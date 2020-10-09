@@ -1,0 +1,123 @@
+* {
+	margin: 0;
+}
+body {
+	background-color: rgb(250, 235, 235);
+}
+/*Signup */
+.sign__form {
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 300px;
+	max-width: 500px;
+	margin: 50px auto;
+	padding: 40px;
+	border: 1px solid rgb(194, 194, 194);
+	border-radius: 10px;
+}
+.sign__form > label {
+	font-size: 15px;
+	color: rgb(153, 147, 147);
+	margin-top: 10px;
+}
+.sign__form > input {
+	margin-bottom: 10px;
+	outline: none;
+	padding: 10px;
+	border: none;
+	border-bottom: 1px solid rgb(153, 147, 147);
+}
+.sign__form > button {
+	background-color: rgb(250, 139, 139);
+	color: white;
+	padding: 10px;
+	width: 150px;
+	border: none;
+	border-radius: 5px;
+	margin: 10px auto 0px auto;
+	cursor: pointer;
+	outline: none;
+}
+.sign__form > .sign__link {
+	text-align: center;
+	margin-top: 10px;
+	text-decoration: none;
+	color: rgb(153, 147, 147);
+	font-size: 13px;
+}
+.sign__form > h2 {
+	text-align: center;
+	color: rgb(153, 147, 147);
+	margin-bottom: 10px;
+}
+.sign__form > p {
+	text-align: center;
+	color: red;
+	padding: 10px 0;
+	font-size: 13px;
+}
+.sign__loader {
+	margin: 0px auto;
+}
+/* Navbar */
+header {
+	display: flex;
+	justify-content: space-around;
+	background-color: white;
+	height: 80px;
+	border-bottom: 1px solid lightgray;
+	position: sticky;
+	top: 0;
+	z-index: 50;
+}
+.header__left {
+	margin-left: auto;
+	display: flex;
+	margin-right: 40px;
+}
+.header__left > .MuiButtonBase-root > span > p {
+	color: #f04e54 !important;
+	font-size: 20px;
+	font-weight: 600 !important;
+	font-family: "Grandstander" !important;
+}
+.header__nouser {
+	margin-top: 20px;
+	display: flex;
+}
+.header__nouser > p,
+.header__link {
+	text-decoration: none;
+	font-size: 18px;
+	color: #f04e54;
+	padding: 10px 20px;
+}
+.header__left > p,
+.header__link2 {
+	padding: 0px 20px 0px 10px;
+	text-decoration: none;
+	font-size: 15px;
+	color: #f04e54;
+	font-family: "Grandstander" !important;
+}
+
+.header__left > p {
+	margin-left: 20px;
+}
+.header__right > .header__link > img {
+	object-fit: contain;
+	height: 60px;
+	width: 130px;
+	padding: 10px;
+}
+/* reset */
+.reset {
+	padding-top: 50px;
+}
+/* newpassword */
+.MuiSnackbar-root > .MuiPaper-root {
+	background-color: rgb(161, 252, 24) !important;
+	color: black;
+}
