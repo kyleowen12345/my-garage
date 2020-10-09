@@ -36,19 +36,8 @@ router.post("/updatephoto", requireLogin, (req, res) => {
 });
 router.post("/updatebio", requireLogin, async (req, res) => {
 	const { _id, name, contactNumber, country, State, city, zipcode } = req.body;
-	if (
-		!_id ||
-		!name ||
-		contactNumber < 1 ||
-		!country ||
-		!State ||
-		!city ||
-		zipcode < 1
-	) {
-		return res.status(422).json({ message: "complete the fields" });
-	}
 	try {
-		const newUser = await User.findOneAndUpdate({ _id: _id });
+		const newUser = await User.findOne({ _id: _id });
 		newUser.name = name;
 		newUser.contactNumber = contactNumber;
 		newUser.country = country;
@@ -57,15 +46,15 @@ router.post("/updatebio", requireLogin, async (req, res) => {
 		newUser.zipcode = zipcode;
 		newUser
 			.save()
-			.then((result) => {
-				res.status(200).json(result);
+			.then((data) => {
+				res.status(200).json(data);
 			})
 			.catch((err) => {
-				console.log(err);
-				res.status(422).json({ message: err });
+				res.status(422).json(err);
 			});
 	} catch (error) {
-		res.status(422).json({ message: "not found" });
+		console.log(error);
+		res.status(422).json({ message: "User not found" });
 	}
 });
 

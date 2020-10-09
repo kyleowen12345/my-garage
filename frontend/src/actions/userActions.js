@@ -7,6 +7,9 @@ import {
 	USER_PROFILE_REQUEST,
 	USER_PROFILE_SUCCESS,
 	USER_PROFILE_FAIL,
+	USER_UPDATEPROFILE_REQUEST,
+	USER_UPDATEPROFILE_SUCCESS,
+	USER_UPDATEPROFILE_FAIL,
 } from "../constants/userConstants";
 
 const signin = (email, password, history) => async (dispatch) => {
@@ -46,5 +49,46 @@ const profile = (_id, token) => (dispatch) => {
 			dispatch({ type: USER_PROFILE_FAIL, payload: err.response.data.error });
 		});
 };
-
-export { signin, profile };
+const updateProfile = (
+	_id,
+	name,
+	contactNumber,
+	country,
+	State,
+	city,
+	zipcode,
+	token
+) => async (dispatch) => {
+	dispatch({
+		type: USER_UPDATEPROFILE_REQUEST,
+		payload: { _id, name, contactNumber, country, State, city, zipcode, token },
+	});
+	try {
+		const { data } = await axios.post(
+			"http://localhost:1234/updatebio",
+			{
+				_id,
+				name,
+				contactNumber,
+				country,
+				State,
+				city,
+				zipcode,
+			},
+			{
+				headers: {
+					Authorization: `Bearer${token}`,
+				},
+			}
+		);
+		dispatch({ type: USER_UPDATEPROFILE_SUCCESS, payload: data });
+		console.log(data);
+	} catch (error) {
+		console.log(error.response.data.message);
+		dispatch({
+			type: USER_UPDATEPROFILE_FAIL,
+			payload: error.response.data.error,
+		});
+	}
+};
+export { signin, profile, updateProfile };

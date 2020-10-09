@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import auth from "./routes/auth.js";
 import userInfo from "./routes/userInfo.js";
+import store from "./routes/store.js";
 import cors from "cors";
 
 // config
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(auth);
 app.use(userInfo);
+app.use(store);
 // database
 mongoose.connect(
 	process.env.MONGO_URI,

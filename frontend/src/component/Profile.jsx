@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Axios from "axios";
 import Loader from "react-loader-spinner";
+import { updateProfile } from "../actions/userActions";
 // import { profile } from "../actions/userActions";
 
 const Profile = () => {
@@ -12,7 +13,14 @@ const Profile = () => {
 	const userProfile = useSelector((state) => state.userProfile);
 	const { userProfileInfo, loading, error } = userProfile;
 	const [url, setUrl] = useState("");
-	// const dispatch = useDispatch();
+	const [name, setName] = useState("");
+	const [country, setCountry] = useState("");
+	const [state, setState] = useState("");
+	const [city, setCity] = useState("");
+	const [contactNumber, setContactNumber] = useState(0);
+	const [zipcode, setZipcode] = useState(0);
+	const [filler, setFiller] = useState("");
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const userEmail = userProfileInfo?.data.email;
@@ -62,6 +70,32 @@ const Profile = () => {
 				console.log(err);
 			});
 	};
+	const handleUpdate = (e) => {
+		e.preventDefault();
+		const userId = userInfo?._id;
+		if (
+			!name ||
+			contactNumber < 1 ||
+			!country ||
+			!state ||
+			!city ||
+			zipcode < 1
+		) {
+			return setFiller("complete the fields");
+		}
+		dispatch(
+			updateProfile(
+				userId,
+				name,
+				contactNumber,
+				country,
+				state,
+				city,
+				zipcode,
+				userInfo?.token
+			)
+		);
+	};
 
 	return (
 		<div className="sign__form">
@@ -89,14 +123,25 @@ const Profile = () => {
 			)}
 
 			<form className="sign__form">
-				<input type="text" />
-				<input type="email" />
-				<input type="text" />
-				<input type="text" />
-				<input type="text" />
-				<input type="number" />
-				<input type="number" />
-				<input type="submit" />
+				<label>Name</label>
+				<input type="text" onChange={(e) => setName(e.target.value)} />
+				<label>Country</label>
+				<input type="text" onChange={(e) => setCountry(e.target.value)} />
+				<label>State</label>
+				<input type="text" onChange={(e) => setState(e.target.value)} />
+				<label>City</label>
+				<input type="text" onChange={(e) => setCity(e.target.value)} />
+				<label>ContactNumber</label>
+				<input
+					type="number"
+					onChange={(e) => setContactNumber(e.target.value)}
+				/>
+				<label>Zipcode</label>
+				<input type="number" onChange={(e) => setZipcode(e.target.value)} />
+				{filler ? <p>{filler}</p> : <></>}
+				<button onClick={handleUpdate} type="submit">
+					Update profile
+				</button>
 			</form>
 		</div>
 	);
