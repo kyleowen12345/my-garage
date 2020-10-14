@@ -22,22 +22,24 @@ const User = mongoose.model(
 			type: String,
 			default: "no picture",
 		},
-		contactNumber: { type: Number, default: 0 },
+		contactNumber: { type: String },
 		country: {
 			type: String,
 			default: "no country",
 		},
-		State: {
+		SocialMediaAcc: {
 			type: String,
-			default: "no State",
+			default: "no SocialMediaAcc",
+			minlength: 5,
+			maxlength: 255,
 		},
 		city: {
 			type: String,
 			default: "no city",
 		},
 		zipcode: {
-			type: Number,
-			default: 0,
+			type: String,
+		
 		},
 		password: {
 			type: String,

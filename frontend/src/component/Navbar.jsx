@@ -12,6 +12,8 @@ import Cookies from "js-cookie";
 import { profile } from "../actions/userActions";
 import Loader from "react-loader-spinner";
 
+
+
 const Navbar = () => {
 	const history = useHistory();
 	const userSignin = useSelector((state) => state.userSignin);
@@ -23,10 +25,12 @@ const Navbar = () => {
 	const anchorRef = React.useRef(null);
 	const userId = userInfo?._id;
 	const userToken = userInfo?.token;
+	
+
 
 	useEffect(() => {
 		if (userInfo) {
-			return dispatch(profile(userId, userToken));
+			return dispatch(profile(userId, userToken))
 		}
 	}, [dispatch, userId, userToken, userInfo]);
 
@@ -89,78 +93,79 @@ const Navbar = () => {
 						</p>
 					</div>
 				) : (
-					<>
-						<Button
-							ref={anchorRef}
-							aria-controls={open ? "menu-list-grow" : undefined}
-							aria-haspopup="true"
-							onClick={handleToggle}
-						>
-							{loading || error ? (
-								<div className="sign__loader">
-									<Loader
-										type="TailSpin"
-										color="#ff4d4d"
-										height={50}
-										width={50}
-									/>
-								</div>
-							) : (
-								<p>{userProfileInfo?.data.name}</p>
-							)}
-						</Button>
-						<Popper
-							open={open}
-							anchorEl={anchorRef.current}
-							role={undefined}
-							transition
-							disablePortal
-						>
-							{({ TransitionProps, placement }) => (
-								<Grow
-									{...TransitionProps}
-									style={{
-										transformOrigin:
-											placement === "bottom" ? "center top" : "center bottom",
-									}}
-								>
-									<Paper>
-										<ClickAwayListener onClickAway={handleClose}>
-											<MenuList
-												autoFocusItem={open}
-												id="menu-list-grow"
-												onKeyDown={handleListKeyDown}
-											>
-												<MenuItem onClick={handleClose}>
-													<Link className="header__link2" to="/profile">
-														Profile
+						<>
+							<Button
+								ref={anchorRef}
+								aria-controls={open ? "menu-list-grow" : undefined}
+								aria-haspopup="true"
+								onClick={handleToggle}
+							>
+								{loading || error ? (
+									<div className="sign__loader">
+										<Loader
+											type="TailSpin"
+											color="#ff4d4d"
+											height={50}
+											width={50}
+										/>
+									</div>
+								) : (
+										<p>{userProfileInfo?.data.name}</p>
+									)}
+							</Button>
+							<Popper
+								open={open}
+								anchorEl={anchorRef.current}
+								role={undefined}
+								transition
+								disablePortal
+							>
+								{({ TransitionProps, placement }) => (
+									<Grow
+										{...TransitionProps}
+										style={{
+											transformOrigin:
+												placement === "bottom" ? "center top" : "center bottom",
+										}}
+									>
+										<Paper>
+											<ClickAwayListener onClickAway={handleClose}>
+												<MenuList
+													autoFocusItem={open}
+													id="menu-list-grow"
+													onKeyDown={handleListKeyDown}
+												>
+													<MenuItem onClick={handleClose}>
+														<Link className="header__link2" to="/profile">
+															Profile
 													</Link>
-												</MenuItem>
-												<MenuItem onClick={handleClose}>
-													<Link className="header__link2" to="/profile">
-														Be a Seller
+													</MenuItem>
+													<MenuItem onClick={handleClose}>
+													 <Link className="header__link2" to={userProfileInfo?.data.Seller===false ? "/Seller": "/Store"} >
+															Store
 													</Link>
-												</MenuItem>
-												<MenuItem onClick={handleClose}>
-													<span
-														className="header__link2"
-														onClick={() => {
-															Cookies.remove("_plip");
-															history.push("/signin");
-															window.location.reload();
-														}}
-													>
-														Logout
+														
+													</MenuItem>
+													<MenuItem onClick={handleClose}>
+														<span
+															className="header__link2"
+															onClick={() => {
+																Cookies.remove("_plip");
+																history.push("/signin");
+																window.location.reload();
+															}}
+														>
+															Logout
 													</span>
-												</MenuItem>
-											</MenuList>
-										</ClickAwayListener>
-									</Paper>
-								</Grow>
-							)}
-						</Popper>
-					</>
-				)}
+													</MenuItem>
+												</MenuList>
+											</ClickAwayListener>
+										</Paper>
+									</Grow>
+								)}
+							</Popper>
+						</>
+					)}
 			</div>
 		</header>
 	);

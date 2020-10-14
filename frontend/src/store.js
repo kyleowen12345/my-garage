@@ -6,14 +6,22 @@ import {
 	userProfileReducer,
 	userSigninReducer,
 } from "./reducers/userReducer";
+import { createStoreReducer, viewMyStoreReducer,allStoreReducer, getSingleStoreReducer } from "./reducers/storeReducer";
+
+
 
 const userInfo = Cookie.getJSON("_plip");
 const initialState = { userSignin: { userInfo } };
 const reducer = combineReducers({
 	userSignin: userSigninReducer,
 	userProfile: userProfileReducer,
-	updateProfile: updateProfileReducer,
+	updateProfileBio: updateProfileReducer,
+	createStore:createStoreReducer,
+	viewYourStore:viewMyStoreReducer,
+	viewAllStore:allStoreReducer,
+	singleStore:getSingleStoreReducer
 });
+
 
 // const composeEnhancer =
 // 	window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||

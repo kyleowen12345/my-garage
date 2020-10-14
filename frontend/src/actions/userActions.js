@@ -12,6 +12,7 @@ import {
 	USER_UPDATEPROFILE_FAIL,
 } from "../constants/userConstants";
 
+
 const signin = (email, password, history) => async (dispatch) => {
 	dispatch({ type: USER_SIGN_REQUEST, payload: { email, password } });
 	try {
@@ -20,11 +21,10 @@ const signin = (email, password, history) => async (dispatch) => {
 			email,
 		});
 		dispatch({ type: USER_SIGN_SUCCESS, payload: data });
-		// localStorage.setItem("token", data.data.token);
-		Cookie.set("_plip", JSON.stringify(data));
+		Cookie.set("_plip", JSON.stringify(data), {expires:7});
 		history.push("/");
 	} catch (err) {
-		dispatch({ type: USER_SIGN_FAIL, payload: err.response.data.error });
+		dispatch({ type: USER_SIGN_FAIL, payload: err.response?.data.error });
 	}
 };
 const profile = (_id, token) => (dispatch) => {
@@ -46,7 +46,7 @@ const profile = (_id, token) => (dispatch) => {
 			dispatch({ type: USER_PROFILE_SUCCESS, payload: data });
 		})
 		.catch((err) => {
-			dispatch({ type: USER_PROFILE_FAIL, payload: err.response.data.error });
+			dispatch({ type: USER_PROFILE_FAIL, payload: err.response?.data.error });
 		});
 };
 const updateProfile = (
@@ -54,14 +54,15 @@ const updateProfile = (
 	name,
 	contactNumber,
 	country,
-	State,
+	SocialMediaAcc,
 	city,
 	zipcode,
-	token
+	token,
+	history
 ) => async (dispatch) => {
 	dispatch({
 		type: USER_UPDATEPROFILE_REQUEST,
-		payload: { _id, name, contactNumber, country, State, city, zipcode, token },
+		payload: { _id,name, contactNumber, country, SocialMediaAcc, city, zipcode, token },
 	});
 	try {
 		const { data } = await axios.post(
@@ -71,7 +72,7 @@ const updateProfile = (
 				name,
 				contactNumber,
 				country,
-				State,
+				SocialMediaAcc,
 				city,
 				zipcode,
 			},
@@ -81,13 +82,13 @@ const updateProfile = (
 				},
 			}
 		);
-		dispatch({ type: USER_UPDATEPROFILE_SUCCESS, payload: data });
-		console.log(data);
+		dispatch({ type: USER_UPDATEPROFILE_SUCCESS, payload: data })
+		history.push('/profile')
 	} catch (error) {
 		console.log(error.response.data.message);
 		dispatch({
 			type: USER_UPDATEPROFILE_FAIL,
-			payload: error.response.data.error,
+			payload: error.response?.data.error,
 		});
 	}
 };

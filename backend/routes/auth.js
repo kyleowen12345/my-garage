@@ -77,6 +77,7 @@ router.post("/signup", (req, res) => {
 						res.status(200).json({ message: "saved successfully", user });
 					})
 					.catch((err) => {
+						console.log(err)
 						res.status(422).json({
 							error: err.errors.name
 								? "name should not have special characters and must be longer than 5 characters"
@@ -119,27 +120,7 @@ router.post("/signin", (req, res) => {
 			});
 	});
 });
-router.post("/createSeller/:id", async (req, res) => {
-	try {
-		const { Seller } = req.body;
-		let user = await User.findByIdAndUpdate({ _id: req.params.id });
-		if (!user) {
-			return res.status(422).json({ error: "User does not exist" });
-		}
-		user.Seller = Seller;
-		user.save().then((result) => {
-			res.json({
-				result,
-				message:
-					result.Seller === true
-						? "You are now a seller"
-						: "You are not a seller",
-			});
-		});
-	} catch (error) {
-		res.json({ error: "User unknown" });
-	}
-});
+
 router.post("/reset-password", (req, res) => {
 	crypto.randomBytes(32, (err, buffer) => {
 		if (err) {

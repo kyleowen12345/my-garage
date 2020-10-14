@@ -12,7 +12,6 @@ const Store = mongoose.model(
 			type: String,
 			min: 5,
 			maxlength: 100,
-			validate: /^[a-zA-Z0-9,. ]*$/,
 			required: true,
 		},
 		storeAddress: {
@@ -46,6 +45,17 @@ const Store = mongoose.model(
 			maxlength: 225,
 			required: true,
 		},
+		createdAt: {
+			type: Date,
+			default: new Date(),
+		},
+	   storeBackgroundImage:{
+		type: String,
+		default:"https://res.cloudinary.com/kaking/image/upload/v1601705050/logo/3847644551_6514180c-9480-4b93-9c7f-65733c047be7_xu2buh.png"
+	   },
+	   storeImages:[{
+		type: String
+	   }]
 	})
 );
 

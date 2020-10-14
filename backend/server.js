@@ -6,6 +6,7 @@ import userInfo from "./routes/userInfo.js";
 import store from "./routes/store.js";
 import cors from "cors";
 
+
 // config
 const app = express();
 dotenv.config();
@@ -23,6 +24,11 @@ app.use(auth);
 app.use(userInfo);
 app.use(store);
 // database
+app.get('/',(req,res)=>{
+	res.send('qweqwe')
+})
+
+
 mongoose.connect(
 	process.env.MONGO_URI,
 	{
@@ -30,9 +36,13 @@ mongoose.connect(
 		useUnifiedTopology: true,
 		useCreateIndex: true,
 		useFindAndModify: false,
-	},
-	() => console.log("connected to mongoDB")
+	},()=>
+		console.log("connected to mongoDB")
 );
+
+
+
+
 
 const port = process.env.PORT || 1234;
 
