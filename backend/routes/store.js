@@ -15,9 +15,9 @@ try {
 }
 })
 router.post('/singlestore',async(req,res)=>{
-	const { storeName }=req.body
+	const { _id }=req.body
 	try {
-		let store=await Store.findOne({storeName:storeName}).populate('sellerName','name')
+		let store=await Store.findOne({_id:_id}).populate('sellerName','name')
 		res.status(200).json(store);
 	} catch (error) {
 		console.log(error)
@@ -75,6 +75,31 @@ router.post("/createStore", requireLogin, async (req, res) => {
 		res.status(422).json(error);
 	}
 });
+router.post('/updatestoreinfo',requireLogin,async(req,res)=>{
+	const {
+		_id,
+		storeName,
+		storeAddress,
+		storeDescription,
+		storeType,
+		contactNumber,
+		socialMediaAcc,
+	} = req.body;
+	try {
+		const storeupdate=await Store.findOne({_id:_id})
+		storeupdate.storeName=storeName
+		storeupdate.storeAddress=storeAddress
+		storeupdate.storeDescription=storeDescription
+		storeupdate.storeType=storeType
+		storeupdate.contactNumber=contactNumber
+		storeupdate.socialMediaAcc=socialMediaAcc
+		storeupdate.save()
+		res.json(storeupdate)
+	} catch (error) {
+		res.json(error)
+		console.log(error)
+	}
+})
 
 router.post('/mystores',requireLogin,(req,res)=>{
  const {_id}=req.body
@@ -92,15 +117,15 @@ router.post('/mystores',requireLogin,(req,res)=>{
 	
 })
 router.post('/storebackgroundImage',requireLogin,(req,res)=>{
-	const {storeBackgroundImage,_id}=req.body
+	const {storeBackgroundImage,storeName}=req.body
 	if (!storeBackgroundImage) {
 		return res.status(422).json({ error: "Put an image first" });
 	}
-	if(!_id){
+	if(!storeName){
 		return res.status(422).json({ error: "Invalid credentials" });
 	}
 
-		Store.findOne({_id:_id}).then(result=>{
+		Store.findOne({storeName:storeName}).then(result=>{
 			result.storeBackgroundImage=storeBackgroundImage
 			result.save().then((data) => {
 				res.json({ message: "successfully upadated the profile picture" }); 
@@ -109,6 +134,15 @@ router.post('/storebackgroundImage',requireLogin,(req,res)=>{
 			res.json({ message: err });
 			console.log(err);
 		})
+})
+router.post('/removeStorefam',requireLogin,async(req,res)=>{
+	const {storeName}=req.body
+	try {
+		await Store.findOneAndDelete({storeName:storeName})
+		res.json({message:'Successfully deleted the Store'})
+	} catch (error) {
+	    console.log(error)
+	}
 })
 
 export default router;

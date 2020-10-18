@@ -18,7 +18,7 @@ const Reset = () => {
 		}
 		setLoading(true);
 		axios
-			.post("https://kcorppetstore.herokuapp.com/reset-password", {
+			.post("/reset-password", {
 				email,
 			})
 			.then((data) => {

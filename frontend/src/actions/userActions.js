@@ -16,7 +16,7 @@ import {
 const signin = (email, password, history) => async (dispatch) => {
 	dispatch({ type: USER_SIGN_REQUEST, payload: { email, password } });
 	try {
-		const { data } = await axios.post("http://localhost:1234/signin", {
+		const { data } = await axios.post("/signin", {
 			password,
 			email,
 		});
@@ -32,7 +32,7 @@ const profile = (_id, token) => (dispatch) => {
 
 	axios
 		.post(
-			"http://localhost:1234/profile",
+			"/profile",
 			{
 				_id,
 			},
@@ -66,7 +66,7 @@ const updateProfile = (
 	});
 	try {
 		const { data } = await axios.post(
-			"http://localhost:1234/updatebio",
+			"/updatebio",
 			{
 				_id,
 				name,

@@ -16,17 +16,22 @@ import Store from "./component/Store";
 import CreateStores from "./component/CreateStores";
 import StoreImage from "./component/StoreImage";
 import StoreInfo from "./component/StoreInfo";
+import CreateProduct from "./component/CreateProduct";
+import ProductImage from "./component/ProductImage";
+import Product from "./component/Product";
+import UpdateStore from "./component/UpdateStore";
 
 function App() {
 	const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
+	// const userProfile = useSelector((state) => state.userProfile);
+    // const { userProfileInfo } = userProfile;
 	return (
 		<BrowserRouter>
 			<Navbar />
 			<Switch>
 				{userInfo ? (
 					<>
-					
 						<Route exact path="/">
 							<Home />
 						</Route>
@@ -39,10 +44,10 @@ function App() {
 						 <Route path="/updataPhoto">
                               <UpdateProfilePic/>
 						 </Route>
+						 
 						 <Route path="/Seller">
                                 <Seller/>
-						 </Route>
-						 <Route path="/Store">
+						 </Route><Route path="/Store">
                                 <Store/>
 						 </Route>
 						 <Route path="/createStore">
@@ -51,8 +56,21 @@ function App() {
 						 <Route path="/createStoreImage">
                               <StoreImage/>
 						 </Route>
+						 
 						 <Route path="/storeInfo/:name">
                               <StoreInfo/>
+						 </Route>
+						 <Route path="/createProduct">
+							 <CreateProduct/>
+						 </Route>
+						 <Route path="/productInfo/:name">
+							 <Product/>
+						 </Route>
+						 <Route path="/createProductImage">
+							 <ProductImage/>
+						 </Route>
+						 <Route path="/updateStore">
+							 <UpdateStore/>
 						 </Route>
 					</>
 				) : (

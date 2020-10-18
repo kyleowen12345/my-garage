@@ -1,30 +1,28 @@
 import React, {useEffect,useState} from 'react'
-import Axios from "axios";
-import { useSelector } from "react-redux";
 import Loader from "react-loader-spinner";
+import Axios from "axios";
+import Cookie from "js-cookie";
 import { useHistory } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 
-const UpdateProfilePic = () => {
+const ProductImage = () => {
     const history=useHistory()
     const [image, setImage] = useState("");
     const [filler, setFiller] = useState('');
     const [photoload,setPhotoLoad]=useState(false)
     const [url, setUrl] = useState("");
-    const userProfile = useSelector((state) => state.userProfile);
-    const { userProfileInfo } = userProfile;
     const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
+    const productNamefam=Cookie.getJSON('_pductFam')
     
     useEffect(() => {
-		const userEmail = userProfileInfo?.data.email;
 		if (url) {
-			setPhotoLoad(true)
 			Axios.post(
-				"/updatephoto",
+				"/productimage",
 				{
-					email: userEmail,
-					profilePic: url,
+					productName: productNamefam,
+					image: url,
 				},
 				{
 					headers: {
@@ -33,15 +31,14 @@ const UpdateProfilePic = () => {
 				}
 			)
 				.then((data) => {
-					console.log(data);
-					setPhotoLoad(false)
-                    history.push('/profile')
+                    console.log(data);
+                    history.push(`/productInfo/${productNamefam.replace(/\s/g,'_')}`)
 				})
 				.catch((err) => {
 					setFiller(err.response?.data.error);
 				});
 		}
-	},[userProfileInfo.data.email, url, userInfo.token, history]);
+	});
 
     const postPhoto = (e) => {
 		e.preventDefault();
@@ -63,7 +60,7 @@ const UpdateProfilePic = () => {
 		)
 			.then((data) => {
 				setUrl(data?.data.secure_url);
-				
+				setPhotoLoad(false)
 			})
 			.catch((err) => {
 				setFiller(err.response?.data.error.message);
@@ -72,16 +69,17 @@ const UpdateProfilePic = () => {
 	};
     return (
         <div className="sign__form">
-            <form >
-			<p>{filler}</p>
-						<input type="file" onChange={(e) => setImage(e.target.files[0])} />
-						{photoload ? <div className="sign__loader">
-					<Loader type="TailSpin" color="#ff4d4d" height={50} width={50} />
-			</div>:<input type="submit" onClick={postPhoto} />}
-						
-					</form>
-        </div>
+        <h2>Add a photo for your Product</h2>
+    <form >
+    <p>{filler}</p>
+                <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+                {photoload ? <div className="sign__loader">
+            <Loader type="TailSpin" color="#ff4d4d" height={50} width={50} />
+    </div>:<input type="submit" onClick={postPhoto} />}
+                
+            </form>
+</div>
     )
 }
 
-export default UpdateProfilePic
+export default ProductImage

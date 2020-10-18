@@ -13,12 +13,10 @@ const Seller = () => {
     const { userInfo } = userSignin;
     const [checked,setChecked]=useState(false)
     const userId = userInfo?._id;
-    console.log(userProfileInfo)
-    console.log(userId)
    
     const handleSeller=(e)=>{
        e.preventDefault()
-     Axios.post("http://localhost:1234/createSeller",{
+     Axios.post("/createSeller",{
          _id:userId
      },{
          headers:{

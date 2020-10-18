@@ -29,7 +29,7 @@ const Home = () => {
 								<img src={item.storeBackgroundImage} alt="my-garage"/>
 						<p>{item.storeName}</p>
 						<p>{item.sellerName.name}</p>
-						<Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item.storeName)}}>View Store</Link>
+						<Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}}>View Store</Link>
 							</div>
 						)
 					})}

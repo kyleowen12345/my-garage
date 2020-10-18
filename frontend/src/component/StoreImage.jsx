@@ -1,6 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import Loader from "react-loader-spinner";
 import Axios from "axios";
+import Cookie from "js-cookie";
 import { useHistory } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
@@ -12,17 +13,15 @@ const StoreImage = () => {
     const [url, setUrl] = useState("");
     const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
-	const createStore = useSelector((state) => state.createStore);
-    const {  storeInfo } = createStore;
-	const storeId=storeInfo?.store._id
+	const storeNamefam=Cookie.getJSON('_stohremate')
 
    
     useEffect(() => {
 		if (url) {
 			Axios.post(
-				"http://localhost:1234/storebackgroundImage",
+				"/storebackgroundImage",
 				{
-					_id: storeId,
+					storeName: storeNamefam,
 					storeBackgroundImage: url,
 				},
 				{

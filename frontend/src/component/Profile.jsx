@@ -15,7 +15,7 @@ const Profile = () => {
 	const dispatch = useDispatch();
 	const userId = userInfo?._id;
 	const userToken = userInfo?.token;
-	
+	console.log(userInfo)
 	useEffect(() => {
 		if (userInfo) {
 			return dispatch(profile(userId, userToken))

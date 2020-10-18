@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import auth from "./routes/auth.js";
 import userInfo from "./routes/userInfo.js";
 import store from "./routes/store.js";
+import product from './routes/product.js'
 import cors from "cors";
 
 
@@ -23,6 +24,7 @@ app.use(cors(corsOptions));
 app.use(auth);
 app.use(userInfo);
 app.use(store);
+app.use(product)
 // database
 app.get('/',(req,res)=>{
 	res.send('qweqwe')
@@ -44,6 +46,6 @@ mongoose.connect(
 
 
 
-const port = process.env.PORT || 1234;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server running at port:${port}`));

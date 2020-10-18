@@ -1,6 +1,7 @@
 {
 	"name": "frontend",
 	"version": "0.1.0",
+	"proxy": "http://localhost:5000",
 	"private": true,
 	"dependencies": {
 		"@material-ui/core": "^4.11.0",
@@ -8,7 +9,6 @@
 		"axios": "^0.20.0",
 		"cra-template": "1.0.3",
 		"js-cookie": "^2.2.1",
-		"materialize-css": "^1.0.0-rc.2",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-loader-spinner": "^3.1.14",

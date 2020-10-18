@@ -21,7 +21,7 @@ const Newpassword = () => {
 		}
 		setLoading(true);
 		axios
-			.post("https://kcorppetstore.herokuapp.com/new-password", {
+			.post("/new-password", {
 				password,
 				token,
 			})

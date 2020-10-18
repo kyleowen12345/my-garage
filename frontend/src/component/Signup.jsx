@@ -20,7 +20,7 @@ const Signup = () => {
 
 		setLoading(true);
 		axios
-			.post("http://localhost:1234/signup", {
+			.post("/signup", {
 				name,
 				password,
 				email,
