@@ -1,53 +1,43 @@
-import React, {useState,useEffect} from 'react'
-import { useSelector, useDispatch } from "react-redux";
+import React, {useState} from 'react'
 import { useHistory,Link } from 'react-router-dom';
-import { makeProduct } from '../actions/productAction';
-import { getSingleStore } from '../actions/storeActions';
-import Cookie from "js-cookie";
+import { useSelector, useDispatch } from "react-redux";
 import Loader from "react-loader-spinner";
-import { useAlert } from 'react-alert'
+import Cookie from "js-cookie";
+import { updateProductInfo } from '../actions/productAction';
 import { Form, Input, Button} from 'antd';
+import { useAlert } from 'react-alert'
 
-const CreateProduct = () => {
+
+const UpdateProduct = () => {
     const history= useHistory()
     const alert = useAlert()
-    const [productName,setProductName]=useState('')
-    const [price,setPrice]=useState('')
-    const [productStocks,setProductStocks]=useState('')
-    const [description,setDescription]=useState('')
-    const dispatch = useDispatch();
+    const [productName, setProductName] = useState("");
+	const [price, setPrice] = useState("");
+	const [productStocks, setProductStocks] = useState("");
+    const [description, setDescription] = useState("");
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
-    const singleStore = useSelector((state) => state.singleStore);
-    const { getStore } = singleStore;
-    const createProduct = useSelector((state) => state.createProduct);
-    const {  loading,error } = createProduct;
-    const storeNameFam=Cookie.getJSON("_stohremate");
-
- const storeName=  getStore?._id
- const storeOwner= userInfo?._id
- const token = userInfo?.token
- useEffect(()=>{
-        dispatch(getSingleStore(storeNameFam))
-},[dispatch,storeNameFam])
-
-    const handleCreate=(e)=>{
-      e.preventDefault()
-      dispatch(makeProduct(productName,price,productStocks,description,storeName,storeOwner,token,history,alert))
+    const updateProduct = useSelector((state) => state.updateProduct);
+    const { loading ,error } = updateProduct;
+    const dispatch = useDispatch();
+    const userToken=userInfo?.token
+    const productNameFam=Cookie.getJSON("_pductFam");
+    const storeNameFam=Cookie.getJSON("_stohremate")
+    const handlePost=(e)=>{
+        e.preventDefault()
+        dispatch(updateProductInfo(productName,price,productStocks,description,storeNameFam,productNameFam,userToken,history,alert))
     }
-    
-
     return (
         <Form
       name="basic"
       initialValues={{
         remember: true,
       }}
-      layout={"vertical"}
-      hideRequiredMark
+     layout={'vertical'}
+     hideRequiredMark
     >
    
-    <h2>Create Product</h2>
+    <h2>Update Product</h2>
 	<Form.Item
         label="Product Name"
         name="productname"
@@ -58,7 +48,7 @@ const CreateProduct = () => {
           },
         ]}
       >
-        <Input  type="text" onChange={(e) => setProductName(e.target.value)} placeholder='Please enter your product name' allowClear={true}/>
+        <Input  type="text" onChange={(e) => setProductName(e.target.value)} placeholder='Please enter new product name' allowClear={true}/>
       </Form.Item>
 	  <Form.Item
         label="Price"
@@ -103,16 +93,16 @@ const CreateProduct = () => {
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={handleCreate} >
-        Next
+      	<Button type="primary" htmlType="submit"  onClick={handlePost} >
+        Create Store
       </Button>
 				)}
       
 	  <Link to="/Store" className="sign__link">
-					Back
+					Cancel
 				</Link>
     </Form>
     )
 }
 
-export default CreateProduct
+export default UpdateProduct

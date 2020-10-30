@@ -4,10 +4,12 @@ import Axios from "axios";
 import Cookie from "js-cookie";
 import { useHistory } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import { useAlert } from 'react-alert'
 
 
 const ProductImage = () => {
-    const history=useHistory()
+	const history=useHistory()
+	const alert = useAlert()
     const [image, setImage] = useState("");
     const [filler, setFiller] = useState('');
     const [photoload,setPhotoLoad]=useState(false)
@@ -21,7 +23,7 @@ const ProductImage = () => {
 			Axios.post(
 				"/productimage",
 				{
-					productName: productNamefam,
+					_id: productNamefam,
 					image: url,
 				},
 				{
@@ -32,7 +34,7 @@ const ProductImage = () => {
 			)
 				.then((data) => {
                     console.log(data);
-                    history.push(`/productInfo/${productNamefam.replace(/\s/g,'_')}`)
+                    history.push(`/productInfo/${data?.data.content.productName.replace(/\s/g,'_')}`)
 				})
 				.catch((err) => {
 					setFiller(err.response?.data.error);
@@ -61,6 +63,7 @@ const ProductImage = () => {
 			.then((data) => {
 				setUrl(data?.data.secure_url);
 				setPhotoLoad(false)
+				alert.success('Image Uploaded')
 			})
 			.catch((err) => {
 				setFiller(err.response?.data.error.message);

@@ -10,11 +10,18 @@ import {
 	USER_UPDATEPROFILE_REQUEST,
 	USER_UPDATEPROFILE_SUCCESS,
 	USER_UPDATEPROFILE_FAIL,
+	USER_SELLER_REQUEST,
+	USER_SELLER_SUCCESS,
+	USER_SELLER_FAIL,
+	USER_IMAGE_REQUEST,
+	USER_IMAGE_SUCCESS,
+	USER_IMAGE_FAIL
 } from "../constants/userConstants";
 
 
-const signin = (email, password, history) => async (dispatch) => {
-	dispatch({ type: USER_SIGN_REQUEST, payload: { email, password } });
+const signin = (email, password, history,message) => async (dispatch) => {
+	dispatch({ type: USER_SIGN_REQUEST});
+	message.info('Processing Credentials')
 	try {
 		const { data } = await axios.post("/signin", {
 			password,
@@ -22,32 +29,32 @@ const signin = (email, password, history) => async (dispatch) => {
 		});
 		dispatch({ type: USER_SIGN_SUCCESS, payload: data });
 		Cookie.set("_plip", JSON.stringify(data), {expires:7});
+		message.success('logged in successfully')
 		history.push("/");
 	} catch (err) {
 		dispatch({ type: USER_SIGN_FAIL, payload: err.response?.data.error });
+		message.error(err.response?.data.error)
 	}
 };
-const profile = (_id, token) => (dispatch) => {
-	dispatch({ type: USER_PROFILE_REQUEST, payload: { _id, token } });
-
-	axios
-		.post(
-			"/profile",
-			{
-				_id,
-			},
-			{
-				headers: {
-					Authorization: `Bearer${token}`,
-				},
-			}
-		)
-		.then((data) => {
-			dispatch({ type: USER_PROFILE_SUCCESS, payload: data });
-		})
-		.catch((err) => {
-			dispatch({ type: USER_PROFILE_FAIL, payload: err.response?.data.error });
-		});
+const profile = (_id, token) =>async (dispatch) => {
+	dispatch({ type: USER_PROFILE_REQUEST});
+  try {
+	  const {data}=await axios
+	  .post(
+		  "/profile",
+		  {
+			  _id,
+		  },
+		  {
+			  headers: {
+				  Authorization: `Bearer${token}`,
+			  },
+		  }
+	  )
+	  dispatch({ type: USER_PROFILE_SUCCESS, payload: data });
+  } catch (error) {
+	dispatch({ type: USER_PROFILE_FAIL, payload: error.response?.data.error });
+  }
 };
 const updateProfile = (
 	_id,
@@ -58,12 +65,13 @@ const updateProfile = (
 	city,
 	zipcode,
 	token,
-	history
+	message,
+	onClose
 ) => async (dispatch) => {
 	dispatch({
-		type: USER_UPDATEPROFILE_REQUEST,
-		payload: { _id,name, contactNumber, country, SocialMediaAcc, city, zipcode, token },
+		type: USER_UPDATEPROFILE_REQUEST
 	});
+	message.info('updating profile')
 	try {
 		const { data } = await axios.post(
 			"/updatebio",
@@ -83,13 +91,58 @@ const updateProfile = (
 			}
 		);
 		dispatch({ type: USER_UPDATEPROFILE_SUCCESS, payload: data })
-		history.push('/profile')
+		message.success('Profile Updated')
+		onClose()
 	} catch (error) {
 		console.log(error.response.data.message);
 		dispatch({
 			type: USER_UPDATEPROFILE_FAIL,
+			payload: error.response?.data.error
+		});
+		message.error(error.response?.data.error)
+	}
+};
+const updateSeller=(_id,token)=>async(dispatch)=>{
+	dispatch({ type: USER_SELLER_REQUEST })
+	try {
+	const {data}=await axios.post("/createSeller",{
+			_id
+		},{
+			headers:{
+			   Authorization: `Bearer${token}`,
+			}
+		})
+		dispatch({ type: USER_SELLER_SUCCESS, payload: data })
+	} catch (error) {
+		dispatch({
+			type: USER_SELLER_FAIL,
 			payload: error.response?.data.error,
 		});
 	}
-};
-export { signin, profile, updateProfile };
+
+}
+const updateProfilePicAct=(url,token,onClose,message)=>async(dispatch)=>{
+	dispatch({ type: USER_IMAGE_REQUEST })
+	message.info('uploading picture')
+	try {
+	const {data}=await	axios.post(
+			"/updatephoto",
+			{
+			
+				profilePic: url,
+			},
+			{
+				headers: {
+					Authorization: `Bearer${token}`,
+				},
+			}
+		)
+		dispatch({ type: USER_IMAGE_SUCCESS, payload:data })
+		message.success('Profile Picture Updated')
+		onClose()
+	} catch (error) {
+		dispatch({ type: USER_IMAGE_FAIL,payload: error.response?.data.error, })
+		message.error(error.response?.data.error)
+	}
+}
+export { signin, profile, updateProfile,updateSeller,updateProfilePicAct };

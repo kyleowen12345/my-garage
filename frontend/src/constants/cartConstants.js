@@ -1,0 +1,15 @@
+export const ADD__TO__CART__REQUEST = "ADD__TO__CART__REQUEST";
+export const ADD__TO__CART__SUCCESS = "ADD__TO__CART__SUCCESS";
+export const ADD__TO__CART__FAIL = "ADD__TO__CART__SUCCESS";
+export const VIEW__CART__REQUEST = "VIEW__CART__REQUEST";
+export const VIEW__CART__SUCCESS = "VIEW__CART__SUCCESS";
+export const VIEW__CART__FAIL = "VIEW__CART__FAIL";
+export const REMOVE__CART__REQUEST = "REMOVE__CART__REQUEST";
+export const REMOVE__CART__SUCCESS = "REMOVE__CART__SUCCESS";
+export const REMOVE__CART__FAIL = "REMOVE__CART__FAIL";
+export const BUY__CART__REQUEST = "BUY__CART__REQUEST";
+export const BUY__CART__SUCCESS = "BUY__CART__SUCCESS";
+export const BUY__CART__FAIL = "BUY__CART__FAIL";
+export const HISTORY__REQUEST = "HISTORY__REQUEST";
+export const HISTORY__SUCCESS = "HISTORY__SUCCESS";
+export const HISTORY__FAIL = "HISTORY__FAIL";

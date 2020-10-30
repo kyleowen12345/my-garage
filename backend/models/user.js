@@ -54,6 +54,14 @@ const User = mongoose.model(
 			type: Date,
 			default: new Date(),
 		},
+		cart: {
+			type: Array,
+			default: []
+		},
+		history:{
+			type:Array,
+			default:[]
+		}
 	})
 );
 

@@ -32,6 +32,7 @@ router.post("/signup", (req, res) => {
 		city,
 		zipcode,
 		createdAt,
+		cart
 	} = req.body;
 	if (!email || !password || !name) {
 		return res.status(422).json({ error: "complete the all the fields" });
@@ -64,6 +65,7 @@ router.post("/signup", (req, res) => {
 					city,
 					zipcode,
 					createdAt,
+					cart
 				});
 				user
 					.save()

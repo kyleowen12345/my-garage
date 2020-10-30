@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
-import Avatar from "@material-ui/core/Avatar";
+import React, { useEffect, useState } from "react";
 import { useSelector,useDispatch } from "react-redux";
-import {Link} from 'react-router-dom'
-import Loader from "react-loader-spinner";
 import { profile } from "../actions/userActions";
-
-
+import UpdateProfile from "./UpdateProfile";
+import UpdateProfilePic from "./UpdateProfilePic";
+import { Avatar,Card,Skeleton,Menu, Dropdown,Drawer } from 'antd';
+import { AntDesignOutlined,EditOutlined,PictureOutlined,AuditOutlined } from '@ant-design/icons';
 
 const Profile = () => {
+	const [drawer,setDrawer]=useState(false)
+	const [imageDrawer,setImageDrawer]=useState(false)
 	const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
 	const userProfile = useSelector((state) => state.userProfile);
@@ -18,36 +19,85 @@ const Profile = () => {
 	console.log(userInfo)
 	useEffect(() => {
 		if (userInfo) {
-			return dispatch(profile(userId, userToken))
+		 dispatch(profile(userId, userToken))
 		}
 	}, [dispatch, userId, userToken, userInfo]);
 
-
+const showDrawer = () => {
+	setDrawer(true)
+	  };
+	
+const onClose = () => {
+	setDrawer(false)
+	  };
+	  const showDrawerimg = () => {
+		setImageDrawer(true)
+		  };
+		
+	const onCloseImg = () => {
+		setImageDrawer(false)
+		  };
+		  const menu = (
+			<Menu>
+			  <Menu.Item key={1}>
+				<p onClick={showDrawerimg}>
+				<PictureOutlined />	Update Profille Picture
+				</p>
+			  </Menu.Item>
+			  <Menu.Item key={2}>
+				<p onClick={showDrawer}>
+				<AuditOutlined />	Update Profile Info
+				</p>
+			  </Menu.Item>
+			</Menu>
+		  )
 	return (
-		<div className="sign__form">
-			{loading ? (
-				<div className="sign__loader">
-					<Loader type="TailSpin" color="#ff4d4d" height={50} width={50} />
-				</div>
-			) : error ? (
+		<>
+			{ error ? (
 				<div>{error}</div>
 			) : (
-				<>
-					<Avatar alt="my-garage" src={userProfileInfo?.data.profilePic} />
-					<Link to="/updataPhoto">Update ProfilePicture</Link>
-					<p>{userProfileInfo?.data.name}</p>
-					<p>{userProfileInfo?.data.email}</p>
-					<p>{userProfileInfo?.data.country}</p>
-					<p>{userProfileInfo?.data.city}</p>
-					<p>{userProfileInfo?.data.SocialMediaAcc}</p>
-					<p>{userProfileInfo?.data.contactNumber}</p>
-					<p>{userProfileInfo?.data.zipcode}</p>
-					<Link to="/updateProfile">Update Profile</Link>
-				</>
+				<Card title="Profile" style={{ width: 300, marginTop: 16 }}  extra={[<Dropdown overlay={menu} placement="bottomCenter" arrow trigger={['click']} key={1}>
+      <EditOutlined key="edit" style={{fontSize:25, color:'black'}}/>
+				</Dropdown>	
+				  ]} bordered={true} bodyStyle={{display:"flex", flexDirection:'column',alignItems:'center'}}>
+ <Skeleton loading={loading} avatar active> 
+
+<Avatar alt="my-garage" src={userProfileInfo?.profilePic}  size={{xs: 100,sm: 120,md: 140,lg: 160,xl: 180,xxl: 200,}}
+    icon={<AntDesignOutlined />} style={{objectFit:'contain'}}/>
+	<div className="Info">
+	<p><span>Name:</span> {userProfileInfo?.name}</p>
+					<p><span>Email:</span>   {userProfileInfo?.email}</p>
+					<p><span>Social Media Account:</span>  {userProfileInfo?.SocialMediaAcc}</p>
+					<p><span>Contact Number:</span>  {userProfileInfo?.contactNumber}</p>
+					<p><span>Country:</span>   {userProfileInfo?.country}</p>
+					<p><span>City:</span> {userProfileInfo?.city}</p>
+					<p><span>Zipcode:</span>  {userProfileInfo?.zipcode}</p>
+	</div>
+	
+
+					
+					<Drawer
+          title="Update Profile"
+		  width={600}
+          onClose={onClose}
+		  visible={drawer}
+		  placement={'right'}
+        >
+			<UpdateProfile onClose={onClose}/> 
+        </Drawer>
+		<Drawer
+          title="Update Profile Picture"
+		  height={200}
+          onClose={onCloseImg}
+          visible={imageDrawer}
+		  placement={'top'}
+        >
+			<UpdateProfilePic  onClose={onCloseImg}/>
+        </Drawer>
+		  </Skeleton> 
+		  </Card>
 			)}
-         
-			
-		</div>
+		</>
 	);
 };
 

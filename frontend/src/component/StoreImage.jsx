@@ -4,9 +4,11 @@ import Axios from "axios";
 import Cookie from "js-cookie";
 import { useHistory } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import { useAlert } from 'react-alert'
 
 const StoreImage = () => {
-    const history=useHistory()
+	const history=useHistory()
+	const alert = useAlert()
     const [image, setImage] = useState("");
     const [filler, setFiller] = useState('');
     const [photoload,setPhotoLoad]=useState(false)
@@ -21,7 +23,7 @@ const StoreImage = () => {
 			Axios.post(
 				"/storebackgroundImage",
 				{
-					storeName: storeNamefam,
+					_id: storeNamefam,
 					storeBackgroundImage: url,
 				},
 				{
@@ -31,8 +33,9 @@ const StoreImage = () => {
 				}
 			)
 				.then((data) => {
-                    console.log(data);
-                    history.push('/Store')
+					console.log(data)
+					history.push(`/storeInfo/${data?.data.storeName.replace(/\s/g,'_')}`)
+					
 				})
 				.catch((err) => {
 					setFiller(err.response?.data.error);
@@ -60,6 +63,7 @@ const StoreImage = () => {
 		)
 			.then((data) => {
 				setUrl(data?.data.secure_url);
+				alert.success('Image Uploaded')
 				setPhotoLoad(false)
 			})
 			.catch((err) => {

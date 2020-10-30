@@ -1,4 +1,5 @@
-import {CREATE_PRODUCT_REQUEST,CREATE_PRODUCT_SUCCESS,CREATE_PRODUCT_FAIL,GET_PRODUCT_REQUEST,GET_PRODUCT_SUCCESS,GET_PRODUCT_FAIL,SINGLE_PRODUCT_REQUEST,SINGLE_PRODUCT_SUCCESS,SINGLE_PRODUCT_FAIL} from '../constants/productContstants'
+import {CREATE_PRODUCT_REQUEST,CREATE_PRODUCT_SUCCESS,CREATE_PRODUCT_FAIL,GET_PRODUCT_REQUEST,GET_PRODUCT_SUCCESS,GET_PRODUCT_FAIL,SINGLE_PRODUCT_REQUEST,SINGLE_PRODUCT_SUCCESS,SINGLE_PRODUCT_FAIL,UPDATE_PRODUCT_REQUEST,UPDATE_PRODUCT_SUCCESS,UPDATE_PRODUCT_FAIL} from '../constants/productContstants'
+
 
 
 const createProductReducer=(state={},action)=>{
@@ -37,5 +38,17 @@ const getProductReducer=(state={},action)=>{
             return state
     }
 }
+const updateProductReducer=(state={},action)=>{
+    switch (action.type) {
+        case UPDATE_PRODUCT_REQUEST:
+            return {loading:true}
+            case UPDATE_PRODUCT_SUCCESS:
+                return {loading:false, updateProd:action.payload}
+                case UPDATE_PRODUCT_FAIL:
+            return {loading:false, error:action.payload}
+        default:
+            return state
+    }
+}
 
-export {createProductReducer,getStoreProductReducer,getProductReducer}
+export {createProductReducer,getStoreProductReducer,getProductReducer,updateProductReducer}

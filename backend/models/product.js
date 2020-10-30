@@ -38,6 +38,10 @@ const Product = mongoose.model(
 			default: 0,
 			required: true,
 		},
+		sold: {
+			type: Number,
+			default: 0,
+		},
 		image: {
 			type: String,
 			default: "https://res.cloudinary.com/kaking/image/upload/v1601705050/logo/3847644551_6514180c-9480-4b93-9c7f-65733c047be7_xu2buh.png",
@@ -49,7 +53,7 @@ const Product = mongoose.model(
 			validate: /^[a-zA-Z0-9,. ]*$/,
 		
 		}
-	})
+	},{timestamps:true})
 );
 
 export { Product };

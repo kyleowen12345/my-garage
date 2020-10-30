@@ -85,6 +85,15 @@ router.post('/updatestoreinfo',requireLogin,async(req,res)=>{
 		contactNumber,
 		socialMediaAcc,
 	} = req.body;
+	if(!_id||
+		!storeName||
+		!storeAddress||
+		!storeDescription||
+		!storeType||
+		!contactNumber||
+		!socialMediaAcc){
+			return res.status(422).json({ error: "complete the fields" })
+		}
 	try {
 		const storeupdate=await Store.findOne({_id:_id})
 		storeupdate.storeName=storeName
@@ -96,8 +105,8 @@ router.post('/updatestoreinfo',requireLogin,async(req,res)=>{
 		storeupdate.save()
 		res.json(storeupdate)
 	} catch (error) {
-		res.json(error)
-		console.log(error)
+	return	res.json(error)
+		
 	}
 })
 
@@ -116,30 +125,25 @@ router.post('/mystores',requireLogin,(req,res)=>{
 
 	
 })
-router.post('/storebackgroundImage',requireLogin,(req,res)=>{
-	const {storeBackgroundImage,storeName}=req.body
+router.post('/storebackgroundImage',requireLogin,async(req,res)=>{
+	const {storeBackgroundImage,_id}=req.body
 	if (!storeBackgroundImage) {
 		return res.status(422).json({ error: "Put an image first" });
 	}
-	if(!storeName){
-		return res.status(422).json({ error: "Invalid credentials" });
-	}
-
-		Store.findOne({storeName:storeName}).then(result=>{
-			result.storeBackgroundImage=storeBackgroundImage
-			result.save().then((data) => {
-				res.json({ message: "successfully upadated the profile picture" }); 
-			});
-		}).catch(err=>{
-			res.json({ message: err });
-			console.log(err);
-		})
+try {
+const result=await	Store.findOne({_id:_id})
+result.storeBackgroundImage=storeBackgroundImage
+result.save()
+res.json(result)
+} catch (error) {
+	console.log(error)
+}
 })
 router.post('/removeStorefam',requireLogin,async(req,res)=>{
 	const {storeName}=req.body
 	try {
 		await Store.findOneAndDelete({storeName:storeName})
-		res.json({message:'Successfully deleted the Store'})
+		res.json({message:'Store deleted'})
 	} catch (error) {
 	    console.log(error)
 	}

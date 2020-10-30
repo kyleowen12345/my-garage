@@ -8,7 +8,14 @@ import {
 	USER_UPDATEPROFILE_REQUEST,
 	USER_UPDATEPROFILE_SUCCESS,
 	USER_UPDATEPROFILE_FAIL,
+	USER_SELLER_REQUEST,
+	USER_SELLER_SUCCESS,
+	USER_SELLER_FAIL,
+	USER_IMAGE_REQUEST,
+	USER_IMAGE_SUCCESS,
+	USER_IMAGE_FAIL
 } from "../constants/userConstants";
+
 
 const userSigninReducer = (state = {}, action) => {
 	switch (action.type) {
@@ -30,29 +37,44 @@ const userProfileReducer = (state = {}, action) => {
 			return {
 				loading: false,
 				userProfileInfo: action.payload,
-				loginStatus: true,
+				
 			};
 		case USER_PROFILE_FAIL:
 			return { loading: false, error: action.payload };
-		default:
-			return state;
-	}
-};
-const updateProfileReducer = (state = {}, action) => {
-	switch (action.type) {
-		case USER_UPDATEPROFILE_REQUEST:
+			case USER_SELLER_REQUEST:
+			return { loading: true };
+		case USER_SELLER_SUCCESS:
+			return {
+				loading: false,
+				userProfileInfo: action.payload,
+			
+			};
+		case USER_SELLER_FAIL:
+			return { loading: false, error: action.payload };
+			case USER_UPDATEPROFILE_REQUEST:
 			return { loading: true };
 		case USER_UPDATEPROFILE_SUCCESS:
 			return {
 				loading: false,
-				updatedUserProfile: action.payload,
+				userProfileInfo: action.payload,
 				loginStatus: true,
 			};
 		case USER_UPDATEPROFILE_FAIL:
+			return { loading: false, error: action.payload };
+			case USER_IMAGE_REQUEST:
+			return { loading: true };
+		case USER_IMAGE_SUCCESS:
+			return {
+				loading: false,
+				userProfileInfo: action.payload,
+				loginStatus: true,
+			};
+		case USER_IMAGE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
 			return state;
 	}
 };
 
-export { userSigninReducer, userProfileReducer, updateProfileReducer };
+
+export { userSigninReducer, userProfileReducer };

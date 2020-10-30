@@ -53,9 +53,10 @@ const Store = mongoose.model(
 		type: String,
 		default:"https://res.cloudinary.com/kaking/image/upload/v1601705050/logo/3847644551_6514180c-9480-4b93-9c7f-65733c047be7_xu2buh.png"
 	   },
-	   storeImages:[{
-		type: String
-	   }]
+	   storeImages:{
+		type: Array,
+		default: []
+	},
 	})
 );
 

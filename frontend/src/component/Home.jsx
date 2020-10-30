@@ -11,7 +11,7 @@ const Home = () => {
 	useEffect(()=>{
 	  dispatch(allStoresViewer())
 	},[dispatch])
-
+console.log(allStores)
 
 	return (
 		<div className="sign__form">
@@ -28,7 +28,7 @@ const Home = () => {
 							<div className="sign__form" key={item._id}>
 								<img src={item.storeBackgroundImage} alt="my-garage"/>
 						<p>{item.storeName}</p>
-						<p>{item.sellerName.name}</p>
+						{/* <p>{item.sellerName.name}</p> */}
 						<Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}}>View Store</Link>
 							</div>
 						)

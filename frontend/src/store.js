@@ -2,12 +2,12 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import Cookie from "js-cookie";
 import {
-	updateProfileReducer,
 	userProfileReducer,
 	userSigninReducer,
 } from "./reducers/userReducer";
 import { createStoreReducer, viewMyStoreReducer,allStoreReducer, getSingleStoreReducer, updateStoreReducer } from "./reducers/storeReducer";
-import { createProductReducer, getProductReducer, getStoreProductReducer } from "./reducers/productReducer";
+import { createProductReducer, getProductReducer, getStoreProductReducer, updateProductReducer } from "./reducers/productReducer";
+import {  historyReducer, viewCartReducer } from "./reducers/cartReducer";
 
 
 
@@ -16,7 +16,6 @@ const initialState = { userSignin: { userInfo } };
 const reducer = combineReducers({
 	userSignin: userSigninReducer,
 	userProfile: userProfileReducer,
-	updateProfileBio: updateProfileReducer,
 	createStore:createStoreReducer,
 	viewYourStore:viewMyStoreReducer,
 	viewAllStore:allStoreReducer,
@@ -25,7 +24,9 @@ const reducer = combineReducers({
 	createProduct:createProductReducer,
 	getStoreProds:getStoreProductReducer,
 	getProduct:getProductReducer,
-	
+	updateProduct:updateProductReducer,
+	viewcahrt:viewCartReducer,
+	purchasedItems:historyReducer
 });
 
 

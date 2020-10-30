@@ -2,64 +2,105 @@
 	margin: 0;
 }
 body {
-	background-color: rgb(250, 235, 235);
+	font-family: "Quicksand", sans-serif !important;
+	background-color: white !important;
 }
-/*Signup */
-.sign__form {
-	background-color: white;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	min-width: 300px;
-	max-width: 500px;
-	margin: 50px auto;
-	padding: 40px;
-	border: 1px solid rgb(194, 194, 194);
-	border-radius: 10px;
+/* Card */
+.Info {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-column-gap: 50px;
 }
-.sign__form > label {
-	font-size: 15px;
-	color: rgb(153, 147, 147);
-	margin-top: 10px;
+.Info > p > span {
+	font-weight: bold;
 }
-.sign__form > input {
-	margin-bottom: 10px;
-	outline: none;
-	padding: 10px;
-	border: none;
-	border-bottom: 1px solid rgb(153, 147, 147);
+.ant-card {
+	margin: 40px auto 0px auto !important;
+	width: 600px !important;
+	position: relative !important;
+	box-shadow: 0 0 10px rgb(172, 171, 171) !important ;
 }
-.sign__form > button {
-	background-color: rgb(250, 139, 139);
-	color: white;
-	padding: 10px;
-	width: 150px;
-	border: none;
-	border-radius: 5px;
-	margin: 10px auto 0px auto;
+.ant-card-head {
+	font-size: 25px !important;
+	font-weight: bold !important;
+}
+
+/* .anticon-more {
+	margin: 0px 0px 0px 0px !important;
+	font-size: 20px !important;
+	font-weight: bolder !important;
+} */
+.ant-avatar {
+	margin: 0px 0px 50px 0px !important;
+}
+/*Forms */
+.ant-row {
+	margin: 10px 0px !important;
+	display: flex !important;
+	flex-direction: column !important;
+}
+.ant-form-item-control-input {
+	border: 1px solid black !important;
+}
+.ant-form {
+	display: flex !important;
+	flex-direction: column !important;
+	justify-content: center !important;
+	max-width: 500px !important;
+	margin: 0px auto !important;
+	padding: 20px !important;
+}
+label {
+	font-size: 20px !important;
+}
+.ant-form-item-explain {
+	color: red !important;
+	margin-left: 40px !important;
+}
+
+.ant-input {
+	color: black !important;
+	padding: 10px !important;
+}
+.ant-btn {
+	background-color: white !important;
+	color: rgb(19, 204, 19) !important;
+	width: 150px !important;
+	border: 2px solid rgb(19, 204, 19) !important;
+	border-radius: 10px !important;
+	margin: 10px 0px 10px 160px !important;
+	cursor: pointer !important;
+	outline: none !important;
+	font-size: 15px !important;
+}
+.ant-form .sign__link {
+	text-align: center !important;
+	margin-top: 10px !important;
+	text-decoration: none !important;
+	color: black !important;
+	font-size: 15px !important;
 	cursor: pointer;
-	outline: none;
 }
-.sign__form > .sign__link {
-	text-align: center;
-	margin-top: 10px;
-	text-decoration: none;
-	color: rgb(153, 147, 147);
-	font-size: 13px;
+.ant-form > h2 {
+	text-align: center !important;
+	color: black !important;
+	margin-bottom: 10px !important;
 }
-.sign__form > h2 {
-	text-align: center;
-	color: rgb(153, 147, 147);
-	margin-bottom: 10px;
+.ant-input-clear-icon {
+	color: red !important;
 }
-.sign__form > p {
-	text-align: center;
-	color: red;
-	padding: 10px 0;
-	font-size: 13px;
+.ant-drawer-close {
+	color: black !important;
+}
+.error {
+	text-align: center !important;
+	color: red !important;
+	padding: 10px 0 !important;
+	font-size: 17px !important;
+	font-weight: 600 !important;
 }
 .sign__loader {
-	margin: 0px auto;
+	margin-left: 220px !important;
 }
 /* Navbar */
 header {
@@ -71,6 +112,10 @@ header {
 	position: sticky;
 	top: 0;
 	z-index: 50;
+}
+.nav__link {
+	display: flex;
+	flex-direction: column;
 }
 .header__left {
 	margin-left: auto;
@@ -87,24 +132,22 @@ header {
 	margin-top: 20px;
 	display: flex;
 }
-.header__nouser > p,
-.header__link {
-	text-decoration: none;
-	font-size: 18px;
-	color: #f04e54;
-	padding: 10px 20px;
-}
+
 .header__left > p,
 .header__link2 {
 	padding: 0px 20px 0px 10px;
 	text-decoration: none;
 	font-size: 15px;
-	color: #f04e54;
-	font-family: "Grandstander" !important;
+	color: black;
+	border-bottom: 1px solid black;
+	margin-bottom: 30px;
 }
 
 .header__left > p {
 	margin-left: 20px;
+}
+.cart__info {
+	margin-top: 20px;
 }
 .header__right > .header__link > img {
 	object-fit: contain;
@@ -115,9 +158,4 @@ header {
 /* reset */
 .reset {
 	padding-top: 50px;
-}
-/* newpassword */
-.MuiSnackbar-root > .MuiPaper-root {
-	background-color: rgb(161, 252, 24) !important;
-	color: black;
 }

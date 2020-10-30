@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Form, Input, Button} from 'antd';
 
 const Newpassword = () => {
 	const [password, setPasword] = useState("");
@@ -41,38 +42,56 @@ const Newpassword = () => {
 	};
 
 	return (
-		<div>
-			<form className="sign__form">
-				<h2>Enter Your New Password</h2>
-				<label>Password</label>
-				<input
-					type="password"
-					value={password}
-					onChange={(e) => setPasword(e.target.value)}
-				/>
-				<label>Confirm-Password</label>
-				<input
-					type="password"
-					value={confirmpass}
-					onChange={(e) => setConfirmpass(e.target.value)}
-				/>
-				<p>{warn}</p>
+		
+			<Form
+      name="basic"
+      initialValues={{
+        remember: true,
+	  }}
+	  hideRequiredMark
+	  layout={'vertical'}
+    >
+   <h2>Enter Your New Password</h2>
+   <Form.Item
+        label="Password"
+        name="password"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your password!',
+          },
+        ]}
+      >
+        <Input.Password  type="password" onChange={(e) => setPasword(e.target.value)} placeholder='Please enter a password'/>
+      </Form.Item>
+
+      <Form.Item
+        label="Confirmpassword"
+        name="Confirmpassword"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Confirm password!',
+          },
+        ]}
+      >
+        <Input.Password  type="password" onChange={(e) => setConfirmpass(e.target.value)} placeholder='Please enter a password' allowClear={true}/>
+      </Form.Item>
+      
+      {warn && <p className="error">{warn}</p>}
 				{loading ? (
-					<div className="sign__loader">
-						<Loader type="TailSpin" color="#ff4d4d" height={50} width={50} />
-					</div>
+				 <div className="sign__loader">
+         <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
+       </div>
 				) : (
-					<button
-						className="btn waves-effect waves-light #64b5f6 blue darken-1"
-						onClick={PostData}
-						type="submit"
-					>
-						Update password
-					</button>
+      	<Button type="primary" htmlType="submit"  onClick={PostData} >
+        Reset Password
+      </Button>
 				)}
-				<Link to="/signin">Go Back to Sign-in</Link>
-			</form>
-		</div>
+      
+				<Link to="/signin"  className="sign__link">Go Back to Sign-in</Link>
+    </Form>
+		
 	);
 };
 

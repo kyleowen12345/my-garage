@@ -4,8 +4,8 @@ import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_R
 
 
 
-const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,history,userToken)=>async(dispatch)=>{
-    dispatch({ type: CREATE_STORE_REQUEST, payload: { storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId } });
+const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,history,userToken,alert)=>async(dispatch)=>{
+    dispatch({ type: CREATE_STORE_REQUEST});
     try {
         const {data} = await axios.post('/createStore',{
             storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,
@@ -16,14 +16,16 @@ const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAc
             },
         })
         dispatch({ type: CREATE_STORE_SUCCESS, payload: data });
-        Cookie.set('_stohremate', storeName)
+        Cookie.set('_stohremate', data?.store._id)
+        alert.success('Store Created')
         history.push('/createStoreImage')
+        
     } catch (error) {
         dispatch({ type: CREATE_STORE_FAIL, payload: error.response?.data.error });
     }
 }
 const viewMyStore=(_id, token)=>async(dispatch)=>{
-    dispatch({ type: VIEW_STORE_REQUEST, payload:{ _id, token } });
+    dispatch({ type: VIEW_STORE_REQUEST});
     try {
         const {data}=await axios.post('/mystores',{_id},{
             headers: {
@@ -46,7 +48,7 @@ const allStoresViewer=()=>async(dispatch)=>{
     
 }
 const getSingleStore=(_id)=>async(dispatch)=>{
-    dispatch({ type: VIEWSINGLE_STORE_REQUEST, payload:_id });
+    dispatch({ type: VIEWSINGLE_STORE_REQUEST});
     try {
         const {data}=await axios.post('/singlestore',{
             _id
@@ -57,8 +59,8 @@ const getSingleStore=(_id)=>async(dispatch)=>{
     }
 
 }
-const updateStore=(_id,storeName,storeAddress,storeDescription,storeType,contactNumber,socialMediaAcc,token,history)=>async(dispatch)=>{
-    dispatch({ type: UPDATE_STORE_REQUEST, payload:{_id,storeName,storeAddress,storeDescription,storeType,contactNumber,socialMediaAcc} });
+const updateStore=(_id,storeName,storeAddress,storeDescription,storeType,contactNumber,socialMediaAcc,token,history,alert)=>async(dispatch)=>{
+    dispatch({ type: UPDATE_STORE_REQUEST});
     try {
         const {data}=await axios.post('/updatestoreinfo',{_id,storeName,storeAddress,storeDescription,storeType,contactNumber,socialMediaAcc},{
             headers: {
@@ -66,9 +68,11 @@ const updateStore=(_id,storeName,storeAddress,storeDescription,storeType,contact
             },
         })
         dispatch({ type: UPDATE_STORE_SUCCESS, payload: data });
+        alert.success('Store Updated')
         history.push(`/storeInfo/${storeName.replace(/\s/g,'_')}`)
     } catch (error) {
         dispatch({ type: UPDATE_STORE_FAIL, payload: error.response?.data.error });
     }
 }
-export {makeStore,viewMyStore,allStoresViewer,getSingleStore,updateStore}
+
+export  {makeStore,viewMyStore,allStoresViewer,getSingleStore,updateStore}

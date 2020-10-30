@@ -1,52 +1,30 @@
 import React, {useEffect,useState} from 'react'
 import Axios from "axios";
-import { useSelector } from "react-redux";
-import Loader from "react-loader-spinner";
-import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import {updateProfilePicAct} from '../actions/userActions'
+import { message} from 'antd';
 
-
-const UpdateProfilePic = () => {
-    const history=useHistory()
+const UpdateProfilePic = ({onClose}) => {
+	
+	const dispatch=useDispatch()
     const [image, setImage] = useState("");
-    const [filler, setFiller] = useState('');
     const [photoload,setPhotoLoad]=useState(false)
     const [url, setUrl] = useState("");
-    const userProfile = useSelector((state) => state.userProfile);
-    const { userProfileInfo } = userProfile;
     const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
+	const token=userInfo?.token
     
     useEffect(() => {
-		const userEmail = userProfileInfo?.data.email;
 		if (url) {
-			setPhotoLoad(true)
-			Axios.post(
-				"/updatephoto",
-				{
-					email: userEmail,
-					profilePic: url,
-				},
-				{
-					headers: {
-						Authorization: `Bearer${userInfo?.token}`,
-					},
-				}
-			)
-				.then((data) => {
-					console.log(data);
-					setPhotoLoad(false)
-                    history.push('/profile')
-				})
-				.catch((err) => {
-					setFiller(err.response?.data.error);
-				});
+			dispatch(updateProfilePicAct(url,token,onClose,message) )
+			
 		}
-	},[userProfileInfo.data.email, url, userInfo.token, history]);
+	},[ url, dispatch, token, onClose]);
 
     const postPhoto = (e) => {
 		e.preventDefault();
 		if(!image){
-			return setFiller('Choose image first')
+			return message.error('Choose image first')
 		}
 		setPhotoLoad(true)
 		const data = new FormData();
@@ -63,21 +41,19 @@ const UpdateProfilePic = () => {
 		)
 			.then((data) => {
 				setUrl(data?.data.secure_url);
-				
+				setPhotoLoad(false)
 			})
 			.catch((err) => {
-				setFiller(err.response?.data.error.message);
+				message.error(err.response?.data.error.message);
 				setPhotoLoad(false)
 			});
 	};
     return (
         <div className="sign__form">
             <form >
-			<p>{filler}</p>
 						<input type="file" onChange={(e) => setImage(e.target.files[0])} />
-						{photoload ? <div className="sign__loader">
-					<Loader type="TailSpin" color="#ff4d4d" height={50} width={50} />
-			</div>:<input type="submit" onClick={postPhoto} />}
+						{photoload ? <p>Uploading...</p>
+						:<input type="submit" onClick={postPhoto} />}
 						
 					</form>
         </div>

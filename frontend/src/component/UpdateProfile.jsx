@@ -2,34 +2,25 @@ import React, {  useState }  from 'react'
 import { updateProfile } from "../actions/userActions";
 import Loader from "react-loader-spinner";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from 'react-router-dom';
+import { Form, Input, Button,message} from 'antd';
 
-const UpdateProfile = () => {
-    const history=useHistory()
+const UpdateProfile = ({onClose}) => {
     const [name, setName] = useState("");
 	const [country, setCountry] = useState("");
 	const [SocialMediaAcc, setSocialMediaAcc] = useState("");
 	const [city, setCity] = useState("");
 	const [contactNumber, setContactNumber] = useState('');
-    const [zipcode, setZipcode] = useState('');
-    const updateProfileBio = useSelector((state) => state.updateProfileBio);
-    const {  loading } = updateProfileBio;
+	const [zipcode, setZipcode] = useState('');
+  const userProfile = useSelector((state) => state.userProfile);
+	const {  loading } = userProfile;
     const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
-    const [filler, setFiller] = useState('');
     const dispatch = useDispatch();
     const handleUpdate = (e) => {
 		e.preventDefault();
 		const userId = userInfo?._id;
-		if (
-			!name ||
-			!contactNumber||
-			!zipcode||
-			!country ||
-			!city ||
-			!SocialMediaAcc
-		) {
-			return setFiller("complete the fields");
+		if(!name|| !contactNumber|| !country|| !zipcode|| !SocialMediaAcc){
+			return message.error('Complete the fields')
 		}
 		dispatch(
 			updateProfile(
@@ -41,43 +32,107 @@ const UpdateProfile = () => {
 				city,
 				zipcode,
                 userInfo?.token,
-                history
+                message,
+                onClose
 			)
 		);
 		
-	};
+  };
+  
     return (
-        <div>
-            <form className="sign__form">
-				<label>Name</label>
-				<input type="text" onChange={(e) => setName(e.target.value)} />
-				<label>Country</label>
-				<input type="text" onChange={(e) => setCountry(e.target.value)} />
-				<label>City</label>
-				<input type="text" onChange={(e) => setCity(e.target.value)} />
-				<label>SocialMediaAcc</label>
-				<input type="text" onChange={(e) => setSocialMediaAcc(e.target.value)} />
-				<label>ContactNumber</label>
-				<input
-					type="number"
-					onChange={(e) => setContactNumber(e.target.value)}
-				/>
-				<label>Zipcode</label>
-				<input type="number" onChange={(e) => setZipcode(e.target.value)} />
-				{filler ? <p>{filler}</p> : <></>}
-				{loading ? <div className="sign__loader">
-										<Loader
-											type="TailSpin"
-											color="#ff4d4d"
-											height={50}
-											width={50}
-										/>
-									</div>:<button onClick={handleUpdate} type="submit">
-					Update profile
-				</button>}
-				
-			</form>
-        </div>
+        <Form
+      name="basic"
+      initialValues={{
+        remember: true,
+      }}
+      layout={"vertical"}
+      hideRequiredMark
+     
+    >
+	<Form.Item
+        label="Username"
+        name="Username"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Username!',
+          },
+        ]}
+        required
+      >
+        <Input  type="text" onChange={(e) => setName(e.target.value)} placeholder='Please enter new username' maxLength={30} allowClear={true} />
+      </Form.Item>
+	  <Form.Item
+        label="Country"
+        name="Country"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Country!',
+          },
+        ]}
+      >
+        <Input  type="text" onChange={(e) => setCountry(e.target.value)} placeholder='Please enter your country' maxLength={30} allowClear={true}/>
+      </Form.Item>
+	  <Form.Item
+        label="City"
+        name="City"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your City!',
+          },
+        ]}
+      >
+        <Input  type="text" onChange={(e) => setCity(e.target.value)} placeholder='Please enter your city' maxLength={30} allowClear={true}/>
+      </Form.Item>
+	  <Form.Item
+        label="Social Media Account"
+        name="Social Media Account"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Social Media Account!',
+          },
+        ]}
+      >
+        <Input  type="text" onChange={(e) => setSocialMediaAcc(e.target.value)} placeholder='Please enter your social media account' maxLength={30} allowClear={true}/>
+      </Form.Item>
+      <Form.Item
+        label="ContactNumber"
+        name="ContactNumber"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your ContactNumber!',
+          },
+        ]}
+      >
+        <Input  type="text" onChange={(e) => setContactNumber(e.target.value)} placeholder='Please enter your contact number'maxLength={30} allowClear={true}/>
+      </Form.Item>
+	  <Form.Item
+        label="Zipcode"
+        name="Zipcode"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Zipcode!',
+          },
+        ]}
+      >
+        <Input  type="text" onChange={(e) => setZipcode(e.target.value)} placeholder='Please enter your zipcode' maxLength={30} allowClear={true}/>
+      </Form.Item>
+				{loading ? (
+				 <div className="sign__loader">
+         <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
+       </div>
+				) : (
+      	<Button type="primary" htmlType="submit"  onClick={handleUpdate} >
+        Update Profile
+      </Button>
+				)}
+      
+    </Form>
     )
 }
 
