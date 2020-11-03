@@ -4,6 +4,7 @@ import {  useHistory } from "react-router-dom";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { updateSeller } from '../actions/userActions';
+import { Card, Button, message,Checkbox } from 'antd';
 
 
 const Seller = () => {
@@ -23,23 +24,32 @@ const Seller = () => {
    
     const handleSeller=(e)=>{
       e.preventDefault()
-      dispatch(updateSeller(userId,userInfo?.token))
+      dispatch(updateSeller(userId,userInfo?.token,message))
       return  history.push('/Store')
     }
+   
     return (
-        <div  className="sign__form">
-            <h2>Accept Terms and policy</h2>
+      <Card title="Terms and Policies" style={{ width: 300, marginTop: 16 }} 	
+				bodyStyle={{display:"flex", flexDirection:'column',alignItems:'center'}}>
+            <h1>Accept Terms and policy</h1>
             <ul>
                 <li>You can create store </li>
                 <li>You can create products </li>
                 <li>You can sell </li>
                 <li>You can also buy </li>
+                <li>By Checking the checkbox you accept our cookie policy</li>
             </ul>
-            <h2>Anything that is not on the list can't be done without the permission of the owner of this friking thing</h2>
-            <input type="checkbox"  onChange={()=>{setChecked(!checked)}} defaultChecked={checked}/>
-            <span>check to accept terms</span>
-            {userProfileInfo?.Seller===false ? <button onClick={handleSeller} type="submit" disabled={checked === false}>Click to be a seller</button>: <p>You are a seller</p>}
-        </div>
+            <h3>Reminders</h3>
+            <ul>
+                <li>The Paypal Payment Process only work in US accounts </li>
+                <li>The Payment Process is not in production mode </li>
+                <li>By Checking the checkbox you can SUBMIT </li>
+            </ul>
+            <Checkbox   onChange={()=>{setChecked(!checked)}} defaultChecked={checked}/>
+            <span>check the box to accept terms</span>
+            {userProfileInfo?.Seller===false && <Button type="primary" htmlType="submit"  onClick={handleSeller} disabled={checked === false} style={{marginLeft:10 }}>Submit</Button>}
+         </Card>
+         
     )
 }
 

@@ -1,4 +1,4 @@
-import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_REQUEST,VIEW_STORE_SUCCESS,VIEW_STORE_FAIL,VIEWALL_STORE_REQUEST,VIEWALL_STORE_SUCCESS,VIEWALL_STORE_FAIL,VIEWSINGLE_STORE_REQUEST,VIEWSINGLE_STORE_SUCCESS,VIEWSINGLE_STORE_FAIL,UPDATE_STORE_REQUEST,UPDATE_STORE_SUCCESS,UPDATE_STORE_FAIL} from '../constants/storeContstants'
+import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_REQUEST,VIEW_STORE_SUCCESS,VIEW_STORE_FAIL,VIEWALL_STORE_REQUEST,VIEWALL_STORE_SUCCESS,VIEWALL_STORE_FAIL,VIEWSINGLE_STORE_REQUEST,VIEWSINGLE_STORE_SUCCESS,VIEWSINGLE_STORE_FAIL,UPDATE_STORE_REQUEST,UPDATE_STORE_SUCCESS,UPDATE_STORE_FAIL,SEARCH_STORE_REQUEST,SEARCH_STORE_SUCCESS,SEARCH_STORE_FAIL} from '../constants/storeContstants'
 
 const createStoreReducer =(state={},action)=>{
     switch (action.type) {
@@ -33,9 +33,20 @@ const allStoreReducer=(state={},action)=>{
                 return {loading:false, allStores:action.payload}
                 case VIEWALL_STORE_FAIL:
             return {loading:false, error:action.payload}
-    
         default:
             return state
+    }
+}
+const searchStoreReducer=(state={},action)=>{
+    switch (action.type) {
+        case SEARCH_STORE_REQUEST:
+            return {loading:true}
+            case SEARCH_STORE_SUCCESS:
+                return {loading:false, searchStore:action.payload}
+                case SEARCH_STORE_FAIL:
+            return {loading:false, error:action.payload}
+    default:
+        return state
     }
 }
 const getSingleStoreReducer=(state={},action)=>{
@@ -65,4 +76,4 @@ const updateStoreReducer=(state={},action)=>{
     }
 }
 
-export {createStoreReducer,viewMyStoreReducer,allStoreReducer,getSingleStoreReducer,updateStoreReducer}
+export {createStoreReducer,viewMyStoreReducer,allStoreReducer,getSingleStoreReducer,updateStoreReducer,searchStoreReducer}

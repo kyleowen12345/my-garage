@@ -64,7 +64,7 @@ const Signin = () => {
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={handlePost} >
+      	<Button type="primary" htmlType="submit"  onClick={handlePost} style={{marginLeft:160}}>
         Login
       </Button>
 				)}

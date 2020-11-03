@@ -127,7 +127,7 @@ const UpdateProfile = ({onClose}) => {
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={handleUpdate} >
+      	<Button type="primary" htmlType="submit"  onClick={handleUpdate} style={{marginLeft:160}}>
         Update Profile
       </Button>
 				)}

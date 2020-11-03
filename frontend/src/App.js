@@ -25,6 +25,7 @@ import UpdateProduct from "./component/UpdateProduct";
 import Cart from "./component/Cart";
 import History from './component/History'
 import StoreStat from "./component/StoreStat";
+import SearchStore from './component/SearchStore'
 
 function App() {
 	const userSignin = useSelector((state) => state.userSignin);
@@ -41,9 +42,6 @@ function App() {
 						<Route path="/profile">
 							<Profile />
 						</Route>
-						{/* <Route path="/updateProfile">
-                               <UpdateProfile/>
-						 </Route> */}
 						 <Route path="/updatePhoto">
                               <UpdateProfilePic/>
 						 </Route>
@@ -53,6 +51,9 @@ function App() {
 						 </Route><Route path="/Store">
                                 <Store/>
 						 </Route>
+						 <Route path="/searchResult">
+                               <SearchStore/>
+						 </Route>
 						 <Route path="/createStore">
                               <CreateStores/>
 						 </Route>
@@ -60,7 +61,7 @@ function App() {
                               <StoreImage/>
 						 </Route>
 						 
-						 <Route path="/storeInfo/:name">
+						 <Route path="/storeInfo">
                               <StoreInfo/>
 						 </Route>
 						 <Route path="/createProduct">

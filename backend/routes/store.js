@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/homies',async(req,res)=>{
 try {
- let stores= await Store.find({}).populate('sellerName','name').sort({createdAt:'desc'})
+ let stores= await Store.find({}).populate('sellerName','name profilePic').sort({createdAt:'desc'})
  res.json(stores)
 
 } catch (error) {
@@ -18,6 +18,15 @@ router.post('/singlestore',async(req,res)=>{
 	const { _id }=req.body
 	try {
 		let store=await Store.findOne({_id:_id}).populate('sellerName','name')
+		res.status(200).json(store);
+	} catch (error) {
+		console.log(error)
+	}
+})
+router.post('/searchedStore',async(req,res)=>{
+	const { storeName }=req.body
+	try {
+		let store=await Store.find({storeName:storeName}).populate('sellerName','name profilePic')
 		res.status(200).json(store);
 	} catch (error) {
 		console.log(error)

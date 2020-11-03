@@ -4,6 +4,7 @@ import requireLogin from "../middleware/requireLogin.js";
 import {Product} from '../models/product.js'
 import {Payment} from '../models/payment.js'
 import ASYNC from 'async'
+import moment from 'moment'
 
 const router = express.Router();
 
@@ -95,7 +96,7 @@ router.post('/addtocart',requireLogin,async(req,res)=>{
 							cart: {
 								id: productId,
 								quantity: 1,
-								date: Date.now()
+								date: moment().format('MMMM Do YYYY, h:mm:ss a')
 							}
 						}
 					},
@@ -172,7 +173,7 @@ router.post('/successBuy',requireLogin,(req,res)=>{
 	let transactionData={}
 	req.body.cartDetail.forEach((item)=>{
 		history.push({
-			dateOfPurchase:Date.now(),
+			dateOfPurchase:moment().format('MMMM Do YYYY, h:mm:ss a'),
 			name:item.productName,
 			id: item._id,
 			price: item.price,

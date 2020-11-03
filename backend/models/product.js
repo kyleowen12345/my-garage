@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import moment from 'moment'
 
 const { ObjectId } = mongoose.Schema.Types;
 const Product = mongoose.model(
@@ -27,10 +28,8 @@ const Product = mongoose.model(
 			validate: /^[a-zA-Z0-9,. ]*$/,
 		},
 		price: {
-			type: String,
-			min: 5,
-			maxlength: 100,
-			validate: /^[a-zA-Z0-9,. ]*$/,
+			type: Number,
+			default: 0,
 			required: true,
 		},
 		productStocks: {
@@ -44,7 +43,7 @@ const Product = mongoose.model(
 		},
 		image: {
 			type: String,
-			default: "https://res.cloudinary.com/kaking/image/upload/v1601705050/logo/3847644551_6514180c-9480-4b93-9c7f-65733c047be7_xu2buh.png",
+			default: "https://res.cloudinary.com/kaking/image/upload/v1604108250/xyjvdcouhpdgau0hcfgn.png",
 		},
 		description:{
 			type: String,
@@ -52,6 +51,10 @@ const Product = mongoose.model(
 			maxlength: 255,
 			validate: /^[a-zA-Z0-9,. ]*$/,
 		
+		},
+		createdAt:{
+			type:String,
+            default:moment().format('MMMM Do YYYY, h:mm:ss a')
 		}
 	},{timestamps:true})
 );

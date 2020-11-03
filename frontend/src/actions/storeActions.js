@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookie from "js-cookie";
-import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_REQUEST,VIEW_STORE_SUCCESS,VIEW_STORE_FAIL,VIEWALL_STORE_REQUEST,VIEWALL_STORE_SUCCESS,VIEWALL_STORE_FAIL,VIEWSINGLE_STORE_REQUEST,VIEWSINGLE_STORE_SUCCESS,VIEWSINGLE_STORE_FAIL,UPDATE_STORE_REQUEST,UPDATE_STORE_SUCCESS,UPDATE_STORE_FAIL} from '../constants/storeContstants'
+import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_REQUEST,VIEW_STORE_SUCCESS,VIEW_STORE_FAIL,VIEWALL_STORE_REQUEST,VIEWALL_STORE_SUCCESS,VIEWALL_STORE_FAIL,VIEWSINGLE_STORE_REQUEST,VIEWSINGLE_STORE_SUCCESS,VIEWSINGLE_STORE_FAIL,UPDATE_STORE_REQUEST,UPDATE_STORE_SUCCESS,UPDATE_STORE_FAIL,SEARCH_STORE_REQUEST,SEARCH_STORE_SUCCESS,SEARCH_STORE_FAIL} from '../constants/storeContstants'
 
 
 
@@ -59,6 +59,21 @@ const getSingleStore=(_id)=>async(dispatch)=>{
     }
 
 }
+const getSearchedStore=(storeName,history)=>async(dispatch)=>{
+    dispatch({ type: SEARCH_STORE_REQUEST});
+    try {
+        const {data}=await axios.post('/searchedStore',{
+            storeName
+        })
+        dispatch({ type: SEARCH_STORE_SUCCESS, payload: data });
+        Cookie.set('_sr', storeName)
+        history.push('/searchResult')
+        console.log(data)
+    } catch (error) {
+        dispatch({ type: SEARCH_STORE_FAIL, payload: error.response?.data.error });
+    }
+
+}
 const updateStore=(_id,storeName,storeAddress,storeDescription,storeType,contactNumber,socialMediaAcc,token,history,alert)=>async(dispatch)=>{
     dispatch({ type: UPDATE_STORE_REQUEST});
     try {
@@ -75,4 +90,4 @@ const updateStore=(_id,storeName,storeAddress,storeDescription,storeType,contact
     }
 }
 
-export  {makeStore,viewMyStore,allStoresViewer,getSingleStore,updateStore}
+export  {makeStore,viewMyStore,allStoresViewer,getSingleStore,updateStore,getSearchedStore}

@@ -5,7 +5,7 @@ import {
 	userProfileReducer,
 	userSigninReducer,
 } from "./reducers/userReducer";
-import { createStoreReducer, viewMyStoreReducer,allStoreReducer, getSingleStoreReducer, updateStoreReducer } from "./reducers/storeReducer";
+import { createStoreReducer, viewMyStoreReducer,allStoreReducer, getSingleStoreReducer, updateStoreReducer, searchStoreReducer } from "./reducers/storeReducer";
 import { createProductReducer, getProductReducer, getStoreProductReducer, updateProductReducer } from "./reducers/productReducer";
 import {  historyReducer, viewCartReducer } from "./reducers/cartReducer";
 
@@ -26,7 +26,8 @@ const reducer = combineReducers({
 	getProduct:getProductReducer,
 	updateProduct:updateProductReducer,
 	viewcahrt:viewCartReducer,
-	purchasedItems:historyReducer
+	purchasedItems:historyReducer,
+	searchedStore:searchStoreReducer
 });
 
 

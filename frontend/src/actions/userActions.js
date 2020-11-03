@@ -102,8 +102,9 @@ const updateProfile = (
 		message.error(error.response?.data.error)
 	}
 };
-const updateSeller=(_id,token)=>async(dispatch)=>{
+const updateSeller=(_id,token,message)=>async(dispatch)=>{
 	dispatch({ type: USER_SELLER_REQUEST })
+	message.info('updating Seller Info')
 	try {
 	const {data}=await axios.post("/createSeller",{
 			_id
@@ -113,11 +114,13 @@ const updateSeller=(_id,token)=>async(dispatch)=>{
 			}
 		})
 		dispatch({ type: USER_SELLER_SUCCESS, payload: data })
+		message.success('You are now a Seller')
 	} catch (error) {
 		dispatch({
 			type: USER_SELLER_FAIL,
 			payload: error.response?.data.error,
 		});
+		message.error(error.response?.data.error)
 	}
 
 }

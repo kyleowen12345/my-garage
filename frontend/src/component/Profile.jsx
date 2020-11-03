@@ -61,9 +61,12 @@ const onClose = () => {
 				</Dropdown>	
 				  ]} bordered={true} bodyStyle={{display:"flex", flexDirection:'column',alignItems:'center'}}>
  <Skeleton loading={loading} avatar active> 
-
-<Avatar alt="my-garage" src={userProfileInfo?.profilePic}  size={{xs: 100,sm: 120,md: 140,lg: 160,xl: 180,xxl: 200,}}
-    icon={<AntDesignOutlined />} style={{objectFit:'contain'}}/>
+ {/* <Image
+        width={200}
+        src={userProfileInfo?.profilePic}
+      /> */}
+	  <Avatar alt="my-garage" src={userProfileInfo?.profilePic}  size={{xs: 100,sm: 120,md: 140,lg: 160,xl: 180,xxl: 200,}}
+			icon={<AntDesignOutlined />} style={{objectFit:'contain'}}/>
 	<div className="Info">
 	<p><span>Name:</span> {userProfileInfo?.name}</p>
 					<p><span>Email:</span>   {userProfileInfo?.email}</p>
@@ -73,9 +76,6 @@ const onClose = () => {
 					<p><span>City:</span> {userProfileInfo?.city}</p>
 					<p><span>Zipcode:</span>  {userProfileInfo?.zipcode}</p>
 	</div>
-	
-
-					
 					<Drawer
           title="Update Profile"
 		  width={600}

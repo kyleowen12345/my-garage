@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Loader from "react-loader-spinner";
 import { useHistory, Link } from "react-router-dom";
-import { Form, Input, Button} from 'antd';
+import { Form, Input, Button,message} from 'antd';
 
 const Signup = () => {
 	const history = useHistory();
@@ -10,16 +10,16 @@ const Signup = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [errors, setErrors] = useState("");
 	const [confirmpass, setConfirmpass] = useState("");
 
 	const handlePost = (e) => {
 		e.preventDefault();
 		if (password !== confirmpass) {
-			return setErrors("password does not match");
+			return message.error("password does not match");
 		}
 
-		setLoading(true);
+    setLoading(true);
+    message.info('creating account',2)
 		axios
 			.post("/signup", {
 				name,
@@ -27,13 +27,15 @@ const Signup = () => {
 				email,
 			})
 			.then((data) => {
-				setLoading(false);
+        setLoading(false);
+        message.success('account created',2)
+        message.info('sign in with your new account',5)
 				history.push("/signin");
 			})
 
 			.catch((err) => {
 				console.log(err.response.data);
-				setErrors(err.response.data.error);
+        message.error(err.response.data.error)
 				setLoading(false);
 			});
 	};
@@ -84,7 +86,7 @@ const Signup = () => {
           },
         ]}
       >
-        <Input.Password  type="password" onChange={(e) => setPassword(e.target.value)} placeholder='Please enter your password' allowClear={true}/>
+        <Input.Password  type="password" onChange={(e) => setPassword(e.target.value)} placeholder='Please enter your password' />
       </Form.Item>
 	  <Form.Item
         name="Confirm Password"
@@ -96,15 +98,14 @@ const Signup = () => {
           },
         ]}
       >
-        <Input.Password  type="password" onChange={(e) => setConfirmpass(e.target.value)} placeholder='Please enter confirm password' allowClear={true}/>
+        <Input.Password  type="password" onChange={(e) => setConfirmpass(e.target.value)} placeholder='Please enter confirm password' />
       </Form.Item>
-      {errors && <p className="error">{errors}</p>}
 				{loading ? (
 				 <div className="sign__loader">
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={handlePost} >
+      	<Button type="primary" htmlType="submit"  onClick={handlePost} style={{marginLeft:160}}>
         Login
       </Button>
 				)}

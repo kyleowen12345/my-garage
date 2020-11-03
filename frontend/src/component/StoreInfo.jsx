@@ -1,4 +1,4 @@
-import React,{ useEffect,useState } from 'react'
+import React,{ useEffect } from 'react'
 import { useSelector,useDispatch } from "react-redux";
 import { getSingleStore } from '../actions/storeActions';
 import Cookie from "js-cookie";
@@ -9,15 +9,14 @@ import { useHistory } from 'react-router-dom';
 import { getAllPInS } from '../actions/productAction';
 import { addtocartact } from '../actions/cartActions';
 import { useAlert } from 'react-alert'
-import { Drawer, Button,message } from 'antd';
+import { message,Spin } from 'antd';
+
 
 
 
 const StoreInfo = () => {
     const history=useHistory()
     const alert = useAlert()
-    const [visible,setVisible]=useState(false)
-    const [placement,setPlacement]=useState('')
     const singleStore = useSelector((state) => state.singleStore);
     const { getStore, loading, error } = singleStore;
     const userSignin = useSelector((state) => state.userSignin);
@@ -27,7 +26,6 @@ const StoreInfo = () => {
     const dispatch = useDispatch();
     const storeNameFam=Cookie.getJSON("_stohremate");
     
- 
   console.log(getStore?._id)
   const storeId=getStore?._id
 
@@ -58,36 +56,13 @@ console.log(PinSInfo)
             console.log(error)
         })
     }
-   const showDrawer = () => {
-    setPlacement('left')
-    setVisible(true)
-      };
-    
-    const  onClose = () => {
-        setVisible(false)
-      };
+   
       
     return (
         <div className="sign__form">
-            <Button type="primary" onClick={showDrawer}>
-            Open
-          </Button>
-          <Drawer
-          title="Basic Drawer"
-          placement={'left'}
-          closable={false}
-          onClose={onClose}
-          visible={visible}
-          key={placement}
-        >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-        </Drawer>
+            
             {loading ? (
-				<div className="sign__loader">
-					<Loader type="TailSpin" color="#ff4d4d" height={50} width={50} />
-				</div>
+				<Spin size="large" style={{ marginTop:50, marginLeft:600}} tip='Gathering Stores .....'/>
 			) : error ? (
 				<div>{error}</div>
 			) :(
@@ -110,7 +85,8 @@ console.log(PinSInfo)
                 const handleAdd=()=>{
                     const token=userInfo?.token
                     const productId=item._id
-                            dispatch(addtocartact(productId,token,message))   
+                    const name=item.productName
+                            dispatch(addtocartact(productId,token,message,name))   
                 }
                return(
                    <div className="sign__form" key={item._id}>

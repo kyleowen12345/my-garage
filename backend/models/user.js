@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import moment from 'moment'
 
 const User = mongoose.model(
 	"User",
@@ -20,7 +21,7 @@ const User = mongoose.model(
 		},
 		profilePic: {
 			type: String,
-			default: "https://res.cloudinary.com/kaking/image/upload/v1601705050/logo/3847644551_6514180c-9480-4b93-9c7f-65733c047be7_xu2buh.png",
+			default: "https://res.cloudinary.com/kaking/image/upload/v1604108250/xyjvdcouhpdgau0hcfgn.png",
 		},
 		contactNumber: { type: String },
 		country: {
@@ -51,8 +52,8 @@ const User = mongoose.model(
 		expireToken: Date,
 		Seller: { type: Boolean, required: true, default: false },
 		createdAt: {
-			type: Date,
-			default: new Date(),
+			type: String,
+			default: moment().format('MMMM Do YYYY, h:mm:ss a'),
 		},
 		cart: {
 			type: Array,
