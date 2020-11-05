@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import moment from 'moment'
+
 
 const { ObjectId } = mongoose.Schema.Types;
 const Product = mongoose.model(
@@ -53,8 +53,8 @@ const Product = mongoose.model(
 		
 		},
 		createdAt:{
-			type:String,
-            default:moment().format('MMMM Do YYYY, h:mm:ss a')
+			type: Date,
+			default:new Date()
 		}
 	},{timestamps:true})
 );

@@ -5,6 +5,7 @@ import requireLogin from "../middleware/requireLogin.js";
 
 const router = express.Router();
 
+
 router.get('/homies',async(req,res)=>{
 try {
  let stores= await Store.find({}).populate('sellerName','name profilePic').sort({createdAt:'desc'})
@@ -23,15 +24,16 @@ router.post('/singlestore',async(req,res)=>{
 		console.log(error)
 	}
 })
-router.post('/searchedStore',async(req,res)=>{
+router.post('/searchresult',async(req,res)=>{
 	const { storeName }=req.body
 	try {
-		let store=await Store.find({storeName:storeName}).populate('sellerName','name profilePic')
-		res.status(200).json(store);
+		const stores= await Store.find({storeName:new RegExp(storeName,'i')}).populate('sellerName','name profilePic').sort({createdAt:"desc"})
+	res.json(stores)
 	} catch (error) {
 		console.log(error)
 	}
 })
+
 router.post("/createStore", requireLogin, async (req, res) => {
 	const {
 		storeName,

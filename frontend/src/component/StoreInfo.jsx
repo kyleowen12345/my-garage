@@ -62,7 +62,7 @@ console.log(PinSInfo)
         <div className="sign__form">
             
             {loading ? (
-				<Spin size="large" style={{ marginTop:50, marginLeft:600}} tip='Gathering Stores .....'/>
+				<Spin size="large" style={{ marginTop:50, marginLeft:600}} tip={`Finding Store..`}/>
 			) : error ? (
 				<div>{error}</div>
 			) :(

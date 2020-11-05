@@ -73,12 +73,12 @@ const Cart = () => {
             dispatch(deleteItemFromCart(productId,token,name,message))
        }
     return (
-        <div className="sign__form" key={uuid()} >
+        <div className="cartTable" key={uuid()} >
             {error ? (
 				<div>{error}</div>
             ):(
-                <Table size={'large'}  dataSource={op} loading={loading}   pagination={false}  rowKey={op=>(op._id ||uuid() )} bordered={true} >
-                    <Column title={<p style={{fontSize:22, marginTop:20}}>Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>} key={uuid()} />
+                <Table size={'large'}  dataSource={op} loading={loading}   pagination={false}  rowKey={op=>(op._id ||uuid() )} bordered={true}>
+                    <Column title={<p style={{fontSize:22, marginTop:20}}>Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} />
                         <Column title={<p style={{fontSize:22, marginTop:20}}>Product Name</p>} dataIndex="productName" key={uuid()}  />
             <Column title={<p style={{fontSize:22, marginTop:20}}>Price</p>} dataIndex="price"   render={(dataIndex) => <p>$ {dataIndex}</p>} sorter={(a, b) => a.price - b.price}  key={uuid()}  />
                         <Column title={<p style={{fontSize:22 , marginTop:20}}>Quantity</p>} dataIndex="quantity"  sorter={(a, b) => a.quantity - b.quantity} key={uuid()}   />

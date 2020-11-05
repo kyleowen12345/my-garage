@@ -62,13 +62,11 @@ const getSingleStore=(_id)=>async(dispatch)=>{
 const getSearchedStore=(storeName,history)=>async(dispatch)=>{
     dispatch({ type: SEARCH_STORE_REQUEST});
     try {
-        const {data}=await axios.post('/searchedStore',{
+        const {data}=await axios.post('/searchresult',{
             storeName
         })
         dispatch({ type: SEARCH_STORE_SUCCESS, payload: data });
-        Cookie.set('_sr', storeName)
-        history.push('/searchResult')
-        console.log(data)
+        history.push(`/searchResult/${storeName}`)
     } catch (error) {
         dispatch({ type: SEARCH_STORE_FAIL, payload: error.response?.data.error });
     }

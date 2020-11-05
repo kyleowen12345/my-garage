@@ -1,10 +1,8 @@
 import mongoose from "mongoose";
-import moment from 'moment'
+
 
 const { ObjectId } = mongoose.Schema.Types;
-const Store = mongoose.model(
-	"Store",
-	new mongoose.Schema({
+const StoreModel = new mongoose.Schema({
 		sellerName: {
 			type: ObjectId,
 			ref: "User",
@@ -48,8 +46,8 @@ const Store = mongoose.model(
 			required: true,
 		},
 		createdAt: {
-			type: String,
-			default: moment().format('MMMM Do YYYY, h:mm:ss a'),
+			type: Date,
+			default:new Date()
 		},
 	   storeBackgroundImage:{
 		type: String,
@@ -60,6 +58,7 @@ const Store = mongoose.model(
 		default: []
 	},
 	})
-);
+	StoreModel.index({storeName:'text'})
 
+const Store=mongoose.model('Store',StoreModel)
 export { Store };

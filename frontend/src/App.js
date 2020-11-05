@@ -51,7 +51,7 @@ function App() {
 						 </Route><Route path="/Store">
                                 <Store/>
 						 </Route>
-						 <Route path="/searchResult">
+						 <Route path="/searchResult/:name">
                                <SearchStore/>
 						 </Route>
 						 <Route path="/createStore">

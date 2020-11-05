@@ -1,20 +1,19 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect,useState,useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { viewCart } from '../actions/cartActions';
 import Cookies from "js-cookie";
 import { profile } from "../actions/userActions";
 import { allStoresViewer, getSearchedStore } from '../actions/storeActions'
-import { Drawer,message,Badge,AutoComplete} from 'antd';
-import { MenuOutlined,ProfileOutlined,HomeOutlined,ShopOutlined,LogoutOutlined,LoginOutlined,QuestionOutlined,UserAddOutlined,ShoppingCartOutlined } from '@ant-design/icons';
-const { Option } = AutoComplete;
-
-
+import { Drawer,message,Badge,Input} from 'antd';
+import { MenuOutlined,ProfileOutlined,HomeOutlined,ShopOutlined,LogoutOutlined,LoginOutlined,QuestionOutlined,UserAddOutlined,ShoppingCartOutlined,SearchOutlined } from '@ant-design/icons';
+import {v4 as uuid} from 'uuid'
 
 const Navbar = () => {
 	const history = useHistory();
 	const [drawer,setDrawer]=useState(false)
-	const [result, setResult] = useState([]);
+	const [suggest,setSuggest]=useState(false)
+	const [suggestContent,setSuggestContent]=useState('')
 	const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
 	const userProfile = useSelector((state) => state.userProfile);
@@ -26,6 +25,7 @@ const Navbar = () => {
 	const dispatch = useDispatch();
 	const userId = userInfo?._id;
 	const userToken = userInfo?.token;
+	const ref = useRef(null);
 	
 	useEffect(()=>{
 		dispatch(viewCart(userToken))
@@ -37,21 +37,33 @@ const Navbar = () => {
 		dispatch(profile(userId, userToken))
 	}
 	}, [dispatch, userId, userToken, userInfo]);
-// Autocomplete
+//   searchbar
 	useEffect(()=>{
 		dispatch(allStoresViewer())
 	  },[dispatch])
 	  
-	  const handleSearch = (value) => {
-		const allstoreNames=allStores?.map(item=>item.storeName) 
-		const filteredOptions = allstoreNames?.filter(item => item.includes(value));
-	setResult(filteredOptions)
-	  };
 	  const onSelect = (data) => {
 		dispatch(getSearchedStore(data,history))
+		setSuggest(false)
 	  };
-	
-	
+
+	const handleClickOutside = (event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+            setSuggest(false);
+        }
+    return { ref, suggest, setSuggest };
+}
+useEffect(() => {
+	document.addEventListener('click', handleClickOutside, true);
+	return () => {
+		document.removeEventListener('click', handleClickOutside, true);
+	};
+});
+	const { Search } = Input;
+	// case insensitive
+	const lowercased=suggestContent.toLowerCase()
+	const allstore=allStores?.map(item=>item.storeName)
+	const filteredStore=allstore?.filter(name=>name.toLowerCase().includes(lowercased))
 	//   Drawer
 	const showDrawer = () => {
 		setDrawer(true)
@@ -61,6 +73,7 @@ const Navbar = () => {
 		setDrawer(false)
 		  };
 console.log(cartInfo)
+console.log(filteredStore)
 	return (
 		<header>
 			<div className="header__right">
@@ -113,26 +126,19 @@ console.log(cartInfo)
         </Drawer>
 			</div>
 			<div className="header__left">
-				<div className="search">
-	<AutoComplete
-	backfill={true}
-	dropdownClassName="certain-category-search-dropdown"
-      style={{
-        width: 200,
-	  }}
-	  onSelect={onSelect}
-	  onSearch={handleSearch}
-	  placeholder='Find Store...'
-	  notFoundContent='not found..'
-    >
-	  {result?.map(item => (
-          <Option key={item} value={item}>
-            {item}
-          </Option>
-        ))}
-  </AutoComplete>
+				<div className="searchbox">
+				<Search placeholder="input search text" onSearch={onSelect} enterButton onClick={()=>setSuggest(true)}  onChange={(e)=>setSuggestContent(e.target.value)} />
+				<div className="suggest" style={{display:suggest? 'block':'none'}} ref={ref}>
+			{suggestContent && <p>Results for "{suggestContent}"</p>}
+				{filteredStore?.map(item=>{
+					return(
+					<p key={uuid()} className='suggest__items' onClick={()=>{dispatch(getSearchedStore(item,history)).then(data=>{setSuggest(false)})}}> <SearchOutlined style={{paddingRight:20}}/>{item}</p>
+					)
+				}
+					)}
 				</div>
-	
+				
+				</div>
 				{userInfo && <div className="cart__info">
 				<Badge style={{marginTop:10, backgroundColor:'green'}}  count={cartInfo?.cartDetail?.length === undefined ? cartInfo?.length:cartInfo?.cartDetail?.length} >
 				<Link to='/cart' >
