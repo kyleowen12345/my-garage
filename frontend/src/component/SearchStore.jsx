@@ -1,6 +1,6 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { useSelector,useDispatch } from "react-redux";
-import {Card,Spin,Avatar } from 'antd';
+import {Card,Spin,Avatar,Pagination } from 'antd';
 import { Link,useHistory, useParams } from "react-router-dom";
 import { getSearchedStore } from '../actions/storeActions';
 import Cookie from "js-cookie";
@@ -8,6 +8,8 @@ import Cookie from "js-cookie";
 const CartContent = () => {
     const history=useHistory()
     const {name}=useParams()
+    const [minValue,setMinValue]=useState(0)
+	const [maxValue,setMaxValue]=useState(6)
     const searchedStore = useSelector((state) => state.searchedStore);
     const { searchStore, loading, error } = searchedStore;
     const { Meta } = Card;
@@ -16,9 +18,15 @@ const CartContent = () => {
         dispatch(getSearchedStore(name,history))
     },[dispatch,name,history])
     console.log(searchStore)
+    // pagnation
+    const numEachPage=6
+    const handleChange = (item) => {
+        setMinValue((item-1)*numEachPage)
+        setMaxValue(item * numEachPage)
+      };
     return (
         <>
-        <h2 className='result'>Search Result for "{name}"</h2>
+        <h2 className='result'>Search Results for "{name}"</h2>
         <div className="home">
             
             {loading ? (
@@ -27,7 +35,7 @@ const CartContent = () => {
 				<div>{error}</div>
 			) : (
 				<> 
-                {searchStore?.map(item=>{
+                {searchStore && searchStore.length >0 && searchStore.slice(minValue,maxValue)?.map(item=>{
                     console.log(item.storeName)
                     return(
                         <div key={item._id}>
@@ -49,6 +57,15 @@ const CartContent = () => {
 				</>
 			)}
         </div>
+        {searchStore && <Pagination
+		total={searchStore?.length}
+		showTotal={total => `Total ${total} Stores`}
+				  defaultCurrent={1}
+				  defaultPageSize={numEachPage} //default size of page
+				  onChange={handleChange}
+				  responsive={true}
+				  style={{display:'flex',justifyContent:'center', margin:30}}
+				/>}
         </>
     )
 }

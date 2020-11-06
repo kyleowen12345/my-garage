@@ -62,17 +62,17 @@ label {
 	color: black !important;
 	padding: 10px !important;
 } */
-.ant-btn {
-	/* background-color: white !important;
+/* .ant-btn {
+	background-color: white !important;
 	color: rgb(19, 204, 19) !important;
 	width: 150px !important;
-	border: 2px solid rgb(19, 204, 19) !important; */
+	border: 2px solid rgb(19, 204, 19) !important;
 	border-radius: 10px !important;
-	/* margin: 10px 0px 10px 160px !important; */
+	margin: 10px 0px 10px 160px !important;
 	cursor: pointer !important;
 	outline: none !important;
 	font-size: 15px !important;
-}
+} */
 .ant-form .sign__link {
 	text-align: center !important;
 	margin-top: 10px !important;
@@ -111,6 +111,7 @@ header {
 	box-shadow: 0 8px 6px -6px rgb(128, 128, 128);
 	position: sticky;
 	width: 100%;
+	flex: 1;
 	top: 0;
 	z-index: 50;
 }
@@ -175,8 +176,10 @@ header {
 	height: 35px !important;
 }
 .searchbox {
-	padding: 20px;
+	padding: 25px;
+	width: 400px;
 }
+
 .suggest {
 	background-color: white;
 	padding: 5px 20px;
@@ -218,6 +221,73 @@ header {
 }
 /* searchcomponent */
 .result {
+	display: flex;
+	justify-content: center;
 	padding-top: 30px;
-	margin-left: 700px;
+}
+/* storeinfo */
+.Store__info {
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+	padding: 50px;
+	box-shadow: 0 4px 6px rgba(32, 33, 36, 0.28);
+}
+.Store__fulldetails {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.Store__fulldetails > img {
+	object-fit: contain;
+	width: 400px;
+	margin-bottom: 50px;
+}
+.Store__details {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-column-gap: 200px;
+	margin-bottom: 100px;
+}
+.Store__details > p > span {
+	font-weight: bold;
+	font-size: 17px;
+	padding-right: 10px;
+}
+.StoreInfo__loader {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+/* storeInfo products */
+.ProductList {
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+	grid-column-gap: 80px;
+	grid-row-gap: 80px;
+}
+.Products {
+	border: 1px solid rgb(192, 192, 192) !important;
+	border-radius: 2px !important;
+}
+.Products > .ant-card {
+	margin-top: 0 !important;
+	width: 250px !important;
+	height: 420px !important;
+}
+
+.Products > .ant-card .ant-card-body {
+	display: flex !important;
+	flex-direction: column;
+	align-items: center;
+}
+.Products > .ant-card .ant-card-body > h2 {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 200px;
 }

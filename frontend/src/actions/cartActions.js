@@ -3,7 +3,7 @@ import {ADD__TO__CART__REQUEST,ADD__TO__CART__SUCCESS,ADD__TO__CART__FAIL,VIEW__
 
 const addtocartact=(productId,token,message,name)=>async(dispatch)=>{
     dispatch({ type: ADD__TO__CART__REQUEST });
-    message.info(`adding ${name}`)
+    message.info(`adding ${name}`,1)
   try {
     const {data}=await axios.post('/addtocart',{productId},{
         headers: {
@@ -12,7 +12,7 @@ const addtocartact=(productId,token,message,name)=>async(dispatch)=>{
       })
      
       dispatch({ type: ADD__TO__CART__SUCCESS, payload: data }); 
-      message.success(`added ${name}`)
+      message.success(`added ${name}`,1)
   } catch (error) {
     dispatch({ type: ADD__TO__CART__FAIL, payload: error.response?.data.error })
     message.error(error.response?.data.error)
@@ -33,7 +33,7 @@ const viewCart=(token)=>async(dispatch)=>{
 }
 const deleteItemFromCart=(productId,token,name,message)=>async(dispatch)=>{
   dispatch({ type: REMOVE__CART__REQUEST });
-  message.info(`deleting ${name}`)
+  message.info(`deleting ${name}`,1)
   try {
     const {data}=await axios.post('/removeitem',{productId},{
       headers: {
@@ -41,7 +41,7 @@ const deleteItemFromCart=(productId,token,name,message)=>async(dispatch)=>{
       },
     })
     dispatch({ type: REMOVE__CART__SUCCESS, payload: data }); 
-    message.success(`${name} deleted`)
+    message.success(`${name} deleted`,1)
     console.log(data)
   } catch (error) {
     dispatch({ type: REMOVE__CART__FAIL, payload: error.response?.data.error })

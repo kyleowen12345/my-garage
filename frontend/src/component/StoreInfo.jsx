@@ -1,15 +1,15 @@
-import React,{ useEffect } from 'react'
+import React,{ useEffect,useState } from 'react'
 import { useSelector,useDispatch } from "react-redux";
 import { getSingleStore } from '../actions/storeActions';
 import Cookie from "js-cookie";
-import Loader from "react-loader-spinner";
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { getAllPInS } from '../actions/productAction';
 import { addtocartact } from '../actions/cartActions';
 import { useAlert } from 'react-alert'
-import { message,Spin } from 'antd';
+import { message,Spin,Dropdown,Menu,Card,Button,Image } from 'antd';
+import { SettingOutlined,BarChartOutlined,PictureOutlined,AuditOutlined,AppstoreAddOutlined,DeleteOutlined,ShoppingCartOutlined } from '@ant-design/icons';
 
 
 
@@ -17,6 +17,7 @@ import { message,Spin } from 'antd';
 const StoreInfo = () => {
     const history=useHistory()
     const alert = useAlert()
+    const [viewDetails,setViewDetails]=useState(false)
     const singleStore = useSelector((state) => state.singleStore);
     const { getStore, loading, error } = singleStore;
     const userSignin = useSelector((state) => state.userSignin);
@@ -56,32 +57,56 @@ console.log(PinSInfo)
             console.log(error)
         })
     }
-   
-      
+    // Dropdown
+    const menu = (
+        <Menu>
+          <Menu.Item key={1}>
+          <Link to='/createStoreImage'><PictureOutlined />  Update Store Image</Link>
+          </Menu.Item>
+          <Menu.Item key={2}>
+          <Link to='/StoreStats'><BarChartOutlined />  Store Stat-sheet</Link>
+          </Menu.Item>
+          <Menu.Item key={3}>
+          <Link to='/updateStore'><AuditOutlined />  Update Store</Link>
+          </Menu.Item>
+          <Menu.Item key={4}>
+          <Link to='/createProduct'><AppstoreAddOutlined /> Add product</Link>
+          </Menu.Item>
+          <Menu.Item key={5}>
+          <p onClick={handleDelete}><DeleteOutlined />  Remove Store</p>
+          </Menu.Item>
+        </Menu>
+      )
+// Card
+const { Meta } = Card;      
     return (
-        <div className="sign__form">
-            
+        <>
             {loading ? (
-				<Spin size="large" style={{ marginTop:50, marginLeft:600}} tip={`Finding Store..`}/>
+                <div className="StoreInfo__loader">
+<Spin size="large"  tip={`Finding Store..`}/>
+                </div>
+				
 			) : error ? (
 				<div>{error}</div>
 			) :(
-            <>
-            
-                <img src={getStore?.storeBackgroundImage} alt="my-garage"/>
-                {userInfo?._id ===getStore?.sellerName._id&& <><Link to='/createStoreImage'>Update Store Image</Link><Link to='/StoreStats'>Store Stat-sheet</Link></>}
-                <p>{getStore?.storeName}</p>
-                <p>{getStore?.storeType}</p>
-                <p>{getStore?.storeDescription}</p>
-                <p>{getStore?.storeAddress}</p>
-                <p>{getStore?.socialMediaAcc}</p>
-                <p>{getStore?.createdAt}</p>
-                <p>{getStore?.contactNumber}</p>
-                <p>{getStore?.sellerName.name}</p> 
-            </>
-            )}
-            {userInfo?._id ===getStore?.sellerName._id &&<><Link to='/updateStore'>Update Store</Link><Link to='/createProduct'>Add product</Link> <button onClick={handleDelete}>Remove Store</button></>}
-           {PinSInfo?.map(item=>{
+                <div className="Store__info">
+            <div className="Store__fulldetails">
+            {userInfo?._id ===getStore?.sellerName._id&& <Dropdown overlay={menu} placement="bottomCenter" arrow trigger={['click']} key={1}>
+      <SettingOutlined key="edit" style={{fontSize:30, color:'black', marginRight:'auto'}}/>
+				</Dropdown>	}
+                <h1>  {getStore?.storeName}</h1>
+                <Image src={getStore?.storeBackgroundImage} alt="my-garage"  style={{objectFit:'contain', marginBottom:50}}/>
+               <div className="Store__details" style={{display:viewDetails? 'block':'none'}}>
+                <p><span>StoreName:</span>   {getStore?.storeName}</p>
+                <p><span>Store Type:</span>   {getStore?.storeType}</p>
+                <p><span>Store Description:</span>   {getStore?.storeDescription}</p>
+                <p><span>Store Address:</span>   {getStore?.storeAddress}</p>
+                <p><span>Social Media Account:</span>   {getStore?.socialMediaAcc}</p>
+                <p><span>Store Owner:</span>   {getStore?.sellerName.name}</p> 
+                </div>
+                <div className="ProductList">
+                    
+                {PinSInfo?.map(item=>{
                 const handleAdd=()=>{
                     const token=userInfo?.token
                     const productId=item._id
@@ -89,19 +114,28 @@ console.log(PinSInfo)
                             dispatch(addtocartact(productId,token,message,name))   
                 }
                return(
-                   <div className="sign__form" key={item._id}>
-                       <img src={item.image} alt="my garage"/>
-               <p>{item.productName}</p>
+                   <div className="Products" key={item._id} >
+                       <Card
+    hoverable
+     cover={<Image src={item.image} alt="my garage"  height={250} width={250} />}
+  >
+               <h2>{item.productName}</h2>
                <p>${item.price}</p>
-               <p>{item.description}</p>
-               <Link to={`/productInfo/${item.productName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_pductFam',item._id)}}>View Product</Link>
-               {userInfo?._id !==getStore?.sellerName._id && <><button onClick={handleAdd}>Add to cart</button>  </>}
+              
+               {userInfo?._id !==getStore?.sellerName._id &&<Button onClick={handleAdd} ><ShoppingCartOutlined />Add to cart</Button>}
+               <Link to={`/productInfo/${item.productName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_pductFam',item._id)}} className='product__clicked'>View More Info</Link>
+  </Card>
+        
                    </div>
                )
            })}
-             
-        
-        </div>
+                </div>
+                
+                </div>
+                
+                </div>
+            )}
+        </>
     )
 }
 

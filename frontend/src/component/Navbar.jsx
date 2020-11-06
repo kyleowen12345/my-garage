@@ -5,7 +5,7 @@ import { viewCart } from '../actions/cartActions';
 import Cookies from "js-cookie";
 import { profile } from "../actions/userActions";
 import { allStoresViewer, getSearchedStore } from '../actions/storeActions'
-import { Drawer,message,Badge,Input} from 'antd';
+import { Drawer,message,Badge,Input,Empty } from 'antd';
 import { MenuOutlined,ProfileOutlined,HomeOutlined,ShopOutlined,LogoutOutlined,LoginOutlined,QuestionOutlined,UserAddOutlined,ShoppingCartOutlined,SearchOutlined } from '@ant-design/icons';
 import {v4 as uuid} from 'uuid'
 
@@ -43,6 +43,9 @@ const Navbar = () => {
 	  },[dispatch])
 	  
 	  const onSelect = (data) => {
+		  if(!suggestContent){
+			return message.error('type in something..')
+		  }
 		dispatch(getSearchedStore(data,history))
 		setSuggest(false)
 	  };
@@ -87,7 +90,6 @@ console.log(filteredStore)
         >
 			{!userInfo ? (
 					<div className='nav__link'>
-						
 							<Link className="header__link2" to="/signin" onClick={onClose}>
 							<LoginOutlined />	Signin
 							</Link>
@@ -127,10 +129,10 @@ console.log(filteredStore)
 			</div>
 			<div className="header__left">
 				<div className="searchbox">
-				<Search placeholder="input search text" onSearch={onSelect} enterButton onClick={()=>setSuggest(true)}  onChange={(e)=>setSuggestContent(e.target.value)} />
+				<Search placeholder="Find Store..."  onSearch={onSelect}  onClick={()=>setSuggest(true)}  onChange={(e)=>setSuggestContent(e.target.value)} />
 				<div className="suggest" style={{display:suggest? 'block':'none'}} ref={ref}>
-			{suggestContent && <p>Results for "{suggestContent}"</p>}
-				{filteredStore?.map(item=>{
+			{suggestContent && <p>{filteredStore?.length} Results for "{suggestContent}"</p>}
+				{filteredStore?.length < 1 ? <Empty description={'Not Found'} /> :filteredStore?.map(item=>{
 					return(
 					<p key={uuid()} className='suggest__items' onClick={()=>{dispatch(getSearchedStore(item,history)).then(data=>{setSuggest(false)})}}> <SearchOutlined style={{paddingRight:20}}/>{item}</p>
 					)
