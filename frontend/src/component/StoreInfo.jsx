@@ -8,8 +8,15 @@ import { useHistory } from 'react-router-dom';
 import { getAllPInS } from '../actions/productAction';
 import { addtocartact } from '../actions/cartActions';
 import { useAlert } from 'react-alert'
-import { message,Spin,Dropdown,Menu,Card,Button,Image } from 'antd';
+import { message,Spin,Dropdown,Menu,Card,Button,Image,Drawer } from 'antd';
 import { SettingOutlined,BarChartOutlined,PictureOutlined,AuditOutlined,AppstoreAddOutlined,DeleteOutlined,ShoppingCartOutlined } from '@ant-design/icons';
+import UpdateStore from './UpdateStore';
+import StoreImage from './StoreImage';
+import CreateProduct from './CreateProduct';
+import ProductImage from './ProductImage';
+import Product from './Product';
+import UpdateProduct from './UpdateProduct';
+
 
 
 
@@ -17,9 +24,15 @@ import { SettingOutlined,BarChartOutlined,PictureOutlined,AuditOutlined,Appstore
 const StoreInfo = () => {
     const history=useHistory()
     const alert = useAlert()
-    const [viewDetails,setViewDetails]=useState(false)
+    const [drawer,setDrawer]=useState(false)
+    const [imageDrawer,setImageDrawer]=useState(false)
+    const [productDrawer,setProductDrawer]=useState(false)
+    const [productchildren,setProductChildren]=useState(false)
+    const [producInfo,setProductInfo]=useState(false)
+    const [updateProduct,setUpdateProduct]=useState(false)
+    const [productName,setProductName]=useState('')
     const singleStore = useSelector((state) => state.singleStore);
-    const { getStore, loading, error } = singleStore;
+    const { getStore, loading } = singleStore;
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
     const getStoreProds = useSelector((state) => state.getStoreProds);
@@ -35,12 +48,15 @@ const StoreInfo = () => {
   },[dispatch,storeId])
 
 console.log(PinSInfo)
+
+// get store
     useEffect(()=>{
-        if(storeNameFam){
+        if(storeNameFam ){
             dispatch(getSingleStore(storeNameFam))
         }
         
     },[dispatch,storeNameFam])
+// get updated store
 
     const handleDelete=()=>{
         Axios.post('/removeStorefam',{
@@ -57,46 +73,92 @@ console.log(PinSInfo)
             console.log(error)
         })
     }
+    // Drawer
+    // Store
+const showDrawer = () => {
+	setDrawer(true)
+	  };
+	
+const onClose = () => {
+	setDrawer(false)
+      };
+    //   Store image
+ const showDrawerimg = () => {
+		setImageDrawer(true)
+		  };
+const onCloseImg = () => {
+		setImageDrawer(false)
+          };  
+        //   add Product 
+          const showDrawerProduct = () => {
+            setProductDrawer(true)
+              };
+const onCloseProduct = () => {
+        setProductDrawer(false)
+              };   
+            //   add Product Image
+const showDrawerProductImg = () => {
+                setProductChildren(true)
+                  };
+const onCloseProductImg =() => {
+            setProductChildren(false)
+            setProductDrawer(false)
+            setProductInfo(false)
+            dispatch(getAllPInS(storeId))
+            dispatch(getSingleStore(storeNameFam))
+                  };   
+                //   Product Info
+        const onCloseProducInfo=()=>{
+            setProductInfo(false)
+        }
+        // Update Product
+        const showUpdateProduct=()=>{
+            setUpdateProduct(true)
+        }
+        const closeUpdateProduct=()=>{
+            setUpdateProduct(false)
+        }
+
     // Dropdown
     const menu = (
         <Menu>
           <Menu.Item key={1}>
-          <Link to='/createStoreImage'><PictureOutlined />  Update Store Image</Link>
+          <p onClick={showDrawerimg}><PictureOutlined />  Update Store Image</p>
           </Menu.Item>
           <Menu.Item key={2}>
-          <Link to='/StoreStats'><BarChartOutlined />  Store Stat-sheet</Link>
+              <p>
+              <Link to='/StoreStats' style={{color:'black'}}><BarChartOutlined />  Store Stat-sheet</Link>
+              </p>
           </Menu.Item>
           <Menu.Item key={3}>
-          <Link to='/updateStore'><AuditOutlined />  Update Store</Link>
+          <p onClick={showDrawer}><AuditOutlined />  Update Store</p>
           </Menu.Item>
           <Menu.Item key={4}>
-          <Link to='/createProduct'><AppstoreAddOutlined /> Add product</Link>
+          <p onClick={showDrawerProduct}><AppstoreAddOutlined /> Add product</p>
           </Menu.Item>
           <Menu.Item key={5}>
           <p onClick={handleDelete}><DeleteOutlined />  Remove Store</p>
           </Menu.Item>
         </Menu>
       )
-// Card
-const { Meta } = Card;      
+ console.log(PinSInfo)
+ console.log(userInfo?._id,getStore?.sellerName._id)
+ console.log(getStore)
     return (
         <>
             {loading ? (
                 <div className="StoreInfo__loader">
 <Spin size="large"  tip={`Finding Store..`}/>
                 </div>
-				
-			) : error ? (
-				<div>{error}</div>
-			) :(
+			):(
                 <div className="Store__info">
             <div className="Store__fulldetails">
-            {userInfo?._id ===getStore?.sellerName._id&& <Dropdown overlay={menu} placement="bottomCenter" arrow trigger={['click']} key={1}>
+                <Image src={getStore?.storeBackgroundImage} alt="my-garage"  />
+                <h1>  {getStore?.storeName}</h1>
+                {userInfo?._id ===getStore?.sellerName._id&& <Dropdown overlay={menu} placement="bottomCenter" arrow trigger={['click']} key={1}>
       <SettingOutlined key="edit" style={{fontSize:30, color:'black', marginRight:'auto'}}/>
 				</Dropdown>	}
-                <h1>  {getStore?.storeName}</h1>
-                <Image src={getStore?.storeBackgroundImage} alt="my-garage"  style={{objectFit:'contain', marginBottom:50}}/>
-               <div className="Store__details" style={{display:viewDetails? 'block':'none'}}>
+               <div className="Store__details" >
                 <p><span>StoreName:</span>   {getStore?.storeName}</p>
                 <p><span>Store Type:</span>   {getStore?.storeType}</p>
                 <p><span>Store Description:</span>   {getStore?.storeDescription}</p>
@@ -104,6 +166,62 @@ const { Meta } = Card;
                 <p><span>Social Media Account:</span>   {getStore?.socialMediaAcc}</p>
                 <p><span>Store Owner:</span>   {getStore?.sellerName.name}</p> 
                 </div>
+                {/* Store */}
+                <Drawer
+          title="Update Store"
+          width={600}
+          onClose={onClose}
+		  visible={drawer}
+		  placement={'right'}
+        >
+			<UpdateStore onClose={onClose}/> 
+        </Drawer>
+		<Drawer
+          title="Update Store Picture"
+		  height={200}
+          onClose={onCloseImg}
+          visible={imageDrawer}
+		  placement={'top'}
+        >
+			<StoreImage  onClose={onCloseImg}/>
+        </Drawer>
+        {/* product */}
+        <Drawer
+          title="Create Product"
+		  width={600}
+          onClose={onCloseProduct}
+          visible={productDrawer}
+		  placement={'right'}
+        >
+		<CreateProduct  onClose={onCloseProduct} openChildred={showDrawerProductImg}/>
+        </Drawer>
+        <Drawer
+          title="Add Photo for the Product"
+		  height={200}
+          onClose={onCloseProductImg}
+          visible={productchildren}
+          placement={'top'}
+        >
+		<ProductImage  onClose={onCloseProductImg} />
+        </Drawer>
+        <Drawer
+          title={productName}
+		  width={600}
+          onClose={onCloseProducInfo}
+          visible={producInfo}
+          placement={'right'}
+        >
+		<Product onClose={onCloseProducInfo} openChildred={showDrawerProductImg} openUpdateprod={showUpdateProduct}/>
+        </Drawer>
+        <Drawer
+          title='Update Product'
+		  width={500}
+          onClose={closeUpdateProduct}
+          visible={updateProduct}
+          placement={'right'}
+        >
+		<UpdateProduct onClose={closeUpdateProduct} openChildred={showDrawerProductImg}/>
+        </Drawer>
                 <div className="ProductList">
                     
                 {PinSInfo?.map(item=>{
@@ -123,7 +241,9 @@ const { Meta } = Card;
                <p>${item.price}</p>
               
                {userInfo?._id !==getStore?.sellerName._id &&<Button onClick={handleAdd} ><ShoppingCartOutlined />Add to cart</Button>}
-               <Link to={`/productInfo/${item.productName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_pductFam',item._id)}} className='product__clicked'>View More Info</Link>
+               <h2 onClick={()=>{ Cookie.set('_pductFam',item._id)
+    setProductInfo(true)
+    setProductName(item.productName)}} className='product__clicked'>View More Info</h2>
   </Card>
         
                    </div>
@@ -135,6 +255,7 @@ const { Meta } = Card;
                 
                 </div>
             )}
+           
         </>
     )
 }

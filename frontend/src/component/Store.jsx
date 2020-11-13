@@ -1,13 +1,15 @@
-import React,{ useEffect } from 'react'
+import React,{ useEffect,useState } from 'react'
 import { Link, } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { viewMyStore } from '../actions/storeActions';
-import Loader from "react-loader-spinner";
 import Cookie from "js-cookie";
-
-
+import {Card,Spin,Avatar,Drawer } from 'antd';
+import CreateStores from './CreateStores'
+import StoreImage from './StoreImage'
 
 const Store = () => {
+    const [drawer,setDrawer]=useState(false)
+    const [storechildren,setStoreChildren]=useState(false)
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
     const viewYourStore = useSelector((state) => state.viewYourStore);
@@ -23,26 +25,64 @@ const Store = () => {
     },[dispatch, userId, userToken, userInfo])
     // const userStoreName= yourStore.map(info=>{
     //    return info.contactNumber})
+    const { Meta } = Card;
+    console.log(yourStore)
+    const showDrawer = () => {
+        setDrawer(true)
+          };
+        
+    const onClose = () => {
+        setDrawer(false)
+          };
+          const showDrawerimg = () => {
+            setStoreChildren(true)
+              };
+    const onCloseImg = () => {
+        dispatch(viewMyStore(userId,userToken))
+        setStoreChildren(false)
+        setDrawer(false)
+              };   
     return (
-        <div className="sign__form">
-             {loading ?  (<Loader type="TailSpin" color="#ff4d4d" height={50} width={50} />): error ? <p>{error}</p>:<>
-             <h1>Stores</h1>
-               <Link to='/createStore'>Create Store</Link>
+        <>
+        <h1>My Stores</h1>
+               <p onClick={showDrawer}>Create Store</p>
+        <div className="home">
+             {loading ?  (<Spin size="large" style={{ marginTop:50, marginLeft:600}} tip='Gathering Stores .....'/>): error ? <p>{error}</p>:<>
+             <Drawer
+          title="Create Store"
+          width={600}
+          onClose={onClose}
+		  visible={drawer}
+		  placement={'right'}
+        >
+			<CreateStores onClose={onClose}  openChildred={showDrawerimg}/> 
+        </Drawer>
+        <Drawer
+          title="Create Store Picture"
+		  height={200}
+          onClose={onCloseImg}
+          visible={storechildren}
+		  placement={'top'}
+        >
+			<StoreImage  onClose={onCloseImg}/>
+        </Drawer>
                {yourStore?.map(item=>{
                    return (
-                       <div className="sign__form" key={item._id}>
-                          
-                           <img src={item.storeBackgroundImage} alt="my-garage"/>
-                   <p>{item.storeName}</p>
-                   <p>{item.socialMediaAcc}</p>
-                   <Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}}>View Store</Link>
-                   </div>
+                    <Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}} key={item._id}>
+                       <Card style={{ width: 300 ,border:'1px solid lightgray'}}   hoverable={true} bodyStyle={{display:'flex', flexDirection:'column',alignItems:'center'}}  cover={<img src={item.storeBackgroundImage} alt="my garage"/>}>
+                          <Meta avatar={<Avatar src={item.sellerName.profilePic} alt='mygarage' />}
+      title={item.storeName}
+      description={item.socialMediaAcc}/>
+                       </Card>
+                       </Link>
+                       
                    )
                })}
              </>}
                
                
         </div>
+        </>
     )
 }
 

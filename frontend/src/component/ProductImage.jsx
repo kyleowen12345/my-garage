@@ -2,14 +2,13 @@ import React, {useEffect,useState} from 'react'
 import Loader from "react-loader-spinner";
 import Axios from "axios";
 import Cookie from "js-cookie";
-import { useHistory } from 'react-router-dom';
-import { useSelector } from "react-redux";
-import { useAlert } from 'react-alert'
+import { useSelector,useDispatch } from "react-redux";
+import {makeProductImage} from '../actions/productAction'
+import imageCompressor from 'browser-image-compression'
+import { message} from 'antd';
 
 
-const ProductImage = () => {
-	const history=useHistory()
-	const alert = useAlert()
+const ProductImage = ({onClose}) => {
     const [image, setImage] = useState("");
     const [filler, setFiller] = useState('');
     const [photoload,setPhotoLoad]=useState(false)
@@ -17,30 +16,13 @@ const ProductImage = () => {
     const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
     const productNamefam=Cookie.getJSON('_pductFam')
-    
+	const dispatch = useDispatch();
+	const token=userInfo?.token
     useEffect(() => {
 		if (url) {
-			Axios.post(
-				"/productimage",
-				{
-					_id: productNamefam,
-					image: url,
-				},
-				{
-					headers: {
-						Authorization: `Bearer${userInfo?.token}`,
-					},
-				}
-			)
-				.then((data) => {
-                    console.log(data);
-                    history.push(`/productInfo/${data?.data.content.productName.replace(/\s/g,'_')}`)
-				})
-				.catch((err) => {
-					setFiller(err.response?.data.error);
-				});
+			dispatch(makeProductImage(productNamefam,url,token,onClose))
 		}
-	});
+	},[dispatch,productNamefam,url,token,onClose]);
 
     const postPhoto = (e) => {
 		e.preventDefault();
@@ -48,27 +30,37 @@ const ProductImage = () => {
 			return setFiller('Choose image first')
 		}
 		setPhotoLoad(true)
-		const data = new FormData();
-		data.append("file", image);
-		data.append("upload_preset", "insta-clone");
-		data.append("cloud_name", "kaking");
-		const config = {
-			headers: { "content-type": "multipart/form-data" },
-		};
-		Axios.post(
-			"https://api.cloudinary.com/v1_1/kaking/image/upload",
-			data,
-			config
-		)
-			.then((data) => {
-				setUrl(data?.data.secure_url);
-				setPhotoLoad(false)
-				alert.success('Image Uploaded')
-			})
-			.catch((err) => {
-				setFiller(err.response?.data.error.message);
-				setPhotoLoad(false)
-			});
+		const options = {
+			maxSizeMB: 0.5,
+			maxWidthOrHeight: 1920,
+			useWebWorker: true
+		  }
+		  imageCompressor(image,options).then(compressFile=>{
+			  message.info('this will only take a few seconds please wait')
+			const data = new FormData();
+			data.append("file", compressFile);
+			data.append("upload_preset", "insta-clone");
+			data.append("cloud_name", "kaking");
+			const config = {
+				headers: { "content-type": "multipart/form-data" },
+			};
+			Axios.post(
+				"https://api.cloudinary.com/v1_1/kaking/image/upload",
+				data,
+				config
+			)
+				.then((data) => {
+					setUrl(data?.data.secure_url);
+					setPhotoLoad(false)
+				})
+				.catch((err) => {
+					setPhotoLoad(false)
+				});
+		  }).catch(err=>{
+			  console.log(err.messsage)
+			  setPhotoLoad(false)
+		  })
+		
 	};
     return (
         <div className="sign__form">

@@ -35,11 +35,10 @@ const handleChange = (item) => {
 					{allStores && allStores.length >0 && allStores.slice(minValue,maxValue).map(item=>{
 						return (
 							<Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}} key={item._id}>
-							<Card title={item.storeName} style={{ width: 300, marginTop: 16, borderRadius:10 ,border:'1px solid lightgray'}}   hoverable={true} bodyStyle={{display:'flex', flexDirection:'column',alignItems:'center'}} headStyle={{border:'none',alignItems:'center'}}>
-								<img src={item.storeBackgroundImage} alt="my-garage" style={{width:350, height:350, objectFit:'contain'}}/>
+							<Card style={{ width: 300 ,border:'1px solid lightgray'}}   hoverable={true} bodyStyle={{display:'flex', flexDirection:'column',alignItems:'center'}}  cover={<img src={item.storeBackgroundImage} alt="my garage"/>}>
 								<Meta
       avatar={<Avatar src={item.sellerName.profilePic} alt='mygarage' />}
-      title={item.sellerName.name}
+      title={item.storeName}
       description={item.storeDescription}
     />
 	<p style={{color:'#125FA7'}}>Visit</p>

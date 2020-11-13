@@ -8,7 +8,7 @@ import { Form, Input, Button} from 'antd';
 import { useAlert } from 'react-alert'
 
 
-const UpdateProduct = () => {
+const UpdateProduct = ({onClose}) => {
     const history= useHistory()
     const alert = useAlert()
     const [productName, setProductName] = useState("");
@@ -98,9 +98,9 @@ const UpdateProduct = () => {
       </Button>
 				)}
       
-	  <Link to="/Store" className="sign__link">
+	  <p onClick={onClose}>
 					Cancel
-				</Link>
+				</p>
     </Form>
     )
 }

@@ -1,16 +1,10 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState} from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory,Link } from 'react-router-dom';
 import { makeProduct } from '../actions/productAction';
-import { getSingleStore } from '../actions/storeActions';
-import Cookie from "js-cookie";
 import Loader from "react-loader-spinner";
-import { useAlert } from 'react-alert'
-import { Form, Input, Button} from 'antd';
+import { Form, Input, Button,message} from 'antd';
 
-const CreateProduct = () => {
-    const history= useHistory()
-    const alert = useAlert()
+const CreateProduct = ({openChildred,onClose}) => {
     const [productName,setProductName]=useState('')
     const [price,setPrice]=useState('')
     const [productStocks,setProductStocks]=useState('')
@@ -22,18 +16,13 @@ const CreateProduct = () => {
     const { getStore } = singleStore;
     const createProduct = useSelector((state) => state.createProduct);
     const {  loading,error } = createProduct;
-    const storeNameFam=Cookie.getJSON("_stohremate");
-
  const storeName=  getStore?._id
  const storeOwner= userInfo?._id
  const token = userInfo?.token
- useEffect(()=>{
-        dispatch(getSingleStore(storeNameFam))
-},[dispatch,storeNameFam])
+ 
 
-    const handleCreate=(e)=>{
-      e.preventDefault()
-      dispatch(makeProduct(productName,price,productStocks,description,storeName,storeOwner,token,history,alert))
+    const handleCreate=()=>{
+      dispatch(makeProduct(productName,price,productStocks,description,storeName,storeOwner,token,openChildred,message))
     }
     
 
@@ -44,6 +33,7 @@ const CreateProduct = () => {
         remember: true,
       }}
       layout={"vertical"}
+      onFinish={handleCreate}
       hideRequiredMark
     >
    
@@ -55,7 +45,7 @@ const CreateProduct = () => {
           {
             required: true,
             message: 'Please input your Product Name!',
-          },
+          },{ min: 5, message: 'Product Name must be minimum 5 characters.' },
         ]}
       >
         <Input  type="text" onChange={(e) => setProductName(e.target.value)} placeholder='Please enter your product name' allowClear={true}/>
@@ -67,7 +57,7 @@ const CreateProduct = () => {
           {
             required: true,
             message: 'Please input your Price!',
-          },
+          }
         ]}
       >
         <Input  type="number" onChange={(e) => setPrice(e.target.value)} placeholder='Please enter your price ' allowClear={true}/>
@@ -79,7 +69,7 @@ const CreateProduct = () => {
           {
             required: true,
             message: 'Please input your Product Stocks',
-          },
+          }
         ]}
       >
         <Input  type="number" onChange={(e) => setProductStocks(e.target.value)} placeholder='Please enter your product stocks' allowClear={true}/>
@@ -91,7 +81,7 @@ const CreateProduct = () => {
           {
             required: true,
             message: 'Please input your Description!',
-          },
+          },{ min: 5, message: 'Description must be minimum 5 characters.' },
         ]}
       >
         <Input type="text" onChange={(e) => setDescription(e.target.value)} placeholder='Please enter description' allowClear={true}/>
@@ -103,14 +93,14 @@ const CreateProduct = () => {
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={handleCreate} >
+      	<Button type="primary" htmlType="submit" >
         Next
       </Button>
 				)}
       
-	  <Link to="/Store" className="sign__link">
+	  <p onClick={onClose} style={{display:loading ? 'none':'block'}}>
 					Back
-				</Link>
+				</p>
     </Form>
     )
 }

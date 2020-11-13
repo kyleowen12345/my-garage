@@ -12,8 +12,7 @@ const Newpassword = () => {
 	const [loading, setLoading] = useState(false);
 	const { token } = useParams();
 
-	const PostData = (e) => {
-		e.preventDefault();
+	const PostData = () => {
 		if (password !== confirmpass) {
 			return setWarn("password does not match");
 		}
@@ -50,6 +49,7 @@ const Newpassword = () => {
 	  }}
 	  hideRequiredMark
 	  layout={'vertical'}
+	  onFinish={PostData}
     >
    <h2>Enter Your New Password</h2>
    <Form.Item
@@ -59,7 +59,8 @@ const Newpassword = () => {
           {
             required: true,
             message: 'Please input your password!',
-          },
+          },{pattern:new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),message:"Minimum eight characters, at least one uppercase letter, one lowercase letter and one number"},
+          {max:30, message:'Password should  contain up to 30 characters'}
         ]}
       >
         <Input.Password  type="password" onChange={(e) => setPasword(e.target.value)} placeholder='Please enter a password'/>
@@ -84,7 +85,7 @@ const Newpassword = () => {
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={PostData} >
+      	<Button type="primary" htmlType="submit"   >
         Reset Password
       </Button>
 				)}

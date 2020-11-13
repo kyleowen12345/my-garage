@@ -16,8 +16,7 @@ const UpdateProfile = ({onClose}) => {
     const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
     const dispatch = useDispatch();
-    const handleUpdate = (e) => {
-		e.preventDefault();
+    const handleUpdate = () => {
 		const userId = userInfo?._id;
 		if(!name|| !contactNumber|| !country|| !zipcode|| !SocialMediaAcc){
 			return message.error('Complete the fields')
@@ -46,6 +45,7 @@ const UpdateProfile = ({onClose}) => {
         remember: true,
       }}
       layout={"vertical"}
+      onFinish={handleUpdate}
       hideRequiredMark
      
     >
@@ -56,9 +56,9 @@ const UpdateProfile = ({onClose}) => {
           {
             required: true,
             message: 'Please input your Username!',
-          },
+          },{ min: 5,max:50, message: 'Username must contain 5-50 characters.' },{ pattern:new RegExp(/^[a-zA-Z0-9,. ]*$/),message:'Dont use special characters'}
         ]}
-        required
+     
       >
         <Input  type="text" onChange={(e) => setName(e.target.value)} placeholder='Please enter new username' maxLength={30} allowClear={true} />
       </Form.Item>
@@ -69,7 +69,7 @@ const UpdateProfile = ({onClose}) => {
           {
             required: true,
             message: 'Please input your Country!',
-          },
+          },{ min: 5, message: 'Country must be minimum 5 characters.' },
         ]}
       >
         <Input  type="text" onChange={(e) => setCountry(e.target.value)} placeholder='Please enter your country' maxLength={30} allowClear={true}/>
@@ -81,7 +81,7 @@ const UpdateProfile = ({onClose}) => {
           {
             required: true,
             message: 'Please input your City!',
-          },
+          },{ min: 5, message: 'City must be minimum 5 characters.' },
         ]}
       >
         <Input  type="text" onChange={(e) => setCity(e.target.value)} placeholder='Please enter your city' maxLength={30} allowClear={true}/>
@@ -93,7 +93,7 @@ const UpdateProfile = ({onClose}) => {
           {
             required: true,
             message: 'Please input your Social Media Account!',
-          },
+          },{ min: 5, message: 'Social Media Account must be minimum 5 characters.' },
         ]}
       >
         <Input  type="text" onChange={(e) => setSocialMediaAcc(e.target.value)} placeholder='Please enter your social media account' maxLength={30} allowClear={true}/>
@@ -105,7 +105,7 @@ const UpdateProfile = ({onClose}) => {
           {
             required: true,
             message: 'Please input your ContactNumber!',
-          },
+          },{pattern:new RegExp(/^[0-9]*$/),message:'Must Contain numbers'}
         ]}
       >
         <Input  type="text" onChange={(e) => setContactNumber(e.target.value)} placeholder='Please enter your contact number'maxLength={30} allowClear={true}/>
@@ -127,7 +127,7 @@ const UpdateProfile = ({onClose}) => {
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={handleUpdate} style={{marginLeft:160}}>
+      	<Button type="primary" htmlType="submit"  >
         Update Profile
       </Button>
 				)}

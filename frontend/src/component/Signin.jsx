@@ -18,8 +18,7 @@ const Signin = () => {
 		}
 	}, [history, userInfo]);
 
-	const handlePost = (e) => {
-		e.preventDefault();
+	const handlePost = () => {
     dispatch(signin(email, password, history,message));
   };
   
@@ -30,6 +29,7 @@ const Signin = () => {
         remember: true,
       }}
       layout={"vertical"}
+      onFinish={handlePost}
       hideRequiredMark
     >
    
@@ -41,7 +41,7 @@ const Signin = () => {
           {
             required: true,
             message: 'Please input your Email!',
-          },
+          },{type:'email', message: "e-mail is not valid!"}
         ]}
       >
         <Input  type="email" onChange={(e) => setEmail(e.target.value)} placeholder='Please enter your email' allowClear={true}/>
@@ -54,17 +54,17 @@ const Signin = () => {
           {
             required: true,
             message: 'Please input your password!',
-          },
+          }
         ]}
       >
-        <Input.Password type="password" onChange={(e) => setPassword(e.target.value)} placeholder='Please enter your password' />
+        <Input.Password type="password" onChange={(e) => setPassword(e.target.value)} placeholder='Please enter your password' allowClear={true}/>
       </Form.Item>
 				{loading ? (
 				 <div className="sign__loader">
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={handlePost} style={{marginLeft:160}}>
+      	<Button type="primary" htmlType="submit" >
         Login
       </Button>
 				)}

@@ -12,10 +12,9 @@ const Signup = () => {
 	const [loading, setLoading] = useState(false);
 	const [confirmpass, setConfirmpass] = useState("");
 
-	const handlePost = (e) => {
-		e.preventDefault();
+	const handlePost = () => {
 		if (password !== confirmpass) {
-			return message.error("password does not match");
+			return message.error("Please match the passwords");
 		}
 
     setLoading(true);
@@ -46,6 +45,7 @@ const Signup = () => {
         remember: true,
       }}
       layout={"vertical"}
+       onFinish={handlePost}
       hideRequiredMark
     >
    
@@ -57,7 +57,8 @@ const Signup = () => {
           {
             required: true,
             message: 'Please input your Username!',
-          },
+          },{ pattern:new RegExp(/^[a-zA-Z0-9,. ]*$/),message:'Dont use special characters'},
+          {max:30, message:'Username should  contain up to 30 characters'}
         ]}
       >
         <Input  type="text" onChange={(e) => setName(e.target.value)} placeholder='Please enter your name' allowClear={true}/>
@@ -70,7 +71,8 @@ const Signup = () => {
           {
             required: true,
             message: 'Please input your Email!',
-          },
+          },{type:'email', message: "e-mail is not valid!"},
+          {max:30, message:'Email should  contain up to 30 characters'}
         ]}
       >
         <Input  type="email" onChange={(e) => setEmail(e.target.value)} placeholder='Please enter your email' allowClear={true}/>
@@ -83,8 +85,10 @@ const Signup = () => {
           {
             required: true,
             message: 'Please input your password!',
-          },
+          },{pattern:new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),message:"Minimum eight characters, at least one uppercase letter, one lowercase letter and one number"},
+          {max:30, message:'Password should  contain up to 30 characters'}
         ]}
+     
       >
         <Input.Password  type="password" onChange={(e) => setPassword(e.target.value)} placeholder='Please enter your password' />
       </Form.Item>
@@ -94,9 +98,10 @@ const Signup = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your Confirm Password!',
+            message: 'Please Confirm your Password!',
           },
         ]}
+       
       >
         <Input.Password  type="password" onChange={(e) => setConfirmpass(e.target.value)} placeholder='Please enter confirm password' />
       </Form.Item>
@@ -105,7 +110,7 @@ const Signup = () => {
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={handlePost} style={{marginLeft:160}}>
+      	<Button type="primary" htmlType="submit"  >
         Login
       </Button>
 				)}

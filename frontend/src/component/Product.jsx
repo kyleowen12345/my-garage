@@ -7,7 +7,7 @@ import Loader from "react-loader-spinner";
 import Axios from 'axios';
 import { addtocartact } from '../actions/cartActions';
 
-const Product = () => {
+const Product = ({openChildred,openUpdateprod}) => {
     const history=useHistory()
     const getProduct = useSelector((state) => state.getProduct);
     const { productInfo, loading, error } = getProduct;
@@ -48,8 +48,8 @@ const Product = () => {
 				<div>{error}</div>
 			):(
                 <>
-    <img src={productInfo?.image} alt="my-garage"/>
-    {userInfo?._id ===productInfo?.storeOwner._id? <Link to='/createProductImage'>Update Product Image</Link>:<></>}
+    <img src={productInfo?.image} alt="my-garage" style={{width:250,height:250}}/>
+    {userInfo?._id ===productInfo?.storeOwner._id&& <p onClick={openChildred}>Update Product Image</p>}
     <p>{productInfo?.productName}</p>
     <p>${productInfo?.price}</p>
     <p>{productInfo?.productStocks}</p>
@@ -58,7 +58,7 @@ const Product = () => {
     <p>{productInfo?.storeOwner.name}</p>
                 </>
             )}
-        {userInfo?._id ===productInfo?.storeOwner._id?<><Link to='/updateProduct'>Update Product</Link><button onClick={handleDelete}>Remove Product</button></>:<><button onClick={handleAdd}>Add to cart</button>  </>}  
+        {userInfo?._id ===productInfo?.storeOwner._id?<><p onClick={openUpdateprod}>Update Product</p><button onClick={handleDelete}>Remove Product</button></>:<><button onClick={handleAdd}>Add to cart</button>  </>}  
         
 </div>
     ) 

@@ -14,13 +14,7 @@ import Seller from "./component/Seller";
 // import UpdateProfile from "./component/UpdateProfile";
 import UpdateProfilePic from "./component/UpdateProfilePic";
 import Store from "./component/Store";
-import CreateStores from "./component/CreateStores";
-import StoreImage from "./component/StoreImage";
 import StoreInfo from "./component/StoreInfo";
-import CreateProduct from "./component/CreateProduct";
-import ProductImage from "./component/ProductImage";
-import Product from "./component/Product";
-import UpdateStore from "./component/UpdateStore";
 import UpdateProduct from "./component/UpdateProduct";
 import Cart from "./component/Cart";
 import History from './component/History'
@@ -54,27 +48,8 @@ function App() {
 						 <Route path="/searchResult/:name">
                                <SearchStore/>
 						 </Route>
-						 <Route path="/createStore">
-                              <CreateStores/>
-						 </Route>
-						 <Route path="/createStoreImage">
-                              <StoreImage/>
-						 </Route>
-						 
 						 <Route path="/storeInfo">
                               <StoreInfo/>
-						 </Route>
-						 <Route path="/createProduct">
-							 <CreateProduct/>
-						 </Route>
-						 <Route path="/productInfo/:name">
-							 <Product/>
-						 </Route>
-						 <Route path="/createProductImage">
-							 <ProductImage/>
-						 </Route>
-						 <Route path="/updateStore">
-							 <UpdateStore/>
 						 </Route>
 						 <Route path="/updateProduct">
 							 <UpdateProduct/>

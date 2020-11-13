@@ -1,85 +1,72 @@
 import React, {useEffect,useState} from 'react'
-import Loader from "react-loader-spinner";
 import Axios from "axios";
 import Cookie from "js-cookie";
-import { useHistory } from 'react-router-dom';
-import { useSelector } from "react-redux";
-import { useAlert } from 'react-alert'
+import { useSelector,useDispatch } from "react-redux";
+import { message} from 'antd';
+import { newStoreImage } from '../actions/storeActions';
+import imageCompressor from 'browser-image-compression'
 
-const StoreImage = () => {
-	const history=useHistory()
-	const alert = useAlert()
+const StoreImage = ({onClose}) => {
     const [image, setImage] = useState("");
-    const [filler, setFiller] = useState('');
+	const [filler, setFiller] = useState('');
     const [photoload,setPhotoLoad]=useState(false)
     const [url, setUrl] = useState("");
     const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
 	const storeNamefam=Cookie.getJSON('_stohremate')
-
-   
-    useEffect(() => {
-		if (url) {
-			Axios.post(
-				"/storebackgroundImage",
-				{
-					_id: storeNamefam,
-					storeBackgroundImage: url,
-				},
-				{
-					headers: {
-						Authorization: `Bearer${userInfo?.token}`,
-					},
-				}
-			)
-				.then((data) => {
-					console.log(data)
-					history.push(`/storeInfo/${data?.data.storeName.replace(/\s/g,'_')}`)
-					
-				})
-				.catch((err) => {
-					setFiller(err.response?.data.error);
-				});
-		}
-	});
- 
+	const dispatch=useDispatch()
+   const token=userInfo?.token
+   useEffect(() => {
+	if(url){
+  dispatch(newStoreImage(url,storeNamefam,token,onClose,message))
+	} 
+},[dispatch,storeNamefam,token,url,onClose]);
     const postPhoto = (e) => {
 		e.preventDefault();
 		if(!image){
 			return setFiller('Choose image first')
 		}
 		setPhotoLoad(true)
-		const data = new FormData();
-		data.append("file", image);
-		data.append("upload_preset", "insta-clone");
-		data.append("cloud_name", "kaking");
-		const config = {
-			headers: { "content-type": "multipart/form-data" },
-		};
-		Axios.post(
-			"https://api.cloudinary.com/v1_1/kaking/image/upload",
-			data,
-			config
-		)
-			.then((data) => {
-				setUrl(data?.data.secure_url);
-				alert.success('Image Uploaded')
-				setPhotoLoad(false)
-			})
-			.catch((err) => {
-				setFiller(err.response?.data.error.message);
-				setPhotoLoad(false)
-			});
+		const options = {
+			maxSizeMB: 0.5,
+			maxWidthOrHeight: 1920,
+			useWebWorker: true
+		  }
+		  imageCompressor(image,options).then(compressFile=>{
+			  message.info('this will only take a few seconds please wait')
+			const data = new FormData();
+			data.append("file", compressFile);
+			data.append("upload_preset", "insta-clone");
+			data.append("cloud_name", "kaking");
+			const config = {
+				headers: { "content-type": "multipart/form-data" },
+			};
+			Axios.post(
+				"https://api.cloudinary.com/v1_1/kaking/image/upload",
+				data,
+				config
+			)
+				.then((data) => {
+					setUrl(data?.data.secure_url);
+					setPhotoLoad(false)
+				})
+				.catch((err) => {
+					setPhotoLoad(false)
+				});
+		  }).catch(err=>{
+			  console.log(err.messsage)
+			  setPhotoLoad(false)
+		  })
+		
 	};
+	
     return (
         <div className="sign__form">
 			<h2>Add a photo for your Store</h2>
         <form >
         <p>{filler}</p>
                     <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-                    {photoload ? <div className="sign__loader">
-                <Loader type="TailSpin" color="#ff4d4d" height={50} width={50} />
-        </div>:<input type="submit" onClick={postPhoto} />}
+                    {photoload ?<p>Uploading...</p>:<input type="submit" onClick={postPhoto} />}
                     
                 </form>
     </div>

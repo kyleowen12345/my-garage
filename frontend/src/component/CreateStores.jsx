@@ -1,14 +1,12 @@
 import React, {useState} from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from 'react-router-dom';
 import { makeStore } from '../actions/storeActions';
 import Loader from "react-loader-spinner";
 import { Form, Input, Button} from 'antd';
 import { useAlert } from 'react-alert'
 
-const CreateStores = () => {
+const CreateStores = ({onClose,openChildred}) => {
 	const alert = useAlert()
-    const history= useHistory()
     const [storeName, setStoreName] = useState("");
 	const [storeAddress, setStoreAddress] = useState("");
 	const [storeDescription, setStoreDescription] = useState("");
@@ -23,9 +21,8 @@ const CreateStores = () => {
     const userId=userInfo?._id
     const userToken=userInfo?.token
 
-    const handlePost=(e)=>{
-        e.preventDefault()
-		dispatch(makeStore(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,history,userToken,alert))
+    const handlePost=()=>{
+		dispatch(makeStore(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,alert))
     }
     return (
         
@@ -35,6 +32,7 @@ const CreateStores = () => {
         remember: true,
       }}
       layout={"vertical"}
+      onFinish={handlePost}
       hideRequiredMark
     >
    
@@ -46,7 +44,7 @@ const CreateStores = () => {
           {
             required: true,
             message: 'Please input your storename!',
-          },
+          },{ min: 5, max:50, message: 'Store Name must contain 5-50 characters.' }
         ]}
       >
         <Input  type="text" onChange={(e) => setStoreName(e.target.value)} placeholder='Please enter your store name' allowClear={true}/>
@@ -58,7 +56,7 @@ const CreateStores = () => {
           {
             required: true,
             message: 'Please input your Store Address!',
-          },
+          },{ min: 5,max:50, message: 'Store Address must contain 5-50 characters.' },
         ]}
       >
         <Input  type="text" onChange={(e) => setStoreAddress(e.target.value)} placeholder='Please enter your store adddress' allowClear={true}/>
@@ -70,7 +68,7 @@ const CreateStores = () => {
           {
             required: true,
             message: 'Please input your Description!',
-          },
+          },{ min: 5,max:50, message: 'Description must be contain 5-50 characters.' }
         ]}
       >
         <Input  type="text" onChange={(e) => setStoreDescription(e.target.value)} placeholder='Please enter your description' allowClear={true}/>
@@ -82,7 +80,7 @@ const CreateStores = () => {
           {
             required: true,
             message: 'Please input your StoreType!',
-          },
+          },{ min: 5, message: 'Store Type must be minimum 5 characters.' },
         ]}
       >
         <Input type="text" onChange={(e) => setStoreType(e.target.value)} placeholder='Please enter your store type' allowClear={true}/>
@@ -94,7 +92,7 @@ const CreateStores = () => {
           {
             required: true,
             message: 'Please input your Social Media Account!',
-          },
+          },{ min: 5,max:50, message: 'Social Media Account must contain 5-50 characters.' },
         ]}
       >
         <Input  type="text" onChange={(e) => setSocialMediaAcc(e.target.value)} placeholder='Please enter your social media account' allowClear={true}/>
@@ -106,7 +104,7 @@ const CreateStores = () => {
           {
             required: true,
             message: 'Please input your Contact Number!',
-          },
+          },{pattern:new RegExp(/^[0-9]*$/),message:'Must Contain numbers'}
         ]}
       >
         <Input  type="number" onChange={(e) => setContactNumber(e.target.value)} placeholder='Please enter your contact number' allowClear={true}/>
@@ -118,14 +116,16 @@ const CreateStores = () => {
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={handlePost} >
+      	<Button type="primary" htmlType="submit"  >
         Create Store
       </Button>
 				)}
-      
-	  <Link to="/Store" className="sign__link">
+      <div style={{display:loading?'none':"block"}}>
+      <p onClick={onClose}>
 					Cancel
-				</Link>
+				</p>
+      </div>
+	 
     </Form>
         
     )

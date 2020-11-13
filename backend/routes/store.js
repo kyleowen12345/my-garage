@@ -96,7 +96,7 @@ router.post('/updatestoreinfo',requireLogin,async(req,res)=>{
 		contactNumber,
 		socialMediaAcc,
 	} = req.body;
-	if(!_id||
+	if(
 		!storeName||
 		!storeAddress||
 		!storeDescription||
@@ -106,7 +106,7 @@ router.post('/updatestoreinfo',requireLogin,async(req,res)=>{
 			return res.status(422).json({ error: "complete the fields" })
 		}
 	try {
-		const storeupdate=await Store.findOne({_id:_id})
+		const storeupdate=await Store.findOne({_id:_id}).populate('sellerName')
 		storeupdate.storeName=storeName
 		storeupdate.storeAddress=storeAddress
 		storeupdate.storeDescription=storeDescription
@@ -116,8 +116,8 @@ router.post('/updatestoreinfo',requireLogin,async(req,res)=>{
 		storeupdate.save()
 		res.json(storeupdate)
 	} catch (error) {
-	return	res.json(error)
-		
+	 res.status(422).json(error)
+	 console.log(error)
 	}
 })
 
@@ -125,7 +125,7 @@ router.post('/mystores',requireLogin,(req,res)=>{
  const {_id}=req.body
 
  Store.find({sellerName:_id})
-    .populate("sellerName","_id name email").sort('-createdAt')
+    .populate("sellerName","_id name email profilePic").sort('-createdAt')
     .then(mypost=>{
 		res.json(mypost)
     })
@@ -142,7 +142,7 @@ router.post('/storebackgroundImage',requireLogin,async(req,res)=>{
 		return res.status(422).json({ error: "Put an image first" });
 	}
 try {
-const result=await	Store.findOne({_id:_id})
+const result=await	Store.findOne({_id:_id}).populate('sellerName')
 result.storeBackgroundImage=storeBackgroundImage
 result.save()
 res.json(result)

@@ -12,7 +12,6 @@ const StoreModel = new mongoose.Schema({
 			min: 5,
 			maxlength: 100,
 			required: true,
-			unique:true
 		},
 		storeAddress: {
 			type: String,

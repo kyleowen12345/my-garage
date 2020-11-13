@@ -22,7 +22,7 @@ router.post('/createproduct', requireLogin,async(req,res)=>{
      const newProduct=new Product({
       productName,price,productStocks,description,storeName,storeOwner
      })
-     await newProduct.save()
+      newProduct.save()
      res.status(200).json(newProduct)
     } catch (error) {
       return  res.json(error)
@@ -56,18 +56,17 @@ router.post('/storeproduct',async(req,res)=>{
       console.log(error)
     }
   })
-router.post('/productimage',requireLogin,(req,res)=>{
+router.post('/productimage',requireLogin,async(req,res)=>{
   const {image,_id}=req.body
-
-    Product.findOne({_id:_id}).then(result=>{
-			result.image=image
-			result.save().then((data) => {
-				res.json({ message: "successfully upadated the profile picture" , content:data}); 
-			});
-		}).catch(err=>{
-			res.json({ message: err });
-			console.log(err);
-		})
+  try {
+  const newImage=await  Product.findOne({_id:_id}).populate('storeName','storeName _id socialMediaAcc').populate('storeOwner','name')
+  newImage.image=image
+  newImage.save(newImage)
+  res.status(200).json(newImage)
+  } catch (error) {
+  return  res.status(422).json(error)
+  }
+  
 })
 router.post('/updateproduct',requireLogin,async(req,res)=>{
   const {productName,price,productStocks,description,storeName,_id}=req.body

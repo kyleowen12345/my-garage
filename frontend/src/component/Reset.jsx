@@ -8,8 +8,7 @@ const Reset = () => {
 	const [email, setEmail] = useState("");
 	const [fillers, setFillers] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const PostData = (e) => {
-		e.preventDefault();
+	const PostData = () => {
 		setLoading(true);
 		axios
 			.post("/reset-password", {
@@ -36,6 +35,7 @@ const Reset = () => {
 		  remember: true,
 		}}
 		hideRequiredMark
+		onFinish={PostData}
 		layout={'vertical'}
 	  >
 		  <h2>Enter You Email..</h2>
@@ -46,7 +46,8 @@ const Reset = () => {
           {
             required: true,
             message: 'Please input your Email!',
-          },
+          },{type:'email', message: "e-mail is not valid!"},
+          {max:30, message:'Email should  contain up to 30 characters'}
         ]}
       >
         <Input  type="email" onChange={(e) => setEmail(e.target.value)} placeholder='Please enter your email' allowClear={true}/>
@@ -58,7 +59,7 @@ const Reset = () => {
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={PostData} >
+      	<Button type="primary" htmlType="submit"  >
         Submit
       </Button>
 				)}
