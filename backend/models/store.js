@@ -31,7 +31,6 @@ const StoreModel = new mongoose.Schema({
 			type: String,
 			min: 5,
 			maxlength: 100,
-			validate: /^[a-zA-Z0-9,. ]*$/,
 			required: true,
 		},
 		contactNumber: {

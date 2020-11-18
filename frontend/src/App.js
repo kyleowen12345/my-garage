@@ -20,6 +20,8 @@ import Cart from "./component/Cart";
 import History from './component/History'
 import StoreStat from "./component/StoreStat";
 import SearchStore from './component/SearchStore'
+import StoreType from "./component/StoreType";
+
 
 function App() {
 	const userSignin = useSelector((state) => state.userSignin);
@@ -33,13 +35,15 @@ function App() {
 						<Route exact path="/">
 							<Home />
 						</Route>
+						<Route path="/storetype/:name">
+                            <StoreType/>
+						</Route>
 						<Route path="/profile">
 							<Profile />
 						</Route>
 						 <Route path="/updatePhoto">
                               <UpdateProfilePic/>
 						 </Route>
-						 
 						 <Route path="/Seller">
                                 <Seller/>
 						 </Route><Route path="/Store">

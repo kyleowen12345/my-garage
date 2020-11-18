@@ -4,7 +4,7 @@ import requireLogin from "../middleware/requireLogin.js";
 import {Product} from '../models/product.js'
 import {Payment} from '../models/payment.js'
 import ASYNC from 'async'
-import moment from 'moment'
+
 
 const router = express.Router();
 
@@ -96,7 +96,7 @@ router.post('/addtocart',requireLogin,async(req,res)=>{
 							cart: {
 								id: productId,
 								quantity: 1,
-								date: moment().format('MMMM Do YYYY, h:mm:ss a')
+								date: new Date()
 							}
 						}
 					},

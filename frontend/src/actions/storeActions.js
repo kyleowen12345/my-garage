@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookie from "js-cookie";
-import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_REQUEST,VIEW_STORE_SUCCESS,VIEW_STORE_FAIL,VIEWALL_STORE_REQUEST,VIEWALL_STORE_SUCCESS,VIEWALL_STORE_FAIL,VIEWSINGLE_STORE_REQUEST,VIEWSINGLE_STORE_SUCCESS,VIEWSINGLE_STORE_FAIL,UPDATE_STORE_REQUEST,UPDATE_STORE_SUCCESS,UPDATE_STORE_FAIL,SEARCH_STORE_REQUEST,SEARCH_STORE_SUCCESS,SEARCH_STORE_FAIL,UPDATE_IMAGE_REQUEST,UPDATE_IMAGE_SUCCESS,UPDATE_IMAGE_FAIL} from '../constants/storeContstants'
+import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_REQUEST,VIEW_STORE_SUCCESS,VIEW_STORE_FAIL,VIEWALL_STORE_REQUEST,VIEWALL_STORE_SUCCESS,VIEWALL_STORE_FAIL,VIEWSINGLE_STORE_REQUEST,VIEWSINGLE_STORE_SUCCESS,VIEWSINGLE_STORE_FAIL,UPDATE_STORE_REQUEST,UPDATE_STORE_SUCCESS,UPDATE_STORE_FAIL,SEARCH_STORE_REQUEST,SEARCH_STORE_SUCCESS,SEARCH_STORE_FAIL,UPDATE_IMAGE_REQUEST,UPDATE_IMAGE_SUCCESS,UPDATE_IMAGE_FAIL,STORETYPE_REQUEST,STORETYPE_SUCCESS,STORETYPE_FAIL} from '../constants/storeContstants'
 
 
 
@@ -108,5 +108,18 @@ const newStoreImage=(storeBackgroundImage,_id,token,onClose,message)=>async(disp
         message.error(error.response?.data.error)
     }
 }
+const getStoreType=(storeType,history)=>async(dispatch)=>{
+    dispatch({ type: STORETYPE_REQUEST});
+    try {
+        const {data}=await axios.post('/storeOption',{
+            storeType
+        })
+        dispatch({ type: STORETYPE_SUCCESS, payload: data });
+        history.push(`/storetype/${storeType}`)
+    } catch (error) {
+        dispatch({ type: STORETYPE_FAIL, payload: error }); 
+       
+    }
+}
 
-export  {makeStore,viewMyStore,allStoresViewer,getSingleStore,updateStore,getSearchedStore,newStoreImage}
+export  {makeStore,viewMyStore,allStoresViewer,getSingleStore,updateStore,getSearchedStore,newStoreImage,getStoreType}

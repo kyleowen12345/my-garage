@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { makeStore } from '../actions/storeActions';
 import Loader from "react-loader-spinner";
-import { Form, Input, Button} from 'antd';
+import { Form, Input, Button,Select} from 'antd';
 import { useAlert } from 'react-alert'
 
 const CreateStores = ({onClose,openChildred}) => {
@@ -20,10 +20,16 @@ const CreateStores = ({onClose,openChildred}) => {
     const dispatch = useDispatch();
     const userId=userInfo?._id
     const userToken=userInfo?.token
+    const { Option } = Select;
 
     const handlePost=()=>{
 		dispatch(makeStore(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,alert))
     }
+    const onChange=(value)=> {
+      setStoreType(value)
+    }
+  
+    
     return (
         
 			<Form
@@ -83,7 +89,33 @@ const CreateStores = ({onClose,openChildred}) => {
           },{ min: 5, message: 'Store Type must be minimum 5 characters.' },
         ]}
       >
-        <Input type="text" onChange={(e) => setStoreType(e.target.value)} placeholder='Please enter your store type' allowClear={true}/>
+        
+             <Select
+            placeholder="Select a option and change input text above"
+            allowClear
+            showSearch
+            onChange={onChange}
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+          >
+            <Option value="Automotive">Automotive</Option>
+            <Option value="Baby & Toddler">Baby & Toddler</Option>
+            <Option value="Clothing & Shoes">Clothing & Shoes</Option>
+            <Option value="Computers">Computers</Option>
+            <Option value="Electronics">Electronics</Option>
+            <Option value="Entertainment & Arts">Entertainment & Arts</Option>
+            <Option value="Food & Gifts">Food & Gifts</Option>
+            <Option value="Home & Garden">Home & Garden</Option>
+            <Option value="Office & Professional Services">Office & Professional Services</Option>
+            <Option value="Personal & Home Services">Personal & Home Services</Option>
+            <Option value="Restaurants & Dining">Restaurants & Dining</Option>
+            <Option value="Software">Software</Option>
+            <Option value="Health & Beauty">Health & Beauty</Option>
+            <Option value="Sports & Outdoors">Sports & Outdoors</Option>
+            <Option value="Travel">Travel</Option>
+          </Select>
       </Form.Item>
       <Form.Item
         label="Social Media Account"

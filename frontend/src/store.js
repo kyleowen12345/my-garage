@@ -5,7 +5,7 @@ import {
 	userProfileReducer,
 	userSigninReducer,
 } from "./reducers/userReducer";
-import { createStoreReducer, viewMyStoreReducer,allStoreReducer, getSingleStoreReducer, searchStoreReducer } from "./reducers/storeReducer";
+import { createStoreReducer, viewMyStoreReducer,allStoreReducer, getSingleStoreReducer, searchStoreReducer, getStoretypeReducer } from "./reducers/storeReducer";
 import { createProductReducer, getProductReducer, getStoreProductReducer, updateProductReducer } from "./reducers/productReducer";
 import {  historyReducer, viewCartReducer } from "./reducers/cartReducer";
 
@@ -22,6 +22,7 @@ const reducer = combineReducers({
 	viewYourStore:viewMyStoreReducer,
 	viewAllStore:allStoreReducer,
 	singleStore:getSingleStoreReducer,
+	storeType:getStoretypeReducer,
 	// Product
 	createProduct:createProductReducer,
 	getStoreProds:getStoreProductReducer,

@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { getAllPInS } from '../actions/productAction';
 import { addtocartact } from '../actions/cartActions';
 import { useAlert } from 'react-alert'
-import { message,Spin,Dropdown,Menu,Card,Button,Image,Drawer } from 'antd';
+import { message,Spin,Dropdown,Menu,Card,Button,Image,Drawer,Empty,Popconfirm } from 'antd';
 import { SettingOutlined,BarChartOutlined,PictureOutlined,AuditOutlined,AppstoreAddOutlined,DeleteOutlined,ShoppingCartOutlined } from '@ant-design/icons';
 import UpdateStore from './UpdateStore';
 import StoreImage from './StoreImage';
@@ -60,7 +60,7 @@ console.log(PinSInfo)
 
     const handleDelete=()=>{
         Axios.post('/removeStorefam',{
-            storeName:getStore?.storeName
+            storeName:storeNameFam
         },{
             headers: {
                 Authorization: `Bearer${userInfo?.token}`,
@@ -117,6 +117,13 @@ const onCloseProductImg =() => {
         }
         const closeUpdateProduct=()=>{
             setUpdateProduct(false)
+            setProductInfo(false)
+            dispatch(getAllPInS(storeId))
+        }
+        // Delete Product
+        const deleteClose=()=>{
+            setProductInfo(false)
+            dispatch(getAllPInS(storeId))
         }
 
     // Dropdown
@@ -137,7 +144,9 @@ const onCloseProductImg =() => {
           <p onClick={showDrawerProduct}><AppstoreAddOutlined /> Add product</p>
           </Menu.Item>
           <Menu.Item key={5}>
-          <p onClick={handleDelete}><DeleteOutlined />  Remove Store</p>
+          <Popconfirm title="Sure to delete?" onConfirm={handleDelete}  >
+          <p ><DeleteOutlined />  Remove Store</p>
+            </Popconfirm>
           </Menu.Item>
         </Menu>
       )
@@ -211,7 +220,7 @@ const onCloseProductImg =() => {
           visible={producInfo}
           placement={'right'}
         >
-		<Product onClose={onCloseProducInfo} openChildred={showDrawerProductImg} openUpdateprod={showUpdateProduct}/>
+		<Product onClose={onCloseProducInfo} openChildred={showDrawerProductImg} openUpdateprod={showUpdateProduct} deleteClose={deleteClose}/>
         </Drawer>
         <Drawer
           title='Update Product'
@@ -224,7 +233,7 @@ const onCloseProductImg =() => {
         </Drawer>
                 <div className="ProductList">
                     
-                {PinSInfo?.map(item=>{
+                {PinSInfo?.length < 1 ?<Empty description={'Products unavailable'} /> :PinSInfo?.map(item=>{
                 const handleAdd=()=>{
                     const token=userInfo?.token
                     const productId=item._id

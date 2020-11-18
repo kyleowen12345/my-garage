@@ -48,6 +48,7 @@ const Navbar = () => {
 		  }
 		dispatch(getSearchedStore(data,history))
 		setSuggest(false)
+		setSuggestContent(' ')
 	  };
 
 	const handleClickOutside = (event) => {
@@ -63,7 +64,7 @@ useEffect(() => {
 	};
 });
 	const { Search } = Input;
-	// case insensitive
+	// case insensitive for search
 	const lowercased=suggestContent.toLowerCase()
 	const allstore=allStores?.map(item=>item.storeName)
 	const filteredStore=allstore?.filter(name=>name.toLowerCase().includes(lowercased))
@@ -129,7 +130,8 @@ console.log(filteredStore)
 			</div>
 			<div className="header__left">
 				<div className="searchbox">
-				<Search placeholder="Find Store..."  onSearch={onSelect}  onClick={()=>setSuggest(true)}  onChange={(e)=>setSuggestContent(e.target.value)} />
+			<Search placeholder="Find Store..."  onSearch={onSelect}  onClick={()=>setSuggest(true)}  onChange={(e)=>{setSuggestContent(e.target.value)
+			setSuggest(true)}} />
 				<div className="suggest" style={{display:suggest? 'block':'none'}} ref={ref}>
 			{suggestContent && <p>{filteredStore?.length} Results for "{suggestContent}"</p>}
 				{filteredStore?.length < 1 ? <Empty description={'Not Found'} /> :filteredStore?.map(item=>{

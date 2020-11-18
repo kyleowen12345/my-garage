@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import { useHistory,Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "react-loader-spinner";
 import Cookie from "js-cookie";
@@ -9,7 +8,6 @@ import { useAlert } from 'react-alert'
 
 
 const UpdateProduct = ({onClose}) => {
-    const history= useHistory()
     const alert = useAlert()
     const [productName, setProductName] = useState("");
 	const [price, setPrice] = useState("");
@@ -23,9 +21,9 @@ const UpdateProduct = ({onClose}) => {
     const userToken=userInfo?.token
     const productNameFam=Cookie.getJSON("_pductFam");
     const storeNameFam=Cookie.getJSON("_stohremate")
-    const handlePost=(e)=>{
-        e.preventDefault()
-        dispatch(updateProductInfo(productName,price,productStocks,description,storeNameFam,productNameFam,userToken,history,alert))
+    const handlePost=()=>{
+        
+        dispatch(updateProductInfo(productName,price,productStocks,description,storeNameFam,productNameFam,userToken,onClose,alert))
     }
     return (
         <Form
@@ -34,6 +32,7 @@ const UpdateProduct = ({onClose}) => {
         remember: true,
       }}
      layout={'vertical'}
+     onFinish={handlePost}
      hideRequiredMark
     >
    
@@ -45,7 +44,7 @@ const UpdateProduct = ({onClose}) => {
           {
             required: true,
             message: 'Please input your Product Name!',
-          },
+          },{ min: 5, max:50, message: 'Product Name must contain 5-50 characters.' }
         ]}
       >
         <Input  type="text" onChange={(e) => setProductName(e.target.value)} placeholder='Please enter new product name' allowClear={true}/>
@@ -57,7 +56,7 @@ const UpdateProduct = ({onClose}) => {
           {
             required: true,
             message: 'Please input your Price!',
-          },
+          }
         ]}
       >
         <Input  type="number" onChange={(e) => setPrice(e.target.value)} placeholder='Please enter your price ' allowClear={true}/>
@@ -81,7 +80,7 @@ const UpdateProduct = ({onClose}) => {
           {
             required: true,
             message: 'Please input your Description!',
-          },
+          },{ min: 5,max:50, message: 'Description must be contain 5-50 characters.' }
         ]}
       >
         <Input type="text" onChange={(e) => setDescription(e.target.value)} placeholder='Please enter description' allowClear={true}/>
@@ -93,14 +92,16 @@ const UpdateProduct = ({onClose}) => {
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"  onClick={handlePost} >
-        Create Store
+      	<Button type="primary" htmlType="submit"   >
+        Update Product
       </Button>
 				)}
       
-	  <p onClick={onClose}>
+      <div style={{display:loading?'none':"block"}}>
+      <p onClick={onClose}>
 					Cancel
 				</p>
+      </div>
     </Form>
     )
 }

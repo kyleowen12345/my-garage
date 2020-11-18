@@ -3,7 +3,7 @@
 }
 body {
 	font-family: "Quicksand", sans-serif !important;
-	background-color: #f0f2f5 !important;
+	background-color: rgb(248, 248, 248) !important;
 }
 /* Card */
 .Info {
@@ -53,21 +53,6 @@ label {
 	margin-left: 40px !important;
 }
 
-/* .ant-input {
-	color: black !important;
-	padding: 10px !important;
-} */
-/* .ant-btn {
-	background-color: white !important;
-	color: rgb(19, 204, 19) !important;
-	width: 150px !important;
-	border: 2px solid rgb(19, 204, 19) !important;
-	border-radius: 10px !important;
-	margin: 10px 0px 10px 160px !important;
-	cursor: pointer !important;
-	outline: none !important;
-	font-size: 15px !important;
-} */
 .ant-form .sign__link {
 	text-align: center !important;
 	margin-top: 10px !important;
@@ -85,6 +70,7 @@ label {
 .ant-drawer-close {
 	color: black !important;
 }
+
 .error {
 	text-align: center !important;
 	color: red !important;
@@ -154,16 +140,7 @@ header {
 	align-items: center;
 	margin-right: 50px;
 }
-/* .anticon-search {
-	font-size: 30px !important;
-	color: #0063e0 !important ;
-} */
 
-.ant-select-selector {
-	border: #0063e0 2px solid !important;
-	border-radius: 3px !important;
-	height: 35px !important;
-}
 .searchbox {
 	padding: 25px;
 	width: 400px;
@@ -208,7 +185,7 @@ header {
 	row-gap: 30px;
 	padding: 20px 100px;
 }
-.home
+
 /* home image */
 .ant-card > .ant-card-cover > img {
 	width: 500px !important;
@@ -216,6 +193,31 @@ header {
 	padding: 0 !important;
 	margin-top: 0 !important;
 }
+/* home carousel */
+.carousel_image {
+	width: 100vw !important;
+	height: 500px;
+	box-shadow: 0 4px 6px rgba(32, 33, 36, 0.28);
+}
+/* options shop */
+.react-multi-carousel-list {
+	margin: 30px 100px !important;
+	height: 250px !important ;
+}
+
+.react-multiple-carousel__arrow {
+	z-index: 40 !important;
+}
+/* options */
+.options {
+	align-items: center;
+	transition: 0.8s;
+	cursor: pointer;
+}
+.options > img:hover {
+	opacity: 0.7;
+}
+
 /* home ellipsis */
 .ant-card-meta-detail > .ant-card-meta-detail,
 .ant-card-meta-description {
@@ -223,6 +225,11 @@ header {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	max-width: 200px;
+}
+/* home loading */
+.ant-skeleton-image {
+	width: 500px !important;
+	height: 500px !important;
 }
 /* searchcomponent */
 .result {

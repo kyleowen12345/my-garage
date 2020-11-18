@@ -95,9 +95,9 @@ router.post('/updateproduct',requireLogin,async(req,res)=>{
   }
 })
 router.post('/removeProduct',requireLogin,async(req,res)=>{
-  const {productName}=req.body
+  const {productNameFam}=req.body
   try {
-    await Product.findOneAndDelete({productName:productName})
+    await Product.findByIdAndDelete({_id:productNameFam})
     res.json({message:'Successfully deleted the Product'})
   } catch (error) {
     console.log(error)

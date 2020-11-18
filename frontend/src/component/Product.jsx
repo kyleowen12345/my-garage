@@ -2,13 +2,12 @@ import React,{ useEffect } from 'react'
 import { useSelector,useDispatch } from "react-redux";
 import { getProdct } from '../actions/productAction';
 import Cookie from "js-cookie";
-import { Link, useHistory } from 'react-router-dom';
 import Loader from "react-loader-spinner";
 import Axios from 'axios';
 import { addtocartact } from '../actions/cartActions';
+import { Popconfirm, message} from 'antd';
 
-const Product = ({openChildred,openUpdateprod}) => {
-    const history=useHistory()
+const Product = ({openChildred,openUpdateprod,deleteClose}) => {
     const getProduct = useSelector((state) => state.getProduct);
     const { productInfo, loading, error } = getProduct;
     const userSignin = useSelector((state) => state.userSignin);
@@ -23,22 +22,25 @@ const Product = ({openChildred,openUpdateprod}) => {
 
     const handleDelete=()=>{
         Axios.post('/removeProduct',{
-            productName:productInfo?.productName
+            productNameFam:productNameFam
         },{
             headers: {
                 Authorization: `Bearer${userInfo?.token}`,
             },
         }).then(result=>{
+            deleteClose()
             console.log(result)
-           history.push(`/storeInfo/${productInfo.storeName.storeName}`)
+            message.success('Product deleted')
         }).catch(error=>{
             console.log(error)
+            message.error('something went wrong')
         })
     }
 
     const handleAdd=()=>{
         const token=userInfo?.token
-        dispatch(addtocartact(productNameFam,token))
+        const productId=productNameFam
+        dispatch(addtocartact(productId,token,message,productInfo?.productName))
     }
     return(
 <div className="sign__form">
@@ -58,7 +60,7 @@ const Product = ({openChildred,openUpdateprod}) => {
     <p>{productInfo?.storeOwner.name}</p>
                 </>
             )}
-        {userInfo?._id ===productInfo?.storeOwner._id?<><p onClick={openUpdateprod}>Update Product</p><button onClick={handleDelete}>Remove Product</button></>:<><button onClick={handleAdd}>Add to cart</button>  </>}  
+        {userInfo?._id ===productInfo?.storeOwner._id?<><p onClick={openUpdateprod}>Update Product</p><Popconfirm title="Sure to delete?" onConfirm={handleDelete}  ><button >Remove Product</button></Popconfirm></>:<><button onClick={handleAdd}>Add to cart</button>  </>}  
         
 </div>
     ) 

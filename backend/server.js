@@ -5,6 +5,7 @@ import auth from "./routes/auth.js";
 import userInfo from "./routes/userInfo.js";
 import store from "./routes/store.js";
 import product from './routes/product.js'
+import payments from './routes/payments.js'
 import cors from "cors";
 
 
@@ -25,6 +26,7 @@ app.use(auth);
 app.use(userInfo);
 app.use(store);
 app.use(product)
+app.use(payments)
 // database
 app.get('/',(req,res)=>{
 	res.send('qweqwe')

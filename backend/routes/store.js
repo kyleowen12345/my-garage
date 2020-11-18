@@ -153,10 +153,19 @@ res.json(result)
 router.post('/removeStorefam',requireLogin,async(req,res)=>{
 	const {storeName}=req.body
 	try {
-		await Store.findOneAndDelete({storeName:storeName})
+		await Store.findByIdAndDelete({_id:storeName})
 		res.json({message:'Store deleted'})
 	} catch (error) {
 	    console.log(error)
+	}
+})
+router.post('/storeOption',async(req,res)=>{
+	const {storeType}=req.body
+	try {
+	const storeoption=await Store.find({storeType:storeType}).populate('sellerName')
+	res.status(200).json(storeoption)
+	} catch (error) {
+		res.status(422).send("not found")
 	}
 })
 

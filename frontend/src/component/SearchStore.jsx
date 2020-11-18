@@ -4,6 +4,7 @@ import {Card,Spin,Avatar,Pagination } from 'antd';
 import { Link,useHistory, useParams } from "react-router-dom";
 import { getSearchedStore } from '../actions/storeActions';
 import Cookie from "js-cookie";
+import HomeLoading from './HomeLoading';
 
 const CartContent = () => {
     const history=useHistory()
@@ -27,11 +28,10 @@ const CartContent = () => {
     return (
         <>
         <h2 className='result'>Search Results for "{name}"</h2>
+        {loading && <HomeLoading/>}
         <div className="home">
             
-            {loading ? (
-				<Spin size="large" style={{ marginTop:50, marginLeft:600}} tip={`Finding ${name}`}/>
-			) :error ? (
+            {error ? (
 				<div>{error}</div>
 			) : (
 				<> 

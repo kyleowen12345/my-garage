@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { allStoresViewer } from '../actions/storeActions'
 import { Link, } from "react-router-dom";
 import Cookie from "js-cookie";
-import {Card,Spin,Pagination,Avatar } from 'antd';
-
+import {Card,Pagination,Avatar } from 'antd';
+import HomeLoading from "./HomeLoading";
+import ImageCarousel from "./ImageCarousel";
+import OptionCarousel from "./OptionCarousel";
 
 const Home = () => {
 	const [minValue,setMinValue]=useState(0)
@@ -24,14 +26,18 @@ const handleChange = (item) => {
   };
 
 	return (
+		
+		
 		<>
-		<div className="home">
+		<ImageCarousel/>
+		<OptionCarousel/>
+		<h1>Stores</h1>
 			{loading ? (
-				<Spin size="large" style={{ marginTop:50, marginLeft:600}} tip='Gathering Stores .....'/>
+				<HomeLoading />
 			) :error ? (
 				<div>{error}</div>
 			) : (
-				<>
+				<div className="home">
 					{allStores && allStores.length >0 && allStores.slice(minValue,maxValue).map(item=>{
 						return (
 							<Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}} key={item._id}>
@@ -48,18 +54,20 @@ const handleChange = (item) => {
 						
 					})}
 					
-				</>
+				</div>
 			)}
 			
 			
-		</div>
+		
 		{allStores && <Pagination
 		total={allStores?.length}
 		showTotal={total => `Total ${total} Stores`}
 				  defaultCurrent={1}
+				  size="small"
 				  defaultPageSize={numEachPage} //default size of page
 				  onChange={handleChange}
 				  responsive={true}
+      showQuickJumper
 				  style={{display:'flex',justifyContent:'center', margin:30}}
 				/>}
 		
