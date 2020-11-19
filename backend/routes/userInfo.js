@@ -171,9 +171,10 @@ router.get('/getCartInfo',requireLogin,async(req,res)=>{
 router.post('/successBuy',requireLogin,(req,res)=>{
 	let history=[]
 	let transactionData={}
+	
 	req.body.cartDetail.forEach((item)=>{
 		history.push({
-			dateOfPurchase:moment().format('MMMM Do YYYY, h:mm:ss a'),
+			dateOfPurchase:new Date(),
 			name:item.productName,
 			id: item._id,
 			price: item.price,
@@ -181,15 +182,11 @@ router.post('/successBuy',requireLogin,(req,res)=>{
 			quantity: item.quantity,
 			storeName:item.storeName,
 			storeOwner:item.storeOwner,
-            paymentId: req.body.paymentData.paymentID
+			paymentId: req.body.paymentData.paymentID,
+			buyer:{id:req.user._id,name:req.user.name,email:req.user.email,profile:req.user.profilePic}
 		})
 	})
 
-	transactionData.user={
-		id:req.user._id,
-		name: req.user.name,
-		email: req.user.email
-	}
 	transactionData.data=req.body.paymentData;
 	transactionData.product=history;
 	 

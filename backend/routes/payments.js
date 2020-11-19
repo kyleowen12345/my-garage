@@ -4,10 +4,11 @@ import {Payment} from '../models/payment.js'
 
 const router = express.Router();
 
-router.get('/payments',requireLogin,async(req,res)=>{
+router.post('/payments',requireLogin,async(req,res)=>{
     try {
-    await Payment.find({})
-    
+   const buyers= await Payment.find({})
+   const result=buyers.map(i=>i.product)
+   res.status(200).json(result)
     } catch (error) {
         res.status(422).send('something went wrong')
     }
