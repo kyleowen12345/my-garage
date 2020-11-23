@@ -2,21 +2,24 @@ import React,{ useEffect,useState } from 'react'
 import { useSelector,useDispatch } from "react-redux";
 import { getAllPInS } from '../actions/productAction';
 import Cookie from "js-cookie";
-import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import {Table} from 'antd';
 import {Bar,Pie} from 'react-chartjs-2';
 import * as ChartDataLabels  from 'chartjs-plugin-datalabels';
 import { sum } from 'lodash';
+import {v4 as uuid} from 'uuid'
+
 
 const StoreStat = () => {
     const getStoreProds = useSelector((state) => state.getStoreProds);
-    const { PinSInfo } = getStoreProds;
+    const { PinSInfo,loading } = getStoreProds;
     const [stats,setStats]=useState([])
     const dispatch = useDispatch();
     const storeNameFam=Cookie.getJSON("_stohremate");
     const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
     const token = userInfo?.token;
+    const { Column,ColumnGroup } = Table;
     
     useEffect(()=>{
         dispatch(getAllPInS(storeNameFam))
@@ -83,7 +86,7 @@ const StoreStat = () => {
         </div>
       )
     }
-     if(PinSInfo?.length >3){
+     if(PinSInfo?.length >4){
        return (
          <div>
 <Bar
@@ -98,7 +101,7 @@ const StoreStat = () => {
           },
           legend:{
             display:true,
-            position:'right'
+            position:'bottom'
           },
           scales: {
             yAxes: [{
@@ -115,7 +118,7 @@ const StoreStat = () => {
         
        )
      }
-     if(PinSInfo?.length <4){
+     if(PinSInfo?.length <=4){
        return(
          <div>
 <Pie
@@ -157,23 +160,33 @@ const StoreStat = () => {
     
    }
     return (
-        <div className="sign__form">
-        {chartLayouts()}
-           {PinSInfo?.map(item=>{
-                
-                
-               return(
-                   <div className="sign__form" key={item._id}>
-                       <img src={item.image} alt="my garage"/>
-               <p>{item.productName}</p>
-               <p>${item.price}</p>
-               <p>{item.description}</p>
-               <p>{item.productStocks}</p>
-               <p>{item.sold}</p>
-               <Link to={`/productInfo/${item.productName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_pductFam',item._id)}}>View Product</Link>
-                   </div>
-               )
-           })}
+        <div className="stats">
+          {chartLayouts()}
+             <h1>Items</h1>
+                     <Table  size={'large'}  dataSource={PinSInfo} loading={loading}   pagination={false}  rowKey={PinSInfo=>(PinSInfo._id ||uuid() )} bordered={true} >
+                     <Column title={<p style={{fontSize:22, marginTop:20}}>Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} />
+                     <Column title={<p style={{fontSize:22, marginTop:20}}>Product Name</p>} dataIndex="productName" key={uuid()} responsive={['md']}  />
+                     <Column title={<p style={{fontSize:22, marginTop:20}}>Price</p>} dataIndex="price"   render={(dataIndex) => <p>$ {dataIndex}</p>} sorter={(a, b) => a.price - b.price}  key={uuid()}  />
+                        <Column title={<p style={{fontSize:22 , marginTop:20}}>Stocks</p>} dataIndex="productStocks"  sorter={(a, b) => a.productStocks - b.productStocks} key={uuid()}  />
+                        <Column title={<p style={{fontSize:22 , marginTop:20}}>Sales</p>} dataIndex="sold"  sorter={(a, b) => a.sold - b.sold} key={uuid()}   />
+                        <Column title={<p style={{fontSize:22 , marginTop:20}}>createdAt</p>} dataIndex="createdAt"  sorter={(a, b) => a.createdAt - b.createdAt} key={uuid()}   />
+                     </Table>
+                     <h1>Buyers</h1>
+                     <Table  size={'large'}  dataSource={yourStats} loading={loading}   pagination={false}  rowKey={yourStats=>(yourStats._id ||uuid() )} bordered={true} >
+                     <ColumnGroup title={<p style={{fontSize:25}}>Buyer</p>} >
+                     <Column title={<p style={{fontSize:18, marginTop:20}}>Image</p>}    render={(dataIndex) =>  <img src={dataIndex.buyer.profile} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} width={50}/>
+                     <Column title={<p style={{fontSize:18, marginTop:20}}>Name</p>} render={ (record) => record.buyer.name} key={uuid()}   />
+                     </ColumnGroup>
+                    <ColumnGroup title={<p style={{fontSize:25}}>Product Purchased</p>}>
+                    <Column title={<p style={{fontSize:18, marginTop:20}}>Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} width={30}/>
+                    <Column title={<p style={{fontSize:18, marginTop:20}}>Product Name</p>} dataIndex="name"  />
+                        <Column title={<p style={{fontSize:18, marginTop:20}}>Price</p>} dataIndex="price"  sorter={(a, b) => a.price - b.price} key={uuid()}  />
+                        <Column title={<p style={{fontSize:18, marginTop:20}}>Quantity</p>} dataIndex="quantity"  sorter={(a, b) => a.quantity - b.quantity} key={uuid()} width={10} />
+                        <Column title={<p style={{fontSize:18, marginTop:20}}>Purchased Date</p>} dataIndex="dateOfPurchase"  sorter={(a, b) => a.dateOfPurchase - b.dateOfPurchase} key={uuid()}   />
+                    </ColumnGroup>
+                     
+                     </Table>
+              
              
         </div>
     )

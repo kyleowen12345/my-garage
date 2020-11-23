@@ -27,7 +27,7 @@ const CartContent = () => {
       };
     return (
         <>
-        <h2 className='result'>Search Results for "{name}"</h2>
+        <h2 className='result' >Search Results for "{name}"</h2>
         {loading && <HomeLoading/>}
         <div className="home">
             
@@ -38,8 +38,7 @@ const CartContent = () => {
                 {searchStore && searchStore.length >0 && searchStore.slice(minValue,maxValue)?.map(item=>{
                     console.log(item.storeName)
                     return(
-                        <div key={item._id}>
-                        <Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}} >
+                        <Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}} key={item._id}>
 							<Card style={{ width: 300, marginTop: 16, borderRadius:10 ,border:'1px solid lightgray'}}   hoverable={true} bodyStyle={{display:'flex', flexDirection:'column',alignItems:'center'}} cover={<img src={item.storeBackgroundImage} alt="my-garage" />}>
 								<Meta
       avatar={<Avatar src={item.sellerName.profilePic} alt='mygarage' />}
@@ -49,7 +48,6 @@ const CartContent = () => {
 	<p style={{color:'#125FA7'}}>Visit</p>
 							</Card>
 							</Link>
-                            </div>
                     )
                 })}
 							

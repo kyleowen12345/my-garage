@@ -3,6 +3,7 @@ import axios from "axios";
 import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { Form, Input, Button} from 'antd';
+import QueueAnim from 'rc-queue-anim';
 
 const Reset = () => {
 	const [email, setEmail] = useState("");
@@ -28,7 +29,10 @@ const Reset = () => {
 			});
 	};
 	return (
-			
+		<div className="signContent">
+		<img src="https://res.cloudinary.com/kaking/image/upload/v1606036379/uj7islr70jtlfazl4hka.jpg" alt="weqweas"/>
+		<div className="signup">
+		<QueueAnim ease={[[0.42, 0, 0.58, 1], [0.42, 0, 0.58, 1]]}>
 		<Form
 		name="basic"
 		initialValues={{
@@ -37,6 +41,7 @@ const Reset = () => {
 		hideRequiredMark
 		onFinish={PostData}
 		layout={'vertical'}
+		key="a"
 	  >
 		  <h2>Enter You Email..</h2>
       <Form.Item
@@ -66,7 +71,9 @@ const Reset = () => {
      
 	  <Link to="/signin" className="sign__link">Go Back to Sign-in</Link>
 </Form>
-	
+</QueueAnim>
+</div>
+</div>
 	);
 };
 

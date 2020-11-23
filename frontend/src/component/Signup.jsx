@@ -3,6 +3,8 @@ import axios from "axios";
 import Loader from "react-loader-spinner";
 import { useHistory, Link } from "react-router-dom";
 import { Form, Input, Button,message} from 'antd';
+import {HomeOutlined} from '@ant-design/icons';
+import QueueAnim from 'rc-queue-anim';
 
 const Signup = () => {
 	const history = useHistory();
@@ -39,6 +41,10 @@ const Signup = () => {
 			});
 	};
 	return (
+    <div className="signContent">
+      <img src="https://res.cloudinary.com/kaking/image/upload/v1606038744/nop2b4gthru9gxf07vp4.jpg" alt="weqweas"/>
+    <div className="signup">
+    <QueueAnim ease={[[0.42, 0, 0.58, 1], [0.42, 0, 0.58, 1]]}>
 			<Form
       name="basic"
       initialValues={{
@@ -47,8 +53,9 @@ const Signup = () => {
       layout={"vertical"}
        onFinish={handlePost}
       hideRequiredMark
+      key="a"
     >
-   
+   <HomeOutlined onClick={()=>history.push('/')}style={{fontSize:30}}/>
     <h2>Sign Up</h2>
 	<Form.Item
         name="Username"
@@ -58,7 +65,7 @@ const Signup = () => {
             required: true,
             message: 'Please input your Username!',
           },{ pattern:new RegExp(/^[a-zA-Z0-9,. ]*$/),message:'Dont use special characters'},
-          {max:30, message:'Username should  contain up to 30 characters'}
+          {max:30, message:'Username should  contain up to 30  characters'}
         ]}
       >
         <Input  type="text" onChange={(e) => setName(e.target.value)} placeholder='Please enter your name' allowClear={true}/>
@@ -72,7 +79,7 @@ const Signup = () => {
             required: true,
             message: 'Please input your Email!',
           },{type:'email', message: "e-mail is not valid!"},
-          {max:30, message:'Email should  contain up to 30 characters'}
+          {min:5, max:30, message:'Email should  contain 5-30  characters'}
         ]}
       >
         <Input  type="email" onChange={(e) => setEmail(e.target.value)} placeholder='Please enter your email' allowClear={true}/>
@@ -86,7 +93,7 @@ const Signup = () => {
             required: true,
             message: 'Please input your password!',
           },{pattern:new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),message:"Minimum eight characters, at least one uppercase letter, one lowercase letter and one number"},
-          {max:30, message:'Password should  contain up to 30 characters'}
+          {min:5,max:30, message:'Password should  contain 5-30 characters'}
         ]}
      
       >
@@ -111,14 +118,16 @@ const Signup = () => {
        </div>
 				) : (
       	<Button type="primary" htmlType="submit"  >
-        Login
+        Sign-Up
       </Button>
 				)}
 	  <Link to="/signin" className="sign__link">
 					Already Have an Account?
 				</Link>
     </Form>
-		
+		</QueueAnim>
+    </div>
+    </div>
 	);
 };
 

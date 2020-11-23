@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { getAllPInS } from '../actions/productAction';
 import { addtocartact } from '../actions/cartActions';
 import { useAlert } from 'react-alert'
-import { message,Spin,Dropdown,Menu,Card,Button,Image,Drawer,Empty,Popconfirm } from 'antd';
+import { message,Dropdown,Menu,Card,Button,Image,Drawer,Empty,Popconfirm } from 'antd';
 import { SettingOutlined,BarChartOutlined,PictureOutlined,AuditOutlined,AppstoreAddOutlined,DeleteOutlined,ShoppingCartOutlined } from '@ant-design/icons';
 import UpdateStore from './UpdateStore';
 import StoreImage from './StoreImage';
@@ -16,6 +16,8 @@ import CreateProduct from './CreateProduct';
 import ProductImage from './ProductImage';
 import Product from './Product';
 import UpdateProduct from './UpdateProduct';
+import StoreInfoLoad from './StoreInfoLoad';
+import Media from 'react-media';
 
 
 
@@ -153,12 +155,11 @@ const onCloseProductImg =() => {
  console.log(PinSInfo)
  console.log(userInfo?._id,getStore?.sellerName._id)
  console.log(getStore)
+ console.log(window.innerWidth)
     return (
         <>
             {loading ? (
-                <div className="StoreInfo__loader">
-<Spin size="large"  tip={`Finding Store..`}/>
-                </div>
+                <StoreInfoLoad/>
 			):(
                 <div className="Store__info">
             <div className="Store__fulldetails">
@@ -176,6 +177,7 @@ const onCloseProductImg =() => {
                 <p><span>Store Owner:</span>   {getStore?.sellerName.name}</p> 
                 </div>
                 {/* Store */}
+                
                 <Drawer
           title="Update Store"
           width={600}
@@ -206,7 +208,7 @@ const onCloseProductImg =() => {
         </Drawer>
         <Drawer
           title="Add Photo for the Product"
-		  height={200}
+          height={200}
           onClose={onCloseProductImg}
           visible={productchildren}
           placement={'top'}
@@ -215,7 +217,7 @@ const onCloseProductImg =() => {
         </Drawer>
         <Drawer
           title={productName}
-		  width={600}
+		  width={window.innerWidth < 1000 ? 300:600}
           onClose={onCloseProducInfo}
           visible={producInfo}
           placement={'right'}
@@ -250,9 +252,9 @@ const onCloseProductImg =() => {
                <p>${item.price}</p>
               
                {userInfo?._id !==getStore?.sellerName._id &&<Button onClick={handleAdd} ><ShoppingCartOutlined />Add to cart</Button>}
-               <h2 onClick={()=>{ Cookie.set('_pductFam',item._id)
+               <h3 onClick={()=>{ Cookie.set('_pductFam',item._id)
     setProductInfo(true)
-    setProductName(item.productName)}} className='product__clicked'>View More Info</h2>
+    setProductName(item.productName)}} className='product__clicked'>View More Info</h3>
   </Card>
         
                    </div>

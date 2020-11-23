@@ -43,7 +43,7 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
         dispatch(addtocartact(productId,token,message,productInfo?.productName))
     }
     return(
-<div className="sign__form">
+<div className="ProductInfo">
     {loading ?(<div className="sign__loader">
 					<Loader type="TailSpin" color="#ff4d4d" height={50} width={50} />
 				</div>): error ? (

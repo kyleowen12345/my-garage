@@ -29,7 +29,7 @@ const handleChange = (item) => {
         <div>
             {/* <ImageCarousel/> */}
 		<OptionCarousel/>
-  <h1>Results for {name}</h1>
+  <h1 className="result">Results for {name}</h1>
   {storeTypeOps?.length < 1 && <Empty description={'Products unavailable'} />}
         {loader ? <HomeLoading/>:<div className="home">
 					{storeTypeOps && storeTypeOps.length >0 && storeTypeOps.slice(minValue,maxValue).map(item=>{

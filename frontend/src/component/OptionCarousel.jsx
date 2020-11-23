@@ -1,7 +1,7 @@
 import React from 'react'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import { getStoreType } from '../actions/storeActions';
 import {useHistory} from 'react-router-dom'
 
@@ -15,19 +15,26 @@ const OptionCarousel = () => {
         superLargeDesktop: {
           // the naming can be any, depends on you.
           breakpoint: { max: 4000, min: 3000 },
-          items: 5
+          items: 7
         },
         desktop: {
           breakpoint: { max: 3000, min: 1024 },
-          items: 3
+          items: 6,
+          slidesToSlide: 3
         },
         tablet: {
-          breakpoint: { max: 1024, min: 464 },
-          items: 2
+          breakpoint: { max: 1024, min: 900 },
+          items: 5,
         },
         mobile: {
-          breakpoint: { max: 464, min: 0 },
-          items: 1
+          breakpoint: { max: 900, min: 500 },
+          items: 4,
+          slidesToSlide: 2
+        },
+       smobile: {
+          breakpoint: { max:500, min: 0 },
+          items: 2,
+          slidesToSlide: 2
         }
       };
       
@@ -53,7 +60,7 @@ const OptionCarousel = () => {
   
     return (
       <>
-      <h1>Categories</h1>
+      <h1 style={{textAlign:'center'}}>Categories</h1>
         <Carousel responsive={responsive} centerMode={true} infinite={true} >
   { Options.map(item=>{
     const handleSelect=()=>{
@@ -66,7 +73,7 @@ const OptionCarousel = () => {
       onClick={handleSelect}
       className='options'
       >
-        <img alt="example" src={item.img} style={{width:430,height:200}}/>
+        <img alt="example" src={item.img} />
         
         <h3>{item.optionName}</h3> 
       

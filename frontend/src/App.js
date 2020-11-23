@@ -21,6 +21,9 @@ import History from './component/History'
 import StoreStat from "./component/StoreStat";
 import SearchStore from './component/SearchStore'
 import StoreType from "./component/StoreType";
+import Footer from "./component/Footer";
+
+
 
 
 function App() {
@@ -28,16 +31,31 @@ function App() {
 	const { userInfo } = userSignin;
 	return (
 		<BrowserRouter>
-			<Navbar />
+			
 			<Switch>
+			<Route exact path="/" >
+			<Navbar />
+				<Home/>
+				<Footer/>
+				</Route>
+				
+			<Route path="/storetype/:name" component={StoreType}>
+			<Navbar />
+				<StoreType/>
+				</Route>
+			<Route path="/storeInfo" component={StoreInfo}>
+			<Navbar />
+				<StoreInfo/>
+			</Route>
+			<Route path="/searchResult/:name" component={SearchStore}>
+			<Navbar />
+				<SearchStore/>
+			</Route>
+                                   	
 				{userInfo ? (
 					<>
-						<Route exact path="/">
-							<Home />
-						</Route>
-						<Route path="/storetype/:name">
-                            <StoreType/>
-						</Route>
+						
+						
 						<Route path="/profile">
 							<Profile />
 						</Route>
@@ -46,15 +64,12 @@ function App() {
 						 </Route>
 						 <Route path="/Seller">
                                 <Seller/>
-						 </Route><Route path="/Store">
+						 </Route>
+						 <Route path="/Store">
                                 <Store/>
 						 </Route>
-						 <Route path="/searchResult/:name">
-                               <SearchStore/>
-						 </Route>
-						 <Route path="/storeInfo">
-                              <StoreInfo/>
-						 </Route>
+						 
+						 
 						 <Route path="/updateProduct">
 							 <UpdateProduct/>
 						 </Route>
