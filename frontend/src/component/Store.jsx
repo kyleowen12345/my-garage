@@ -6,6 +6,7 @@ import Cookie from "js-cookie";
 import {Card,Spin,Avatar,Drawer } from 'antd';
 import CreateStores from './CreateStores'
 import StoreImage from './StoreImage'
+import HomeLoading from './HomeLoading';
 
 const Store = () => {
     const [drawer,setDrawer]=useState(false)
@@ -47,7 +48,7 @@ const Store = () => {
         <h1>My Stores</h1>
                <p onClick={showDrawer}>Create Store</p>
         <div className="home">
-             {loading ?  (<Spin size="large" style={{ marginTop:50, marginLeft:600}} tip='Gathering Stores .....'/>): error ? <p>{error}</p>:<>
+             {loading ?  <HomeLoading/>: error ? <p>{error}</p>:<>
              <Drawer
           title="Create Store"
           width={600}

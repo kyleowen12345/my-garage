@@ -11,17 +11,15 @@ import Reset from "./component/Reset";
 import Newpassword from "./component/Newpassword";
 import Profile from "./component/Profile";
 import Seller from "./component/Seller";
-// import UpdateProfile from "./component/UpdateProfile";
-import UpdateProfilePic from "./component/UpdateProfilePic";
 import Store from "./component/Store";
 import StoreInfo from "./component/StoreInfo";
-import UpdateProduct from "./component/UpdateProduct";
 import Cart from "./component/Cart";
 import History from './component/History'
 import StoreStat from "./component/StoreStat";
 import SearchStore from './component/SearchStore'
 import StoreType from "./component/StoreType";
 import Footer from "./component/Footer";
+
 
 
 
@@ -54,32 +52,26 @@ function App() {
                                    	
 				{userInfo ? (
 					<>
-						
-						
 						<Route path="/profile">
+						<Navbar />
 							<Profile />
 						</Route>
-						 <Route path="/updatePhoto">
-                              <UpdateProfilePic/>
-						 </Route>
 						 <Route path="/Seller">
                                 <Seller/>
 						 </Route>
 						 <Route path="/Store">
+						 <Navbar />
                                 <Store/>
 						 </Route>
-						 
-						 
-						 <Route path="/updateProduct">
-							 <UpdateProduct/>
-						 </Route>
 						 <Route path="/cart">
+						 <Navbar />
 							 <Cart/>
 						 </Route>
 						 <Route path="/history">
                              <History/>
 						 </Route>
 						 <Route path="/StoreStats">
+						 <Navbar />
                              <StoreStat/>
 						 </Route>
 					</>

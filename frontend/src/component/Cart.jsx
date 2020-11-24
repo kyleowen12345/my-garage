@@ -77,17 +77,17 @@ const Cart = () => {
             {error ? (
 				<div>{error}</div>
             ):(
-                <Table size={'large'}  dataSource={op} loading={loading}   pagination={false}  rowKey={op=>(op._id ||uuid() )} bordered={true}>
-                    <Column title={<p style={{fontSize:22, marginTop:20}}>Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} />
-                        <Column title={<p style={{fontSize:22, marginTop:20}}>Product Name</p>} dataIndex="productName" key={uuid()}  />
-            <Column title={<p style={{fontSize:22, marginTop:20}}>Price</p>} dataIndex="price"   render={(dataIndex) => <p>$ {dataIndex}</p>} sorter={(a, b) => a.price - b.price}  key={uuid()}  />
-                        <Column title={<p style={{fontSize:22 , marginTop:20}}>Quantity</p>} dataIndex="quantity"  sorter={(a, b) => a.quantity - b.quantity} key={uuid()}   />
-                        <Column title={<p style={{fontSize:22, marginTop:20}}>Remove</p>} dataIndex="Operation"  render={(text, record) =>
+                <Table size={'large'}  dataSource={op} loading={loading}   pagination={{ pageSize: 5 }}  rowKey={op=>(op._id ||uuid() )} bordered={true} scroll={{ x: true }}>
+                    <Column title={<p className="Cart__title">Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:window.innerWidth < 600 ? 30:100, height:window.innerWidth < 800 ? 40:100, objectFit:'contain'}}/>}  key={uuid()} />
+                        <Column title={<p className="Cart__title">Product Name</p>} render={(record)=><p className="Cart__productName">{record.productName}</p>} key={uuid()}  />
+            <Column title={<p className="Cart__title">Price</p>} dataIndex="price"   render={(dataIndex) => <p className='Cart__price'>$ {dataIndex}</p>} sorter={(a, b) => a.price - b.price}  key={uuid()}  />
+            <Column title={<p className="Cart__title">Quantity</p>} render={(record)=> <p className='Cart__price'>{record.quantity}</p>}  sorter={(a, b) => a.quantity - b.quantity} key={uuid()}   />
+                        <Column title={<p className="Cart__title">Remove</p>} dataIndex="Operation"  render={(text, record) =>
           op.length >= 1 ? (
             <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record?._id,record?.productName)} key={uuid()} >
-              <DeleteOutlined style={{color:'red', fontSize:20}} key={uuid()} />
+              <DeleteOutlined style={{color:'red'}} key={uuid()} />
             </Popconfirm>
-          ) : null} width={50} key={uuid()}  />
+          ) : null} width={10} key={uuid()}  />
                     </Table>
                     
             )}

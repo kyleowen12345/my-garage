@@ -88,7 +88,8 @@ label {
 	font-weight: 600 !important;
 }
 .sign__loader {
-	margin-left: 220px !important;
+	display: flex;
+	justify-content: center;
 }
 
 /* Navbar */
@@ -199,7 +200,7 @@ header {
 	display: grid;
 	grid-template-columns: auto auto auto;
 	column-gap: 30px;
-	padding: 20px 50px;
+	padding: 0px 50px;
 }
 
 /* home image */
@@ -284,6 +285,7 @@ header {
 	grid-template-columns: auto auto;
 	grid-column-gap: 200px;
 	margin-bottom: 100px;
+	padding: 10px;
 }
 .Store__details > p > span {
 	font-weight: bold;
@@ -315,6 +317,13 @@ header {
 	border: 1px solid rgb(192, 192, 192) !important;
 	border-radius: 2px !important;
 }
+/* product load */
+.ProductInfo > .ant-skeleton {
+	margin-bottom: 20px !important;
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+}
 .Products > .ant-card {
 	margin-top: 0 !important;
 	width: 250px !important;
@@ -343,7 +352,24 @@ header {
 /* Product Info */
 /* Product Info */
 .ProductInfo {
-	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+/* Cart */
+/* Cart */
+/* Cart */
+/* Cart */
+/* Cart */
+.Cart__productName {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 150px;
+}
+.Cart__title {
+	font-size: 22px;
+	margin-top: 20px;
 }
 
 /* Sign up */
@@ -423,6 +449,13 @@ header {
 	.Store__details {
 		grid-template-columns: auto;
 	}
+	.Cart__title {
+		font-size: 15px;
+	}
+	.Cart__productName {
+		font-size: 10px;
+		max-width: 30px;
+	}
 }
 @media only screen and (max-width: 900px) {
 	.signup {
@@ -496,8 +529,11 @@ header {
 	.result {
 		font-size: 15px;
 	}
+	.Stats__info {
+		font-size: 10px;
+	}
 }
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
 	.options > img {
 		width: 100px;
 		height: 80px;
@@ -507,5 +543,25 @@ header {
 	}
 	.suggest {
 		width: 75vw;
+	}
+	.ant-table-tbody > tr > td {
+		width: 30px !important;
+	}
+	.Cart__title {
+		font-size: 10px;
+		/* white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 20px; */
+	}
+	.ant-table-column-sorters {
+		padding: 10px !important;
+	}
+	.Cart__productName {
+		font-size: 9px;
+		max-width: 30px;
+	}
+	.Cart__price {
+		font-size: 8px;
 	}
 }

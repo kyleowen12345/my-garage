@@ -2,14 +2,13 @@ import React,{ useEffect,useState } from 'react'
 import { useSelector,useDispatch } from "react-redux";
 import { getSingleStore } from '../actions/storeActions';
 import Cookie from "js-cookie";
-import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { getAllPInS } from '../actions/productAction';
 import { addtocartact } from '../actions/cartActions';
 import { useAlert } from 'react-alert'
 import { message,Dropdown,Menu,Card,Button,Image,Drawer,Empty,Popconfirm } from 'antd';
-import { SettingOutlined,BarChartOutlined,PictureOutlined,AuditOutlined,AppstoreAddOutlined,DeleteOutlined,ShoppingCartOutlined } from '@ant-design/icons';
+import { BarChartOutlined,PictureOutlined,AuditOutlined,AppstoreAddOutlined,DeleteOutlined,ShoppingCartOutlined,EditOutlined } from '@ant-design/icons';
 import UpdateStore from './UpdateStore';
 import StoreImage from './StoreImage';
 import CreateProduct from './CreateProduct';
@@ -17,11 +16,6 @@ import ProductImage from './ProductImage';
 import Product from './Product';
 import UpdateProduct from './UpdateProduct';
 import StoreInfoLoad from './StoreInfoLoad';
-import Media from 'react-media';
-
-
-
-
 
 const StoreInfo = () => {
     const history=useHistory()
@@ -41,8 +35,6 @@ const StoreInfo = () => {
     const { PinSInfo } = getStoreProds;
     const dispatch = useDispatch();
     const storeNameFam=Cookie.getJSON("_stohremate");
-    
-  console.log(getStore?._id)
   const storeId=getStore?._id
 
   useEffect(()=>{
@@ -110,46 +102,58 @@ const onCloseProductImg =() => {
             dispatch(getSingleStore(storeNameFam))
                   };   
                 //   Product Info
-        const onCloseProducInfo=()=>{
-            setProductInfo(false)
+const onCloseProducInfo=()=>{
+          setProductInfo(false)
         }
         // Update Product
-        const showUpdateProduct=()=>{
-            setUpdateProduct(true)
+const showUpdateProduct=()=>{
+  setUpdateProduct(true)
         }
-        const closeUpdateProduct=()=>{
-            setUpdateProduct(false)
-            setProductInfo(false)
-            dispatch(getAllPInS(storeId))
+const closeUpdateProduct=()=>{
+    setUpdateProduct(false)
+    setProductInfo(false)
+    dispatch(getAllPInS(storeId))
         }
         // Delete Product
-        const deleteClose=()=>{
-            setProductInfo(false)
-            dispatch(getAllPInS(storeId))
+const deleteClose=()=>{
+      setProductInfo(false)
+     dispatch(getAllPInS(storeId))
         }
 
     // Dropdown
-    const menu = (
+    const editmenu=(
         <Menu>
           <Menu.Item key={1}>
           <p onClick={showDrawerimg}><PictureOutlined />  Update Store Image</p>
           </Menu.Item>
-          <Menu.Item key={2}>
-              <p>
-              <Link to='/StoreStats' style={{color:'black'}}><BarChartOutlined />  Store Stat-sheet</Link>
-              </p>
-          </Menu.Item>
           <Menu.Item key={3}>
           <p onClick={showDrawer}><AuditOutlined />  Update Store</p>
           </Menu.Item>
+        </Menu>
+    )
+    const Statmenu = (
+        <Menu>
+          <Menu.Item key={2}>
+              <p onClick={()=>history.push('/StoreStats')}>
+             <BarChartOutlined  />  Store Stat-sheet
+              </p>
+          </Menu.Item>
+        </Menu>
+      )
+      const Addmenu = (
+        <Menu>
           <Menu.Item key={4}>
           <p onClick={showDrawerProduct}><AppstoreAddOutlined /> Add product</p>
           </Menu.Item>
+        </Menu>
+      )
+      const Deletemenu = (
+        <Menu>
           <Menu.Item key={5}>
           <Popconfirm title="Sure to delete?" onConfirm={handleDelete}  >
           <p ><DeleteOutlined />  Remove Store</p>
             </Popconfirm>
-          </Menu.Item>
+          </Menu.Item> 
         </Menu>
       )
  console.log(PinSInfo)
@@ -165,9 +169,16 @@ const onCloseProductImg =() => {
             <div className="Store__fulldetails">
                 <Image src={getStore?.storeBackgroundImage} alt="my-garage"  />
                 <h1>  {getStore?.storeName}</h1>
-                {userInfo?._id ===getStore?.sellerName._id&& <Dropdown overlay={menu} placement="bottomCenter" arrow trigger={['click']} key={1}>
-      <SettingOutlined key="edit" style={{fontSize:30, color:'black', marginRight:'auto'}}/>
-				</Dropdown>	}
+                {userInfo?._id ===getStore?.sellerName._id&&<div> <Dropdown overlay={Statmenu} placement="bottomCenter" arrow trigger={['click']} key={1}>
+      <BarChartOutlined key="edit" style={{fontSize:25, margin:20}}/>
+				</Dropdown> 
+        <Dropdown overlay={editmenu} placement="bottomCenter" arrow trigger={['click']} key={2}><EditOutlined style={{fontSize:25,margin:20}}/></Dropdown>
+         <Dropdown overlay={Addmenu} placement="bottomCenter" arrow trigger={['click']} key={3}>
+      <AppstoreAddOutlined key="edit"style={{fontSize:25,margin:20}} />
+				</Dropdown>
+         <Dropdown overlay={Deletemenu} placement="bottomCenter" arrow trigger={['click']} key={4}>
+      <DeleteOutlined key="edit" style={{fontSize:25,margin:20}}/>
+				</Dropdown></div>	}
                <div className="Store__details" >
                 <p><span>StoreName:</span>   {getStore?.storeName}</p>
                 <p><span>Store Type:</span>   {getStore?.storeType}</p>
@@ -180,7 +191,7 @@ const onCloseProductImg =() => {
                 
                 <Drawer
           title="Update Store"
-          width={600}
+          width={window.innerWidth < 1000 ? 300:600}
           onClose={onClose}
 		  visible={drawer}
 		  placement={'right'}
@@ -189,7 +200,7 @@ const onCloseProductImg =() => {
         </Drawer>
 		<Drawer
           title="Update Store Picture"
-		  height={200}
+          height={window.innerWidth < 1000 ? 250:200}
           onClose={onCloseImg}
           visible={imageDrawer}
 		  placement={'top'}
@@ -199,7 +210,7 @@ const onCloseProductImg =() => {
         {/* product */}
         <Drawer
           title="Create Product"
-		  width={600}
+		  width={window.innerWidth < 1000 ? 300:600}
           onClose={onCloseProduct}
           visible={productDrawer}
 		  placement={'right'}
@@ -208,7 +219,7 @@ const onCloseProductImg =() => {
         </Drawer>
         <Drawer
           title="Add Photo for the Product"
-          height={200}
+          height={window.innerWidth < 1000 ? 250:200}
           onClose={onCloseProductImg}
           visible={productchildren}
           placement={'top'}
@@ -222,11 +233,11 @@ const onCloseProductImg =() => {
           visible={producInfo}
           placement={'right'}
         >
-		<Product onClose={onCloseProducInfo} openChildred={showDrawerProductImg} openUpdateprod={showUpdateProduct} deleteClose={deleteClose}/>
+		<Product onClose={onCloseProducInfo} openChildred={showDrawerProductImg} openUpdateprod={showUpdateProduct} deleteClose={deleteClose} />
         </Drawer>
         <Drawer
           title='Update Product'
-		  width={500}
+		  width={window.innerWidth < 1000 ? 300:500}
           onClose={closeUpdateProduct}
           visible={updateProduct}
           placement={'right'}
@@ -256,17 +267,13 @@ const onCloseProductImg =() => {
     setProductInfo(true)
     setProductName(item.productName)}} className='product__clicked'>View More Info</h3>
   </Card>
-        
                    </div>
                )
            })}
                 </div>
-                
                 </div>
-                
                 </div>
             )}
-           
         </>
     )
 }

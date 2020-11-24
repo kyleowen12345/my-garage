@@ -86,7 +86,7 @@ const StoreStat = () => {
         </div>
       )
     }
-     if(PinSInfo?.length >4){
+     if(PinSInfo?.length >3){
        return (
          <div>
 <Bar
@@ -118,7 +118,7 @@ const StoreStat = () => {
         
        )
      }
-     if(PinSInfo?.length <=4){
+     if(PinSInfo?.length <=3){
        return(
          <div>
 <Pie
@@ -163,26 +163,26 @@ const StoreStat = () => {
         <div className="stats">
           {chartLayouts()}
              <h1>Items</h1>
-                     <Table  size={'large'}  dataSource={PinSInfo} loading={loading}   pagination={false}  rowKey={PinSInfo=>(PinSInfo._id ||uuid() )} bordered={true} >
-                     <Column title={<p style={{fontSize:22, marginTop:20}}>Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} />
-                     <Column title={<p style={{fontSize:22, marginTop:20}}>Product Name</p>} dataIndex="productName" key={uuid()} responsive={['md']}  />
-                     <Column title={<p style={{fontSize:22, marginTop:20}}>Price</p>} dataIndex="price"   render={(dataIndex) => <p>$ {dataIndex}</p>} sorter={(a, b) => a.price - b.price}  key={uuid()}  />
-                        <Column title={<p style={{fontSize:22 , marginTop:20}}>Stocks</p>} dataIndex="productStocks"  sorter={(a, b) => a.productStocks - b.productStocks} key={uuid()}  />
-                        <Column title={<p style={{fontSize:22 , marginTop:20}}>Sales</p>} dataIndex="sold"  sorter={(a, b) => a.sold - b.sold} key={uuid()}   />
-                        <Column title={<p style={{fontSize:22 , marginTop:20}}>createdAt</p>} dataIndex="createdAt"  sorter={(a, b) => a.createdAt - b.createdAt} key={uuid()}   />
+                     <Table  size={'large'}  dataSource={PinSInfo} loading={loading}   rowKey={PinSInfo=>(PinSInfo._id ||uuid() )} bordered={true} scroll={{ x: true }} pagination={{ pageSize: 5 }}>
+                     <Column title={<p className="Cart__title">Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} fixed={'left'}/>
+    <Column title={<p className="Cart__title">Product Name</p>} render={(record)=><p className="Stats__info">{record.productName}</p>} key={uuid()} />
+                     <Column title={<p className="Cart__title">Price </p>} dataIndex="price"   render={(dataIndex) => <p className="Stats__info">$ {dataIndex}</p>} sorter={(a, b) => a.price - b.price}  key={uuid()}  />
+    <Column title={<p className="Cart__title">Stocks</p>} render={(record)=><p className="Stats__info">{record.productStocks}</p>} sorter={(a, b) => a.productStocks - b.productStocks} key={uuid()}  />
+    <Column title={<p className="Cart__title">Sales</p>}  render={(record)=><p className="Stats__info">{record.sold}</p>} sorter={(a, b) => a.sold - b.sold} key={uuid()}   />
+    <Column title={<p className="Cart__title">createdAt</p>}  render={(record)=><p className="Stats__info"> {record.createdAt}</p>} sorter={(a, b) => a.createdAt - b.createdAt} key={uuid()}   />
                      </Table>
                      <h1>Buyers</h1>
-                     <Table  size={'large'}  dataSource={yourStats} loading={loading}   pagination={false}  rowKey={yourStats=>(yourStats._id ||uuid() )} bordered={true} >
-                     <ColumnGroup title={<p style={{fontSize:25}}>Buyer</p>} >
-                     <Column title={<p style={{fontSize:18, marginTop:20}}>Image</p>}    render={(dataIndex) =>  <img src={dataIndex.buyer.profile} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} width={50}/>
-                     <Column title={<p style={{fontSize:18, marginTop:20}}>Name</p>} render={ (record) => record.buyer.name} key={uuid()}   />
+                     <Table  size={'large'}  dataSource={yourStats} loading={loading}   scroll={{ x: true }} rowKey={yourStats=>(yourStats._id ||uuid() )} bordered={true} pagination={{ pageSize: 5 }}>
+                     <ColumnGroup title={<p >Buyer</p>} >
+                     <Column title={<p className="Cart__title">Image</p>}    render={(dataIndex) =>  <img src={dataIndex.buyer.profile} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} width={50} fixed={'left'}/>
+                     <Column title={<p className="Cart__title">Name</p>} render={ (record) => record.buyer.name} key={uuid()}   />
                      </ColumnGroup>
-                    <ColumnGroup title={<p style={{fontSize:25}}>Product Purchased</p>}>
-                    <Column title={<p style={{fontSize:18, marginTop:20}}>Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} width={30}/>
-                    <Column title={<p style={{fontSize:18, marginTop:20}}>Product Name</p>} dataIndex="name"  />
-                        <Column title={<p style={{fontSize:18, marginTop:20}}>Price</p>} dataIndex="price"  sorter={(a, b) => a.price - b.price} key={uuid()}  />
-                        <Column title={<p style={{fontSize:18, marginTop:20}}>Quantity</p>} dataIndex="quantity"  sorter={(a, b) => a.quantity - b.quantity} key={uuid()} width={10} />
-                        <Column title={<p style={{fontSize:18, marginTop:20}}>Purchased Date</p>} dataIndex="dateOfPurchase"  sorter={(a, b) => a.dateOfPurchase - b.dateOfPurchase} key={uuid()}   />
+                    <ColumnGroup title={<p >Product Purchased</p>}>
+                    <Column title={<p className="Cart__title">Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} width={30}/>
+                    <Column title={<p className="Cart__title">Product Name</p>} dataIndex="name"  />
+                        <Column title={<p className="Cart__title">Price</p>} dataIndex="price"  sorter={(a, b) => a.price - b.price} key={uuid()}  />
+                        <Column title={<p className="Cart__title">Quantity</p>} dataIndex="quantity"  sorter={(a, b) => a.quantity - b.quantity} key={uuid()} width={10} />
+                        <Column title={<p className="Cart__title">Purchased Date</p>} dataIndex="dateOfPurchase"  sorter={(a, b) => a.dateOfPurchase - b.dateOfPurchase} key={uuid()}   />
                     </ColumnGroup>
                      
                      </Table>
