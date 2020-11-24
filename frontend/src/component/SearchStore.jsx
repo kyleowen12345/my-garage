@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import { useSelector,useDispatch } from "react-redux";
-import {Card,Spin,Avatar,Pagination } from 'antd';
+import {Card,Avatar,Pagination } from 'antd';
 import { Link,useHistory, useParams } from "react-router-dom";
 import { getSearchedStore } from '../actions/storeActions';
 import Cookie from "js-cookie";

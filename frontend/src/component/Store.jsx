@@ -3,10 +3,12 @@ import { Link, } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { viewMyStore } from '../actions/storeActions';
 import Cookie from "js-cookie";
-import {Card,Spin,Avatar,Drawer } from 'antd';
+import {Card,Avatar,Drawer } from 'antd';
+import {PlusCircleOutlined } from '@ant-design/icons';
 import CreateStores from './CreateStores'
 import StoreImage from './StoreImage'
 import HomeLoading from './HomeLoading';
+
 
 const Store = () => {
     const [drawer,setDrawer]=useState(false)
@@ -45,13 +47,15 @@ const Store = () => {
               };   
     return (
         <>
+        <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
         <h1>My Stores</h1>
-               <p onClick={showDrawer}>Create Store</p>
+         <p onClick={showDrawer} style={{cursor:'pointer'}}><PlusCircleOutlined style={{fontSize:20,margin:10}} />Create Store</p>
+        
         <div className="home">
              {loading ?  <HomeLoading/>: error ? <p>{error}</p>:<>
              <Drawer
           title="Create Store"
-          width={600}
+          width={window.innerWidth < 1000 ? 300:600}
           onClose={onClose}
 		  visible={drawer}
 		  placement={'right'}
@@ -60,7 +64,7 @@ const Store = () => {
         </Drawer>
         <Drawer
           title="Create Store Picture"
-		  height={200}
+          height={window.innerWidth < 1000 ? 250:200}
           onClose={onCloseImg}
           visible={storechildren}
 		  placement={'top'}
@@ -82,6 +86,7 @@ const Store = () => {
              </>}
                
                
+        </div>
         </div>
         </>
     )

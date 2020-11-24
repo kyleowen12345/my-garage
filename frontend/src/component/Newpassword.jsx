@@ -4,6 +4,7 @@ import Loader from "react-loader-spinner";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Form, Input, Button} from 'antd';
+import QueueAnim from 'rc-queue-anim';
 
 const Newpassword = () => {
 	const [password, setPasword] = useState("");
@@ -41,7 +42,10 @@ const Newpassword = () => {
 	};
 
 	return (
-		
+		<div className="signContent">
+			<img src="https://res.cloudinary.com/kaking/image/upload/v1606036379/uj7islr70jtlfazl4hka.jpg" alt="weqweas"/>
+			<div className="signup">
+			<QueueAnim ease={[[0.42, 0, 0.58, 1], [0.42, 0, 0.58, 1]]}>
 			<Form
       name="basic"
       initialValues={{
@@ -92,7 +96,9 @@ const Newpassword = () => {
       
 				<Link to="/signin"  className="sign__link">Go Back to Sign-in</Link>
     </Form>
-		
+	</QueueAnim>
+	</div>
+</div>
 	);
 };
 

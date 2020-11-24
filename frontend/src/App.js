@@ -14,11 +14,11 @@ import Seller from "./component/Seller";
 import Store from "./component/Store";
 import StoreInfo from "./component/StoreInfo";
 import Cart from "./component/Cart";
-import History from './component/History'
 import StoreStat from "./component/StoreStat";
 import SearchStore from './component/SearchStore'
 import StoreType from "./component/StoreType";
 import Footer from "./component/Footer";
+
 
 
 
@@ -32,6 +32,7 @@ function App() {
 			
 			<Switch>
 			<Route exact path="/" >
+				
 			<Navbar />
 				<Home/>
 				<Footer/>
@@ -66,9 +67,6 @@ function App() {
 						 <Route path="/cart">
 						 <Navbar />
 							 <Cart/>
-						 </Route>
-						 <Route path="/history">
-                             <History/>
 						 </Route>
 						 <Route path="/StoreStats">
 						 <Navbar />
