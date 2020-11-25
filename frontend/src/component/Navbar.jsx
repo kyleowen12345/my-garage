@@ -151,7 +151,7 @@ console.log(filteredStore)
 			<div className="second_row">
 			<div className="searchbox">
 			<Search placeholder="Find Store..."  onSearch={onSelect}  onClick={()=>setSuggest(true)}  onChange={(e)=>{setSuggestContent(e.target.value)
-			setSuggest(true)}} loading={searchedStore.loading} enterButton/>
+			setSuggest(true)}} loading={searchedStore.loading} />
 				<div className="suggest" style={{display:suggest? 'block':'none'}} ref={ref}>
 			{suggestContent && <p>{filteredStore?.length} Results for "{suggestContent}"</p>}
 				{filteredStore?.length < 1 ? <Empty description={'Not Found'} /> :filteredStore?.map(item=>{

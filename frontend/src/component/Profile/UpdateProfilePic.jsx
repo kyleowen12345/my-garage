@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import {updateProfilePicAct} from '../actions/userActions'
+import {updateProfilePicAct} from '../../actions/userActions'
 import { message} from 'antd';
 
 const UpdateProfilePic = ({onClose}) => {

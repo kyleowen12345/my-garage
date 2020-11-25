@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { profile } from "../actions/userActions";
+import { profile } from "../../actions/userActions";
 import UpdateProfile from "./UpdateProfile";
 import UpdateProfilePic from "./UpdateProfilePic";
 import { Avatar,Card,Menu, Dropdown,Drawer } from 'antd';

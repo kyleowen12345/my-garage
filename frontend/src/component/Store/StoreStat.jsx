@@ -1,6 +1,6 @@
 import React,{ useEffect,useState } from 'react'
 import { useSelector,useDispatch } from "react-redux";
-import { getAllPInS } from '../actions/productAction';
+import { getAllPInS } from '../../actions/productAction';
 import Cookie from "js-cookie";
 import Axios from 'axios';
 import {Table} from 'antd';
@@ -8,6 +8,9 @@ import {Bar,Pie} from 'react-chartjs-2';
 import * as ChartDataLabels  from 'chartjs-plugin-datalabels';
 import { sum } from 'lodash';
 import {v4 as uuid} from 'uuid'
+import Moment from 'react-moment';
+
+
 
 
 const StoreStat = () => {
@@ -158,6 +161,7 @@ const StoreStat = () => {
        )
      }
     
+    
    }
     return (
         <div className="stats">
@@ -169,7 +173,7 @@ const StoreStat = () => {
                      <Column title={<p className="Cart__title">Price </p>} dataIndex="price"   render={(dataIndex) => <p className="Stats__info">$ {dataIndex}</p>} sorter={(a, b) => a.price - b.price}  key={uuid()}  />
     <Column title={<p className="Cart__title">Stocks</p>} render={(record)=><p className="Stats__info">{record.productStocks}</p>} sorter={(a, b) => a.productStocks - b.productStocks} key={uuid()}  />
     <Column title={<p className="Cart__title">Sales</p>}  render={(record)=><p className="Stats__info">{record.sold}</p>} sorter={(a, b) => a.sold - b.sold} key={uuid()}   />
-    <Column title={<p className="Cart__title">createdAt</p>}  render={(record)=><p className="Stats__info"> {record.createdAt}</p>} sorter={(a, b) => a.createdAt - b.createdAt} key={uuid()}   />
+    <Column title={<p className="Cart__title">createdAt</p>}  render={(record)=><p className="Stats__info"><Moment format="LLLL">{record.createdAt}</Moment></p>} sorter={(a, b) => a.createdAt - b.createdAt} key={uuid()}   />
                      </Table>
                      <h1>Buyers</h1>
                      <Table  size={'large'}  dataSource={yourStats} loading={loading}   scroll={{ x: true }} rowKey={yourStats=>(yourStats._id ||uuid() )} bordered={true} pagination={{ pageSize: 5 }}>
@@ -182,7 +186,7 @@ const StoreStat = () => {
                     <Column title={<p className="Cart__title">Product Name</p>} dataIndex="name"  />
                         <Column title={<p className="Cart__title">Price</p>} dataIndex="price"  sorter={(a, b) => a.price - b.price} key={uuid()}  />
                         <Column title={<p className="Cart__title">Quantity</p>} dataIndex="quantity"  sorter={(a, b) => a.quantity - b.quantity} key={uuid()} width={10} />
-                        <Column title={<p className="Cart__title">Purchased Date</p>} dataIndex="dateOfPurchase"  sorter={(a, b) => a.dateOfPurchase - b.dateOfPurchase} key={uuid()}   />
+                        <Column title={<p className="Cart__title">Purchased Date</p>} render={(record)=> <p className='Cart__price'><Moment format="LLLL">{record.dateOfPurchase}</Moment></p>}  sorter={(a, b) => a.dateOfPurchase - b.dateOfPurchase} key={uuid()}   />
                     </ColumnGroup>
                      
                      </Table>

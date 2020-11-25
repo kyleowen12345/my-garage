@@ -1,8 +1,9 @@
 import React,{ useEffect } from 'react'
 import { useSelector,useDispatch } from "react-redux";
-import { cartHistory } from '../actions/cartActions';
+import { cartHistory } from '../../actions/cartActions';
 import {v4 as uuid} from 'uuid'
 import {Table} from 'antd';
+import Moment from 'react-moment';
 
 const History = () => {
     const dispatch=useDispatch()
@@ -28,7 +29,7 @@ const History = () => {
                         <Column title={<p className="Cart__title"> Name</p>} render={(record)=><p className="Cart__productName">{record.name}</p>} key={uuid()}  />
             <Column title={<p className="Cart__title">Price</p>} dataIndex="price"   render={(dataIndex) => <p className='Cart__price'>$ {dataIndex}</p>} sorter={(a, b) => a.price - b.price}  key={uuid()}  />
             <Column title={<p className="Cart__title">Quantity</p>} render={(record)=> <p className='Cart__price'>{record.quantity}</p>}  sorter={(a, b) => a.quantity - b.quantity} key={uuid()}   />
-            <Column title={<p className="Cart__title">Purchased Date</p>}  render={(record)=> <p className='Cart__price'>{record.dateOfPurchase}</p>} sorter={(a, b) => a.dateOfPurchase - b.dateOfPurchase} key={uuid()}   />
+            <Column title={<p className="Cart__title">Purchased Date</p>}  render={(record)=> <p className='Cart__price'><Moment format="LLLL">{record.dateOfPurchase}</Moment></p>} sorter={(a, b) => a.dateOfPurchase - b.dateOfPurchase} key={uuid()}   />
                    </ColumnGroup>
                     
                     </Table>

@@ -65,7 +65,7 @@ const Signup = () => {
             required: true,
             message: 'Please input your Username!',
           },{ pattern:new RegExp(/^[a-zA-Z0-9,. ]*$/),message:'Dont use special characters'},
-          {max:30, message:'Username should  contain up to 30  characters'}
+          {min:5, max:30, message:'Username should  contain 5-30  characters'}
         ]}
       >
         <Input  type="text" onChange={(e) => setName(e.target.value)} placeholder='Please enter your name' allowClear={true}/>

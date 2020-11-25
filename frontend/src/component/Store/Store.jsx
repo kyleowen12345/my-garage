@@ -1,13 +1,13 @@
 import React,{ useEffect,useState } from 'react'
 import { Link, } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { viewMyStore } from '../actions/storeActions';
+import { viewMyStore } from '../../actions/storeActions';
 import Cookie from "js-cookie";
 import {Card,Avatar,Drawer } from 'antd';
 import {PlusCircleOutlined } from '@ant-design/icons';
 import CreateStores from './CreateStores'
 import StoreImage from './StoreImage'
-import HomeLoading from './HomeLoading';
+import HomeLoading from '../Home/HomeLoading';
 
 
 const Store = () => {
@@ -47,7 +47,7 @@ const Store = () => {
               };   
     return (
         <>
-        <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
+        <div style={{display:'flex',flexDirection:'column',alignItems:'center', padding:30}}>
         <h1>My Stores</h1>
          <p onClick={showDrawer} style={{cursor:'pointer'}}><PlusCircleOutlined style={{fontSize:20,margin:10}} />Create Store</p>
         

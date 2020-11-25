@@ -174,7 +174,9 @@ header {
 	display: grid;
 	grid-template-columns: auto auto auto;
 	column-gap: 30px;
+	row-gap: 30px;
 	padding: 0px 50px;
+	justify-content: center;
 }
 .home > a > .ant-card {
 	margin: 40px auto 0px auto !important;
@@ -192,9 +194,10 @@ header {
 /* home carousel */
 .carousel_image {
 	width: 100vw !important;
-	height: 500px;
+	height: 600px;
 	box-shadow: 0 4px 6px rgba(32, 33, 36, 0.28);
 }
+
 /* options shop */
 .react-multi-carousel-list {
 	height: 250px !important ;
@@ -224,7 +227,7 @@ header {
 }
 /* home loading */
 .ant-skeleton-image {
-	width: 500px !important;
+	width: 519px !important;
 	height: 500px !important;
 }
 /* searchcomponent */
@@ -311,6 +314,10 @@ header {
 .Products > .ant-card > .ant-card-cover > .ant-skeleton > .ant-skeleton-image {
 	width: 250px !important;
 	height: 300px !important;
+}
+.ProductInfo > .ant-skeleton > .ant-skeleton-image {
+	width: 200px !important;
+	height: 200px !important;
 }
 
 .Products > .ant-card .ant-card-body {
@@ -479,6 +486,9 @@ header {
 	.ant-card-head {
 		padding: 0px !important;
 	}
+	.carousel_image {
+		height: 400px;
+	}
 }
 @media only screen and (max-width: 900px) {
 	.signup {
@@ -555,6 +565,9 @@ header {
 	.Stats__info {
 		font-size: 10px;
 	}
+	.carousel_image {
+		height: 300px;
+	}
 }
 @media only screen and (max-width: 600px) {
 	.options > img {
@@ -589,5 +602,9 @@ header {
 	}
 	.Info {
 		grid-template-columns: auto;
+	}
+
+	.carousel_image {
+		height: 200px;
 	}
 }

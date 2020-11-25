@@ -42,6 +42,7 @@ router.post('/storeproduct',async(req,res)=>{
   const {storeName}=req.body
     try {
         let product = await Product.find({storeName:storeName}).populate('storeName','storeName _id socialMediaAcc').populate('storeOwner','name').sort({createdAt:'desc'})
+        product.createdAt=new Date()
         res.json(product)
     } catch (error) {
       console.log(error)  

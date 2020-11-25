@@ -1,29 +1,26 @@
 import React, {useEffect,useState} from 'react'
-import Loader from "react-loader-spinner";
 import Axios from "axios";
 import Cookie from "js-cookie";
 import { useSelector,useDispatch } from "react-redux";
-import {makeProductImage} from '../actions/productAction'
-import imageCompressor from 'browser-image-compression'
 import { message} from 'antd';
+import { newStoreImage } from '../../actions/storeActions';
+import imageCompressor from 'browser-image-compression'
 
-
-const ProductImage = ({onClose}) => {
+const StoreImage = ({onClose}) => {
     const [image, setImage] = useState("");
-    const [filler, setFiller] = useState('');
+	const [filler, setFiller] = useState('');
     const [photoload,setPhotoLoad]=useState(false)
     const [url, setUrl] = useState("");
     const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
-    const productNamefam=Cookie.getJSON('_pductFam')
-	const dispatch = useDispatch();
-	const token=userInfo?.token
-    useEffect(() => {
-		if (url) {
-			dispatch(makeProductImage(productNamefam,url,token,onClose))
-		}
-	},[dispatch,productNamefam,url,token,onClose]);
-
+	const storeNamefam=Cookie.getJSON('_stohremate')
+	const dispatch=useDispatch()
+   const token=userInfo?.token
+   useEffect(() => {
+	if(url){
+  dispatch(newStoreImage(url,storeNamefam,token,onClose,message))
+	} 
+},[dispatch,storeNamefam,token,url,onClose]);
     const postPhoto = (e) => {
 		e.preventDefault();
 		if(!image){
@@ -62,19 +59,18 @@ const ProductImage = ({onClose}) => {
 		  })
 		
 	};
+	
     return (
         <div className="sign__form">
-        <h2>Add a photo for your Product</h2>
-    <form >
-    <p>{filler}</p>
-                <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-                {photoload ? <div className="sign__loader">
-            <Loader type="TailSpin" color="#ff4d4d" height={50} width={50} />
-    </div>:<input type="submit" onClick={postPhoto} />}
-                
-            </form>
-</div>
+			<h2>Add a photo for your Store</h2>
+        <form >
+        <p>{filler}</p>
+                    <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+                    {photoload ?<p>Uploading...</p>:<input type="submit" onClick={postPhoto} />}
+                    
+                </form>
+    </div>
     )
 }
 
-export default ProductImage
+export default StoreImage

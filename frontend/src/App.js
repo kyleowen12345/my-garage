@@ -2,22 +2,23 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import 'antd/dist/antd.css';
-import Home from "./component/Home";
+import Home from "./component/Home/Home";
 import Navbar from "./component/Navbar";
-import Signin from "./component/Signin";
-import Signup from "./component/Signup";
+import Signin from "./component/Forms/Signin";
+import Signup from "./component/Forms/Signup";
 import { useSelector } from "react-redux";
-import Reset from "./component/Reset";
-import Newpassword from "./component/Newpassword";
-import Profile from "./component/Profile";
+import Reset from "./component/Forms/Reset";
+import Newpassword from "./component/Forms/Newpassword";
+import Profile from "./component/Profile/Profile";
 import Seller from "./component/Seller";
-import Store from "./component/Store";
-import StoreInfo from "./component/StoreInfo";
-import Cart from "./component/Cart";
-import StoreStat from "./component/StoreStat";
-import SearchStore from './component/SearchStore'
-import StoreType from "./component/StoreType";
+import Store from "./component/Store/Store";
+import StoreInfo from "./component/Store/StoreInfo";
+import Cart from "./component/Cart/Cart";
+import StoreStat from "./component/Store/StoreStat";
+import SearchStore from './component/Store/SearchStore'
+import StoreType from "./component/Store/StoreType";
 import Footer from "./component/Footer";
+
 
 
 
@@ -31,8 +32,8 @@ function App() {
 		<BrowserRouter>
 			
 			<Switch>
-			<Route exact path="/" >
 				
+			<Route exact path="/" >
 			<Navbar />
 				<Home/>
 				<Footer/>
@@ -58,6 +59,7 @@ function App() {
 							<Profile />
 						</Route>
 						 <Route path="/Seller">
+						 <Navbar />
                                 <Seller/>
 						 </Route>
 						 <Route path="/Store">

@@ -29,7 +29,7 @@ const Seller = () => {
     }
    
     return (
-      <Card title="Terms and Policies" style={{ width: 300, marginTop: 16 }} 	
+      <Card title="Terms and Policies" style={{ width:'100%', marginTop: 16,marginLeft:'auto',marginRight:'auto' }} 	
 				bodyStyle={{display:"flex", flexDirection:'column',alignItems:'center'}}>
             <h1>Accept Terms and policy</h1>
             <ul>

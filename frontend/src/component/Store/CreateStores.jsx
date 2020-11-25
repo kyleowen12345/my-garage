@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { makeStore } from '../actions/storeActions';
+import { makeStore } from '../../actions/storeActions';
 import Loader from "react-loader-spinner";
 import { Form, Input, Button,Select} from 'antd';
 import { useAlert } from 'react-alert'

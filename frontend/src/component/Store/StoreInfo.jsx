@@ -1,20 +1,20 @@
 import React,{ useEffect,useState } from 'react'
 import { useSelector,useDispatch } from "react-redux";
-import { getSingleStore } from '../actions/storeActions';
+import { getSingleStore } from '../../actions/storeActions';
 import Cookie from "js-cookie";
 import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { getAllPInS } from '../actions/productAction';
-import { addtocartact } from '../actions/cartActions';
+import { getAllPInS } from '../../actions/productAction';
+import { addtocartact } from '../../actions/cartActions';
 import { useAlert } from 'react-alert'
 import { message,Dropdown,Menu,Card,Button,Image,Drawer,Empty,Popconfirm } from 'antd';
 import { BarChartOutlined,PictureOutlined,AuditOutlined,AppstoreAddOutlined,DeleteOutlined,ShoppingCartOutlined,EditOutlined } from '@ant-design/icons';
-import UpdateStore from './UpdateStore';
-import StoreImage from './StoreImage';
-import CreateProduct from './CreateProduct';
-import ProductImage from './ProductImage';
-import Product from './Product';
-import UpdateProduct from './UpdateProduct';
+import UpdateStore from '../Store/UpdateStore';
+import StoreImage from '../Store/StoreImage';
+import CreateProduct from '../Product/CreateProduct';
+import ProductImage from '../Product/ProductImage';
+import Product from '../Product/Product';
+import UpdateProduct from '../Product/UpdateProduct';
 import StoreInfoLoad from './StoreInfoLoad';
 
 const StoreInfo = () => {
@@ -119,7 +119,8 @@ const deleteClose=()=>{
       setProductInfo(false)
      dispatch(getAllPInS(storeId))
         }
-
+        
+        const sold = PinSInfo?.map(i=>i.sold)
     // Dropdown
     const editmenu=(
         <Menu>
@@ -131,6 +132,7 @@ const deleteClose=()=>{
           </Menu.Item>
         </Menu>
     )
+   
     const Statmenu = (
         <Menu>
           <Menu.Item key={2}>
@@ -170,7 +172,7 @@ const deleteClose=()=>{
                 <Image src={getStore?.storeBackgroundImage} alt="my-garage"  />
                 <h1>  {getStore?.storeName}</h1>
                 {userInfo?._id ===getStore?.sellerName._id&&<div> <Dropdown overlay={Statmenu} placement="bottomCenter" arrow trigger={['click']} key={1}>
-      <BarChartOutlined key="edit" style={{fontSize:25, margin:20}}/>
+      <BarChartOutlined key="edit" style={{fontSize:25, margin:20, display:sold > 0?'block':'none'}}/>
 				</Dropdown> 
         <Dropdown overlay={editmenu} placement="bottomCenter" arrow trigger={['click']} key={2}><EditOutlined style={{fontSize:25,margin:20}}/></Dropdown>
          <Dropdown overlay={Addmenu} placement="bottomCenter" arrow trigger={['click']} key={3}>

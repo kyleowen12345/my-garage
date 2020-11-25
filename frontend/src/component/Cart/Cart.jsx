@@ -1,8 +1,8 @@
 import React from 'react'
 import { useEffect,useState } from 'react'
 import { useSelector,useDispatch } from "react-redux";
-import { buyCart, deleteItemFromCart, viewCart } from '../actions/cartActions';
-import Paypal from './Paypal';
+import { buyCart, deleteItemFromCart, viewCart } from '../../actions/cartActions';
+import Paypal from '../Paypal';
 import { Link, } from "react-router-dom";
 import {message,Table,Popconfirm} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -97,7 +97,6 @@ const Cart = () => {
            ontracError={transactionError}
            ontracCancel={transactionCancel}
            /></div>}
-           <Link to='/history'>items that you bought</Link>
         </div>
     )
 }

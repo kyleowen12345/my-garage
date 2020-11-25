@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { updateStore } from '../actions/storeActions';
+import { updateStore } from '../../actions/storeActions';
 import { useSelector, useDispatch } from "react-redux";
 import Cookie from "js-cookie";
 import { Form, Input, Button,message,Select} from 'antd';

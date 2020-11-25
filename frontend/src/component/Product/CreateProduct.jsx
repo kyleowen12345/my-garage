@@ -1,42 +1,43 @@
 import React, {useState} from 'react'
 import { useSelector, useDispatch } from "react-redux";
+import { makeProduct } from '../../actions/productAction';
 import Loader from "react-loader-spinner";
-import Cookie from "js-cookie";
-import { updateProductInfo } from '../actions/productAction';
-import { Form, Input, Button} from 'antd';
-import { useAlert } from 'react-alert'
+import { Form, Input, Button,message} from 'antd';
 
-
-const UpdateProduct = ({onClose}) => {
-    const alert = useAlert()
-    const [productName, setProductName] = useState("");
-	const [price, setPrice] = useState("");
-	const [productStocks, setProductStocks] = useState("");
-    const [description, setDescription] = useState("");
+const CreateProduct = ({openChildred,onClose}) => {
+    const [productName,setProductName]=useState('')
+    const [price,setPrice]=useState('')
+    const [productStocks,setProductStocks]=useState('')
+    const [description,setDescription]=useState('')
+    const dispatch = useDispatch();
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
-    const updateProduct = useSelector((state) => state.updateProduct);
-    const { loading ,error } = updateProduct;
-    const dispatch = useDispatch();
-    const userToken=userInfo?.token
-    const productNameFam=Cookie.getJSON("_pductFam");
-    const storeNameFam=Cookie.getJSON("_stohremate")
-    const handlePost=()=>{
-        
-        dispatch(updateProductInfo(productName,price,productStocks,description,storeNameFam,productNameFam,userToken,onClose,alert))
+    const singleStore = useSelector((state) => state.singleStore);
+    const { getStore } = singleStore;
+    const createProduct = useSelector((state) => state.createProduct);
+    const {  loading,error } = createProduct;
+ const storeName=  getStore?._id
+ const storeOwner= userInfo?._id
+ const token = userInfo?.token
+ 
+
+    const handleCreate=()=>{
+      dispatch(makeProduct(productName,price,productStocks,description,storeName,storeOwner,token,openChildred,message))
     }
+    
+
     return (
         <Form
       name="basic"
       initialValues={{
         remember: true,
       }}
-     layout={'vertical'}
-     onFinish={handlePost}
-     hideRequiredMark
+      layout={"vertical"}
+      onFinish={handleCreate}
+      hideRequiredMark
     >
    
-    <h2>Update Product</h2>
+    <h2>Create Product</h2>
 	<Form.Item
         label="Product Name"
         name="productname"
@@ -44,10 +45,10 @@ const UpdateProduct = ({onClose}) => {
           {
             required: true,
             message: 'Please input your Product Name!',
-          },{ min: 5, max:50, message: 'Product Name must contain 5-50 characters.' }
+          },{ min: 5, message: 'Product Name must be minimum 5 characters.' },
         ]}
       >
-        <Input  type="text" onChange={(e) => setProductName(e.target.value)} placeholder='Please enter new product name' allowClear={true}/>
+        <Input  type="text" onChange={(e) => setProductName(e.target.value)} placeholder='Please enter your product name' allowClear={true}/>
       </Form.Item>
 	  <Form.Item
         label="Price"
@@ -68,7 +69,7 @@ const UpdateProduct = ({onClose}) => {
           {
             required: true,
             message: 'Please input your Product Stocks',
-          },
+          }
         ]}
       >
         <Input  type="number" onChange={(e) => setProductStocks(e.target.value)} placeholder='Please enter your product stocks' allowClear={true}/>
@@ -80,7 +81,7 @@ const UpdateProduct = ({onClose}) => {
           {
             required: true,
             message: 'Please input your Description!',
-          },{ min: 5,max:50, message: 'Description must be contain 5-50 characters.' }
+          },{ min: 5, message: 'Description must be minimum 5 characters.' },
         ]}
       >
         <Input type="text" onChange={(e) => setDescription(e.target.value)} placeholder='Please enter description' allowClear={true}/>
@@ -92,18 +93,16 @@ const UpdateProduct = ({onClose}) => {
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />
        </div>
 				) : (
-      	<Button type="primary" htmlType="submit"   >
-        Update Product
+      	<Button type="primary" htmlType="submit" >
+        Next
       </Button>
 				)}
       
-      <div style={{display:loading?'none':"block"}}>
-      <p onClick={onClose}>
-					Cancel
+	  <p onClick={onClose} style={{display:loading ? 'none':'block'}}>
+					Back
 				</p>
-      </div>
     </Form>
     )
 }
 
-export default UpdateProduct
+export default CreateProduct

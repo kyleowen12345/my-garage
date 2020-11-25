@@ -1,5 +1,5 @@
 import React, {  useState }  from 'react'
-import { updateProfile } from "../actions/userActions";
+import { updateProfile } from "../../actions/userActions";
 import Loader from "react-loader-spinner";
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Input, Button,message} from 'antd';

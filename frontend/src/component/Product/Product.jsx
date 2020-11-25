@@ -1,9 +1,9 @@
 import React,{ useEffect } from 'react'
 import { useSelector,useDispatch } from "react-redux";
-import { getProdct } from '../actions/productAction';
+import { getProdct } from '../../actions/productAction';
 import Cookie from "js-cookie";
 import Axios from 'axios';
-import { addtocartact } from '../actions/cartActions';
+import { addtocartact } from '../../actions/cartActions';
 import { Popconfirm, message,Dropdown,Menu} from 'antd';
 import ProductLoad from './ProductLoad';
 import { PictureOutlined,AuditOutlined,DeleteOutlined,EditOutlined,ShoppingCartOutlined } from '@ant-design/icons';
@@ -81,7 +81,7 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
     <p><span style={{fontWeight:'bold', fontSize:15}}>Description :</span> {productInfo?.description}</p>
     <p> <span style={{fontWeight:'bold', fontSize:15}}>Store Name :</span> {productInfo?.storeName.storeName}</p>
     <p><span style={{fontWeight:'bold', fontSize:15}}>Store Owner :</span> {productInfo?.storeOwner.name}</p>
-    {userInfo?._id !==productInfo?.storeOwner._id&&<button onClick={handleAdd}><ShoppingCartOutlined /> Add to cart</button>}
+   {userInfo?._id !==productInfo?.storeOwner._id&&<button onClick={handleAdd}><ShoppingCartOutlined /> Add to cart</button>}
                 </>
             )}
          
