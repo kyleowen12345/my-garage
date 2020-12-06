@@ -1,5 +1,4 @@
 import React, {useEffect,useState} from 'react'
-import Loader from "react-loader-spinner";
 import Axios from "axios";
 import Cookie from "js-cookie";
 import { useSelector,useDispatch } from "react-redux";

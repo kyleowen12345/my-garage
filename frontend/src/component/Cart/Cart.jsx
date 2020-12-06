@@ -3,7 +3,6 @@ import { useEffect,useState } from 'react'
 import { useSelector,useDispatch } from "react-redux";
 import { buyCart, deleteItemFromCart, viewCart } from '../../actions/cartActions';
 import Paypal from '../Paypal';
-import { Link, } from "react-router-dom";
 import {message,Table,Popconfirm} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import {v4 as uuid} from 'uuid'
@@ -68,7 +67,7 @@ const Cart = () => {
      }
     
     console.log(Total)
-    console.log(op)
+    console.log(op?.map(i=>i.storeName))
          const handleDelete=(productId,name)=>{
             dispatch(deleteItemFromCart(productId,token,name,message))
        }

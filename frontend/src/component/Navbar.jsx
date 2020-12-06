@@ -87,7 +87,7 @@ console.log(filteredStore)
 			<MenuOutlined onClick={showDrawer} style={{fontSize:30, color:'white', fontWeight:'bolder'}} />
 			
 			<Drawer
-          title={<img src={"https://res.cloudinary.com/kaking/image/upload/v1604108250/xyjvdcouhpdgau0hcfgn.png"} alt={'my-garage'} style={{width:70, objectFit:'contain'}}/>}
+          title='Logo'
 		  width={300}
           onClose={onClose}
 		  visible={drawer}

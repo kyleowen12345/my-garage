@@ -39,9 +39,8 @@ const StoreStat = () => {
             statSheet.push(data)
          })
      })
-     const yourStats=statSheet.filter(i=>i.storeName.includes(storeNameFam))
-     console.log(yourStats)
-     console.log(PinSInfo)
+     const yourStats=statSheet?.filter(i=>i.storeName?.includes(storeNameFam))
+     console.log(statSheet?.filter(i=>i.storeName?.includes(storeNameFam)))
      const productNames=PinSInfo?.map(item=>item.productName)
      const productSales=PinSInfo?.map(item=>item.sold)
      const state = {

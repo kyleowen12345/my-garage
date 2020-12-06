@@ -13,7 +13,6 @@ import cors from "cors";
 const app = express();
 dotenv.config();
 export const secret = process.env.JWT_SECRET;
-export const api_key = process.env.api_key;
 const corsOptions = {
 	origin: "http://localhost:3000",
 	optionsSuccessStatus: 200, // For legacy browser support
@@ -29,7 +28,7 @@ app.use(product)
 app.use(payments)
 // database
 app.get('/',(req,res)=>{
-	res.send('qweqwe')
+	res.send('qwseqwe')
 })
 
 
@@ -43,7 +42,6 @@ mongoose.connect(
 	},()=>
 		console.log("connected to mongoDB")
 );
-
 
 
 

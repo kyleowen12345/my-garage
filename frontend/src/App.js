@@ -18,6 +18,7 @@ import StoreStat from "./component/Store/StoreStat";
 import SearchStore from './component/Store/SearchStore'
 import StoreType from "./component/Store/StoreType";
 import Footer from "./component/Footer";
+// import HomeLoading from './component/Home/HomeLoading'
 
 
 
@@ -32,7 +33,9 @@ function App() {
 		<BrowserRouter>
 			
 			<Switch>
-				
+				{/* <Route path="/sa">
+					<HomeLoading/>
+				</Route> */}
 			<Route exact path="/" >
 			<Navbar />
 				<Home/>

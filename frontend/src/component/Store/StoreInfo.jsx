@@ -120,7 +120,7 @@ const deleteClose=()=>{
      dispatch(getAllPInS(storeId))
         }
         
-        const sold = PinSInfo?.map(i=>i.sold)
+
     // Dropdown
     const editmenu=(
         <Menu>
@@ -172,7 +172,7 @@ const deleteClose=()=>{
                 <Image src={getStore?.storeBackgroundImage} alt="my-garage"  />
                 <h1>  {getStore?.storeName}</h1>
                 {userInfo?._id ===getStore?.sellerName._id&&<div> <Dropdown overlay={Statmenu} placement="bottomCenter" arrow trigger={['click']} key={1}>
-      <BarChartOutlined key="edit" style={{fontSize:25, margin:20, display:sold > 0?'block':'none'}}/>
+      <BarChartOutlined key="edit" style={{fontSize:25, margin:20}}/>
 				</Dropdown> 
         <Dropdown overlay={editmenu} placement="bottomCenter" arrow trigger={['click']} key={2}><EditOutlined style={{fontSize:25,margin:20}}/></Dropdown>
          <Dropdown overlay={Addmenu} placement="bottomCenter" arrow trigger={['click']} key={3}>
