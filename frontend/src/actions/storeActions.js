@@ -4,7 +4,7 @@ import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_R
 
 
 
-const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,alert)=>async(dispatch)=>{
+const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,message)=>async(dispatch)=>{
     dispatch({ type: CREATE_STORE_REQUEST});
     try {
         const {data} = await axios.post('/createStore',{
@@ -17,7 +17,7 @@ const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAc
         })
         dispatch({ type: CREATE_STORE_SUCCESS, payload: data });
         Cookie.set('_stohremate', data?.store._id)
-        alert.success('Store Created')
+        message.success('Store Created')
         openChildred()
         
     } catch (error) {

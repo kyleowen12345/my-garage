@@ -26,8 +26,6 @@ const handleChange = (item) => {
   };
 
 	return (
-		
-		
 		<>
 		<ImageCarousel/>
 		<OptionCarousel/>
@@ -56,9 +54,6 @@ const handleChange = (item) => {
 					
 				</div>
 			)}
-			
-			
-		
 		{allStores && <Pagination
 		total={allStores?.length}
 		showTotal={total => `Total ${total} Stores`}

@@ -29,7 +29,6 @@ const Store = () => {
     // const userStoreName= yourStore.map(info=>{
     //    return info.contactNumber})
     const { Meta } = Card;
-    console.log(yourStore)
     const showDrawer = () => {
         setDrawer(true)
           };
@@ -83,9 +82,7 @@ const Store = () => {
                        
                    )
                })}
-             </>}
-               
-               
+             </>}    
         </div>
         </div>
         </>

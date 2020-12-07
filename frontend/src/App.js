@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import 'antd/dist/antd.css';
 import Home from "./component/Home/Home";
-import Navbar from "./component/Navbar";
+import Navbar from "./component/Navbar/Navbar";
 import Signin from "./component/Forms/Signin";
 import Signup from "./component/Forms/Signup";
 import { useSelector } from "react-redux";
@@ -18,7 +18,7 @@ import StoreStat from "./component/Store/StoreStat";
 import SearchStore from './component/Store/SearchStore'
 import StoreType from "./component/Store/StoreType";
 import Footer from "./component/Footer";
-// import HomeLoading from './component/Home/HomeLoading'
+
 
 
 

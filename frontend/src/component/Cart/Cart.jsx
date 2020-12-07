@@ -65,9 +65,6 @@ const Cart = () => {
     const transactionCancel=()=>{
         console.log('Transaction has been canceled')
      }
-    
-    console.log(Total)
-    console.log(op?.map(i=>i.storeName))
          const handleDelete=(productId,name)=>{
             dispatch(deleteItemFromCart(productId,token,name,message))
        }

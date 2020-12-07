@@ -3,12 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import Loader from "react-loader-spinner";
 import Cookie from "js-cookie";
 import { updateProductInfo } from '../../actions/productAction';
-import { Form, Input, Button} from 'antd';
-import { useAlert } from 'react-alert'
+import { Form, Input, Button,message} from 'antd';
 
 
 const UpdateProduct = ({onClose}) => {
-    const alert = useAlert()
     const [productName, setProductName] = useState("");
 	const [price, setPrice] = useState("");
 	const [productStocks, setProductStocks] = useState("");
@@ -23,7 +21,7 @@ const UpdateProduct = ({onClose}) => {
     const storeNameFam=Cookie.getJSON("_stohremate")
     const handlePost=()=>{
         
-        dispatch(updateProductInfo(productName,price,productStocks,description,storeNameFam,productNameFam,userToken,onClose,alert))
+        dispatch(updateProductInfo(productName,price,productStocks,description,storeNameFam,productNameFam,userToken,onClose,message))
     }
     return (
         <Form

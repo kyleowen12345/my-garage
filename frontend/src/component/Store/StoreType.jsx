@@ -15,7 +15,7 @@ const StoreType = () => {
     const dispatch = useDispatch();
     const history=useHistory()
     const {name}=useParams()
-    console.log(storeTypeOps)
+    
     const { Meta } = Card;
     useEffect(() => {
         dispatch(getStoreType(name,history))

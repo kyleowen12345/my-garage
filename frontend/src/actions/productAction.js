@@ -41,7 +41,7 @@ const getProdct=(_id)=>async(dispatch)=>{
     dispatch({ type: SINGLE_PRODUCT_FAIL, payload: error.response?.data.error });
   }
 }
-const updateProductInfo=(productName,price,productStocks,description,storeName,_id,token,onClose,alert)=>async(dispatch)=>{
+const updateProductInfo=(productName,price,productStocks,description,storeName,_id,token,onClose,message)=>async(dispatch)=>{
     dispatch({ type: UPDATE_PRODUCT_REQUEST });
     try {
         const {data}=await axios.post('/updateproduct',{
@@ -52,8 +52,7 @@ const updateProductInfo=(productName,price,productStocks,description,storeName,_
             },
         })
         dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: data });
-        console.log(data)
-        alert.success('Product Updated')
+        message.success('Product Updated')
         onClose()
     } catch (error) {
         dispatch({ type: UPDATE_PRODUCT_FAIL, payload: error.response?.data.error });
@@ -70,7 +69,6 @@ const makeProductImage=(_id,image,token,onClose)=>async(dispatch)=>{
             },
         })
         dispatch({ type: UPDATE_IMAGE_SUCCESS, payload: data });
-      console.log(data)
       onClose()
     } catch (error) {
         dispatch({ type: UPDATE_IMAGE_FAIL, payload: error.response?.data.error });

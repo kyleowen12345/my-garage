@@ -2,11 +2,10 @@ import React, {useState} from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { makeStore } from '../../actions/storeActions';
 import Loader from "react-loader-spinner";
-import { Form, Input, Button,Select} from 'antd';
-import { useAlert } from 'react-alert'
+import { Form, Input, Button,Select,message} from 'antd';
+
 
 const CreateStores = ({onClose,openChildred}) => {
-	const alert = useAlert()
     const [storeName, setStoreName] = useState("");
 	const [storeAddress, setStoreAddress] = useState("");
 	const [storeDescription, setStoreDescription] = useState("");
@@ -23,7 +22,7 @@ const CreateStores = ({onClose,openChildred}) => {
     const { Option } = Select;
 
     const handlePost=()=>{
-		dispatch(makeStore(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,alert))
+		dispatch(makeStore(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,message))
     }
     const onChange=(value)=> {
       setStoreType(value)

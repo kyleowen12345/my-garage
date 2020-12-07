@@ -1,16 +1,16 @@
 import React, { useEffect,useState,useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { viewCart } from '../actions/cartActions';
-import Cookies from "js-cookie";
-import { profile } from "../actions/userActions";
-import { allStoresViewer, getSearchedStore } from '../actions/storeActions'
-import { Drawer,message,Badge,Input,Empty } from 'antd';
-import { MenuOutlined,ProfileOutlined,HomeOutlined,ShopOutlined,LogoutOutlined,LoginOutlined,UserAddOutlined,ShoppingCartOutlined,SearchOutlined } from '@ant-design/icons';
+import { viewCart } from '../../actions/cartActions';
+import { profile } from "../../actions/userActions";
+import { allStoresViewer, getSearchedStore } from '../../actions/storeActions'
+import { message,Badge,Input,Empty } from 'antd';
+import { MenuOutlined,UserAddOutlined,ShoppingCartOutlined,SearchOutlined } from '@ant-design/icons';
 import {v4 as uuid} from 'uuid'
+import NavbarDrawer from "./NavbarDrawer";
 
 const Navbar = () => {
-	const history = useHistory();
+	const history = useHistory()
 	const [drawer,setDrawer]=useState(false)
 	const [suggest,setSuggest]=useState(false)
 	const [suggestContent,setSuggestContent]=useState('')
@@ -33,7 +33,6 @@ const Navbar = () => {
 		dispatch(viewCart(userToken))
 	},[dispatch,userToken,userInfo])
 
-	
 	useEffect(() => {
 	if (userInfo) {
 		dispatch(profile(userId, userToken))
@@ -78,64 +77,17 @@ useEffect(() => {
 	const onClose = () => {
 		setDrawer(false)
 		  };
-console.log(cartInfo)
-console.log(filteredStore)
+
 	return (
 		<header>
 			<div className="first__row"> 
 			<div className="header__right">
 			<MenuOutlined onClick={showDrawer} style={{fontSize:30, color:'white', fontWeight:'bolder'}} />
-			
-			<Drawer
-          title='Logo'
-		  width={300}
-          onClose={onClose}
-		  visible={drawer}
-		  placement={'left'}
-        >
-			{!userInfo ? (
-					<div className='nav__link'>
-							<Link className="header__link2" to="/signin" onClick={onClose}>
-							<LoginOutlined />	Signin
-							</Link>
-							<Link className="header__link2" to="/signup" onClick={onClose}>
-							<UserAddOutlined />	Signup
-							</Link>
-							<Link className="header__link2" to="/" onClick={onClose}>
-							<HomeOutlined />	Home 
-							</Link>
-					</div>
-				) : (
-						<div className='nav__link'> 
-                <Link className="header__link2" to="/" onClick={onClose}>
-				 <HomeOutlined />	Home
-				</Link>
-				<Link className="header__link2" to="/profile" onClick={onClose}>
-				<ProfileOutlined />	Profile
-				</Link>					
-				<Link className="header__link2" to={userProfileInfo?.Seller===false ? "/Seller": "/Store"} onClick={onClose} >
-				<ShopOutlined /> My	Store
-				</Link>													
-				<Link to="/signin"
-				className="header__link2"
-				onClick={() => {
-				onClose()
-				Cookies.remove("_plip");
-				message.success('logged out successfully')
-			    history.push("/");
-				window.location.reload();			
-				}}
-				>
-				<LogoutOutlined />	Logout
-				</Link>
-						</div>
-					)}
-        </Drawer>
-
+			{/* Drawer */}
+			<NavbarDrawer onClose={onClose} drawer={drawer} userInfo={userInfo} userProfileInfo={userProfileInfo} history={history}/>
 			</div>
 			<h2 style={{color:'white'}}>Logo</h2>
 			<div className="header__left">
-				
 				{userInfo ? <div className="cart__info">
 				<Badge style={{marginTop:10, backgroundColor:'green'}}  count={cartInfo?.cartDetail?.length === undefined ? cartInfo?.length:cartInfo?.cartDetail?.length} >
 				<Link to='/cart' >
@@ -145,7 +97,6 @@ console.log(filteredStore)
 				</div> :<div className="cart__info"><Link to='/signin' >
 				<UserAddOutlined style={{fontSize:40, color:'white'}}/>
 				</Link></div>}
-				
 			</div>
 			</div>
 			<div className="second_row">
@@ -161,10 +112,8 @@ console.log(filteredStore)
 				}
 					)}
 				</div>
-				
 				</div>
 			</div>
-			
 		</header>
 	);
 };

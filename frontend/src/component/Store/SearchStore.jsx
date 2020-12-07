@@ -18,7 +18,6 @@ const CartContent = () => {
     useEffect(()=>{
         dispatch(getSearchedStore(name,history))
     },[dispatch,name,history])
-    console.log(searchStore)
     // pagnation
     const numEachPage=6
     const handleChange = (item) => {
@@ -36,7 +35,6 @@ const CartContent = () => {
 			) : (
 				<> 
                 {searchStore && searchStore.length >0 && searchStore.slice(minValue,maxValue)?.map(item=>{
-                    console.log(item.storeName)
                     return(
                         <Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}} key={item._id}>
 							<Card style={{ width: 300, marginTop: 16, borderRadius:10 ,border:'1px solid lightgray'}}   hoverable={true} bodyStyle={{display:'flex', flexDirection:'column',alignItems:'center'}} cover={<img src={item.storeBackgroundImage} alt="my-garage" />}>

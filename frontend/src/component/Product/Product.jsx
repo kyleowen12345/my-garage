@@ -15,12 +15,11 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
     const { userInfo } = userSignin;
     const dispatch = useDispatch();
     const productNameFam=Cookie.getJSON("_pductFam");
-    console.log(productNameFam)
+  
     useEffect(()=>{
         dispatch(getProdct(productNameFam))
     },[productNameFam,dispatch])
-    console.log(productInfo)
-
+    
     const handleDelete=()=>{
         Axios.post('/removeProduct',{
             productNameFam:productNameFam
@@ -30,7 +29,6 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
             },
         }).then(result=>{
             deleteClose()
-            console.log(result)
             message.success('Product deleted')
         }).catch(error=>{
             console.log(error)

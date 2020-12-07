@@ -4,9 +4,7 @@ import { getAllPInS } from '../../actions/productAction';
 import Cookie from "js-cookie";
 import Axios from 'axios';
 import {Table} from 'antd';
-import {Bar,Pie} from 'react-chartjs-2';
-import * as ChartDataLabels  from 'chartjs-plugin-datalabels';
-import { sum } from 'lodash';
+import {Line} from 'react-chartjs-2';
 import {v4 as uuid} from 'uuid'
 import Moment from 'react-moment';
 
@@ -40,7 +38,7 @@ const StoreStat = () => {
          })
      })
      const yourStats=statSheet?.filter(i=>i.storeName?.includes(storeNameFam))
-     console.log(statSheet?.filter(i=>i.storeName?.includes(storeNameFam)))
+
      const productNames=PinSInfo?.map(item=>item.productName)
      const productSales=PinSInfo?.map(item=>item.sold)
      const state = {
@@ -59,42 +57,18 @@ const StoreStat = () => {
         ],
         
       }
-      const statePie = {
-        labels: productNames,
-        datasets: [
-          {
-            label: 'Sales',
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
 
-            ],
-            data: productSales
-          }
-        ]
-      }
-   console.log(PinSInfo?.length)
    const chartLayouts=()=>{
-    if(PinSInfo?.length <=1){
-      return(
-        <div>
-          must have 1 more item
-        </div>
-      )
+    if(PinSInfo?.length <=2){
+      return
     }
-     if(PinSInfo?.length >3){
+     else{
        return (
          <div>
-<Bar
+<Line
         data={state}
-        width={750} 
-        height={150}
+
+        maintainAspectRatio
         options={{
           title:{
             display:true,
@@ -112,55 +86,21 @@ const StoreStat = () => {
                     min: 0,
                    max:productSales?.sort((a,b)=>a-b)[productSales?.length - 1] + 2
                 }
-              }]
-           }
+              }],
+              xAxes: [{
+                ticks: {
+                 fontSize: 12
+                }
+               }]
+           },
+           responsive: true,
+          maintainAspectRatio: true,
         }}
       />
          </div>
         
        )
      }
-     if(PinSInfo?.length <=3){
-       return(
-         <div>
-<Pie
-
-        data={statePie}
-        plugins= {[ChartDataLabels]}
-        width={750} 
-          height={200}
-        options={{
-          title:{
-            display:true,
-            text:'Sales',
-            fontSize:20
-          },
-          legend:{
-            display:true,
-            position:'bottom',
-          
-          },
-          plugins:{
-            datalabels: {
-              formatter: (value, ctx) => {            
-                let dataArr = ctx.chart.data.datasets[0].data;
-                let total = sum(dataArr);     // sum from lodash        
-                let percentage = (value * 100 / total).toFixed(2) + "%";
-                return percentage;
-              },
-              color: 'black',
-            }
-          
-        }
-        }}
-       
-      />
-         </div>
-        
-       )
-     }
-    
-    
    }
     return (
         <div className="stats">
@@ -187,10 +127,7 @@ const StoreStat = () => {
                         <Column title={<p className="Cart__title">Quantity</p>} dataIndex="quantity"  sorter={(a, b) => a.quantity - b.quantity} key={uuid()} width={10} />
                         <Column title={<p className="Cart__title">Purchased Date</p>} render={(record)=> <p className='Cart__price'><Moment format="LLLL">{record.dateOfPurchase}</Moment></p>}  sorter={(a, b) => a.dateOfPurchase - b.dateOfPurchase} key={uuid()}   />
                     </ColumnGroup>
-                     
                      </Table>
-              
-             
         </div>
     )
 }

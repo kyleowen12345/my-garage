@@ -41,7 +41,7 @@ const StoreInfo = () => {
     dispatch(getAllPInS(storeId))
   },[dispatch,storeId])
 
-console.log(PinSInfo)
+
 
 // get store
     useEffect(()=>{
@@ -60,7 +60,6 @@ console.log(PinSInfo)
                 Authorization: `Bearer${userInfo?.token}`,
             },
         }).then(result=>{
-            console.log(result)
             alert.success(result?.data.message)
             history.push('/Store')
         }).catch(error=>{
@@ -158,10 +157,7 @@ const deleteClose=()=>{
           </Menu.Item> 
         </Menu>
       )
- console.log(PinSInfo)
- console.log(userInfo?._id,getStore?.sellerName._id)
- console.log(getStore)
- console.log(window.innerWidth)
+ 
     return (
         <>
             {loading ? (

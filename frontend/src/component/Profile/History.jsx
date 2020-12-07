@@ -17,7 +17,7 @@ const History = () => {
     useEffect(()=>{
         dispatch(cartHistory(token))
     },[dispatch,token])
-    console.log(historyInfo)
+
     return (
         <div className="history">
         { error ? (
