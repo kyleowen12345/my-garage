@@ -36,7 +36,7 @@ const handleChange = (item) => {
 				<div>{error}</div>
 			) : (
 				<div className="home">
-					{allStores && allStores.length >0 && allStores.slice(minValue,maxValue).map(item=>{
+					{allStores && allStores?.length >0 && allStores?.slice(minValue,maxValue).map(item=>{
 						return (
 							<Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}} key={item._id}>
 							<Card style={{ width: 300 ,border:'1px solid lightgray'}}   hoverable={true} bodyStyle={{display:'flex', flexDirection:'column',alignItems:'center'}}  cover={<img src={item.storeBackgroundImage} alt="my garage"/>}>

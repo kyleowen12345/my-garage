@@ -67,7 +67,7 @@ useEffect(() => {
 	const { Search } = Input;
 	// case insensitive for search
 	const lowercased=suggestContent.toLowerCase()
-	const allstore=allStores?.map(item=>item.storeName)
+	const allstore=allStores?.map(item=>item?.storeName)
 	const filteredStore=allstore?.filter(name=>name.toLowerCase().includes(lowercased))
 	//   Drawer
 	const showDrawer = () => {

@@ -23,7 +23,7 @@ const signin = (email, password, history,message) => async (dispatch) => {
 	dispatch({ type: USER_SIGN_REQUEST});
 	message.info('Processing Credentials')
 	try {
-		const { data } = await axios.post("/signin", {
+		const { data } = await axios.post("https://mygarage23.herokuapp.com/signin", {
 			password,
 			email,
 		});
@@ -41,7 +41,7 @@ const profile = (_id, token) =>async (dispatch) => {
   try {
 	  const {data}=await axios
 	  .post(
-		  "/profile",
+		  "https://mygarage23.herokuapp.com/profile",
 		  {
 			  _id,
 		  },
@@ -74,7 +74,7 @@ const updateProfile = (
 	message.info('updating profile')
 	try {
 		const { data } = await axios.post(
-			"/updatebio",
+			"https://mygarage23.herokuapp.com/updatebio",
 			{
 				_id,
 				name,
@@ -106,7 +106,7 @@ const updateSeller=(_id,token,message)=>async(dispatch)=>{
 	dispatch({ type: USER_SELLER_REQUEST })
 	message.info('updating Seller Info')
 	try {
-	const {data}=await axios.post("/createSeller",{
+	const {data}=await axios.post("https://mygarage23.herokuapp.com/createSeller",{
 			_id
 		},{
 			headers:{
@@ -129,7 +129,7 @@ const updateProfilePicAct=(url,token,onClose,message)=>async(dispatch)=>{
 	message.info('uploading picture')
 	try {
 	const {data}=await	axios.post(
-			"/updatephoto",
+			"https://mygarage23.herokuapp.com/updatephoto",
 			{
 			
 				profilePic: url,

@@ -4,7 +4,6 @@ import { getAllPInS } from '../../actions/productAction';
 import Cookie from "js-cookie";
 import Axios from 'axios';
 import {Table} from 'antd';
-import {Line} from 'react-chartjs-2';
 import {v4 as uuid} from 'uuid'
 import Moment from 'react-moment';
 
@@ -26,85 +25,14 @@ const StoreStat = () => {
         dispatch(getAllPInS(storeNameFam))
       },[dispatch,storeNameFam])
   useEffect(()=>{
-      Axios.post('/payments',{},{headers:{
+      Axios.post('/payments',{storeNameFam:storeNameFam},{headers:{
         Authorization: `Bearer${token}`,
       }}).then(data=>setStats(data.data)).catch(err=>console.log(err))
-  },[token])
+  },[token,storeNameFam])
     
-    let statSheet=[]
-     stats.forEach((info)=>{
-         info.forEach((data)=>{
-            statSheet.push(data)
-         })
-     })
-     const yourStats=statSheet?.filter(i=>i.storeName?.includes(storeNameFam))
-
-     const productNames=PinSInfo?.map(item=>item.productName)
-     const productSales=PinSInfo?.map(item=>item.sold)
-     const state = {
-        labels: productNames,
-        datasets: [
-          {
-            label: 'Sales',
-            backgroundColor: 'rgba(255,99,132,0.2)',
-  borderColor: 'rgba(255,99,132,1)',
-  borderWidth: 1,
-  hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-  hoverBorderColor: 'rgba(255,99,132,1)',
-            data: productSales
-            
-          }
-        ],
-        
-      }
-
-   const chartLayouts=()=>{
-    if(PinSInfo?.length <=2){
-      return
-    }
-     else{
-       return (
-         <div>
-<Line
-        data={state}
-
-        maintainAspectRatio
-        options={{
-          title:{
-            display:true,
-            text:'Product Sales',
-            fontSize:20
-          },
-          legend:{
-            display:true,
-            position:'bottom'
-          },
-          scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true,
-                    min: 0,
-                   max:productSales?.sort((a,b)=>a-b)[productSales?.length - 1] + 2
-                }
-              }],
-              xAxes: [{
-                ticks: {
-                 fontSize: 12
-                }
-               }]
-           },
-           responsive: true,
-          maintainAspectRatio: true,
-        }}
-      />
-         </div>
-        
-       )
-     }
-   }
     return (
         <div className="stats">
-          {chartLayouts()}
+          <h1>Stats</h1>
              <h1>Items</h1>
                      <Table  size={'large'}  dataSource={PinSInfo} loading={loading}   rowKey={PinSInfo=>(PinSInfo._id ||uuid() )} bordered={true} scroll={{ x: true }} pagination={{ pageSize: 5 }}>
                      <Column title={<p className="Cart__title">Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} fixed={'left'}/>
@@ -115,7 +43,7 @@ const StoreStat = () => {
     <Column title={<p className="Cart__title">createdAt</p>}  render={(record)=><p className="Stats__info"><Moment format="LLLL">{record.createdAt}</Moment></p>} sorter={(a, b) => a.createdAt - b.createdAt} key={uuid()}   />
                      </Table>
                      <h1>Buyers</h1>
-                     <Table  size={'large'}  dataSource={yourStats} loading={loading}   scroll={{ x: true }} rowKey={yourStats=>(yourStats._id ||uuid() )} bordered={true} pagination={{ pageSize: 5 }}>
+                     <Table  size={'large'}  dataSource={stats} loading={loading}   scroll={{ x: true }} rowKey={yourStats=>(yourStats._id ||uuid() )} bordered={true} pagination={{ pageSize: 5 }}>
                      <ColumnGroup title={<p >Buyer</p>} >
                      <Column title={<p className="Cart__title">Image</p>}    render={(dataIndex) =>  <img src={dataIndex.buyer.profile} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} width={50} fixed={'left'}/>
                      <Column title={<p className="Cart__title">Name</p>} render={ (record) => record.buyer.name} key={uuid()}   />

@@ -21,7 +21,7 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
     },[productNameFam,dispatch])
     
     const handleDelete=()=>{
-        Axios.post('/removeProduct',{
+        Axios.post('https://mygarage23.herokuapp.com/removeProduct',{
             productNameFam:productNameFam
         },{
             headers: {

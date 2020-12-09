@@ -12,7 +12,7 @@ const Reset = () => {
 	const PostData = () => {
 		setLoading(true);
 		axios
-			.post("/reset-password", {
+			.post("https://mygarage23.herokuapp.com/reset-password", {
 				email,
 			})
 			.then((data) => {

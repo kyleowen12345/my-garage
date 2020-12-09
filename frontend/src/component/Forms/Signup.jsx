@@ -22,7 +22,7 @@ const Signup = () => {
     setLoading(true);
     message.info('creating account',2)
 		axios
-			.post("/signup", {
+			.post("https://mygarage23.herokuapp.com/signup", {
 				name,
 				password,
 				email,

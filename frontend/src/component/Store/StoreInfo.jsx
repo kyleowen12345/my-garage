@@ -53,7 +53,7 @@ const StoreInfo = () => {
 // get updated store
 
     const handleDelete=()=>{
-        Axios.post('/removeStorefam',{
+        Axios.post('https://mygarage23.herokuapp.com/removeStorefam',{
             storeName:storeNameFam
         },{
             headers: {

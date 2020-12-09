@@ -56,7 +56,6 @@ const OptionCarousel = () => {
         {img:"https://cdn.pixabay.com/photo/2017/09/20/18/31/boys-2769553__340.jpg",optionName:'Sports & Outdoors'},
         {img:"https://cdn.pixabay.com/photo/2015/07/11/23/02/plane-841441__340.jpg",optionName:'Travel'},
     ]
-        console.log(Options)
   
     return (
       <>

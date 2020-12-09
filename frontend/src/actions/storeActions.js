@@ -7,7 +7,7 @@ import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_R
 const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,message)=>async(dispatch)=>{
     dispatch({ type: CREATE_STORE_REQUEST});
     try {
-        const {data} = await axios.post('/createStore',{
+        const {data} = await axios.post('https://mygarage23.herokuapp.com/createStore',{
             storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,
             _id:userId
         },{
@@ -27,7 +27,7 @@ const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAc
 const viewMyStore=(_id, token)=>async(dispatch)=>{
     dispatch({ type: VIEW_STORE_REQUEST});
     try {
-        const {data}=await axios.post('/mystores',{_id},{
+        const {data}=await axios.post('https://mygarage23.herokuapp.com/mystores',{_id},{
             headers: {
                 Authorization: `Bearer${token}`,
             },
@@ -40,7 +40,7 @@ const viewMyStore=(_id, token)=>async(dispatch)=>{
 const allStoresViewer=()=>async(dispatch)=>{
     dispatch({ type: VIEWALL_STORE_REQUEST });
     try {
-        const {data}=await axios.get('/homies')
+        const {data}=await axios.get('https://mygarage23.herokuapp.com/homies')
         dispatch({ type: VIEWALL_STORE_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: VIEWALL_STORE_FAIL, payload: error.response?.data.error });
@@ -50,7 +50,7 @@ const allStoresViewer=()=>async(dispatch)=>{
 const getSingleStore=(_id)=>async(dispatch)=>{
     dispatch({ type: VIEWSINGLE_STORE_REQUEST});
     try {
-        const {data}=await axios.post('/singlestore',{
+        const {data}=await axios.post('https://mygarage23.herokuapp.com/singlestore',{
             _id
         })
         dispatch({ type: VIEWSINGLE_STORE_SUCCESS, payload: data });
@@ -62,7 +62,7 @@ const getSingleStore=(_id)=>async(dispatch)=>{
 const getSearchedStore=(storeName,history)=>async(dispatch)=>{
     dispatch({ type: SEARCH_STORE_REQUEST});
     try {
-        const {data}=await axios.post('/searchresult',{
+        const {data}=await axios.post('https://mygarage23.herokuapp.com/searchresult',{
             storeName
         })
         dispatch({ type: SEARCH_STORE_SUCCESS, payload: data });
@@ -76,7 +76,7 @@ const updateStore=(_id,storeName,storeAddress,storeDescription,storeType,contact
     dispatch({ type: UPDATE_STORE_REQUEST});
     message.info('Updating Store',1)
     try {
-        const {data}=await axios.post('/updatestoreinfo',{_id,storeName,storeAddress,storeDescription,storeType,contactNumber,socialMediaAcc},{
+        const {data}=await axios.post('https://mygarage23.herokuapp.com/updatestoreinfo',{_id,storeName,storeAddress,storeDescription,storeType,contactNumber,socialMediaAcc},{
             headers: {
                 Authorization: `Bearer${token}`,
             },
@@ -93,7 +93,7 @@ const newStoreImage=(storeBackgroundImage,_id,token,onClose,message)=>async(disp
     dispatch({ type: UPDATE_IMAGE_REQUEST});
     message.info('uploading..',1)
     try {
-        const {data}=await axios.post('/storebackgroundImage',{
+        const {data}=await axios.post('https://mygarage23.herokuapp.com/storebackgroundImage',{
             storeBackgroundImage,_id
         },{
             headers: {
@@ -111,7 +111,7 @@ const newStoreImage=(storeBackgroundImage,_id,token,onClose,message)=>async(disp
 const getStoreType=(storeType,history)=>async(dispatch)=>{
     dispatch({ type: STORETYPE_REQUEST});
     try {
-        const {data}=await axios.post('/storeOption',{
+        const {data}=await axios.post('https://mygarage23.herokuapp.com/storeOption',{
             storeType
         })
         dispatch({ type: STORETYPE_SUCCESS, payload: data });

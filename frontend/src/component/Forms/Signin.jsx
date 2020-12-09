@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { signin } from "../../actions/userActions";
 import { Form, Input, Button,message} from 'antd';
 import {HomeOutlined} from '@ant-design/icons';
-import 'react-toastify/dist/ReactToastify.css';
 import QueueAnim from 'rc-queue-anim';
 const Signin = () => {
 	const history = useHistory();

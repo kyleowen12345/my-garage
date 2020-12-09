@@ -7,7 +7,7 @@ import {CREATE_PRODUCT_REQUEST,CREATE_PRODUCT_SUCCESS,CREATE_PRODUCT_FAIL,GET_PR
 const makeProduct=(productName,price,productStocks,description,storeName,storeOwner,token,openChildred,message)=>async(dispatch)=>{
     dispatch({ type: CREATE_PRODUCT_REQUEST});
     try {
-        const {data}=await axios.post('/createproduct',{
+        const {data}=await axios.post('https://mygarage23.herokuapp.com/createproduct',{
             productName,price,productStocks,description,storeName,storeOwner
         },{
             headers: {
@@ -26,7 +26,7 @@ const makeProduct=(productName,price,productStocks,description,storeName,storeOw
 const getAllPInS=(storeName)=>async(dispatch)=>{
     dispatch({ type: GET_PRODUCT_REQUEST });
     try {
-        const {data}=await axios.post('/storeproduct',{storeName})
+        const {data}=await axios.post('https://mygarage23.herokuapp.com/storeproduct',{storeName})
         dispatch({ type: GET_PRODUCT_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: GET_PRODUCT_FAIL, payload: error.response?.data.error });
@@ -35,7 +35,7 @@ const getAllPInS=(storeName)=>async(dispatch)=>{
 const getProdct=(_id)=>async(dispatch)=>{
     dispatch({ type: SINGLE_PRODUCT_REQUEST});
   try {
-      const {data}=await axios.post('/singlestoreproduct',{_id})
+      const {data}=await axios.post('https://mygarage23.herokuapp.com/singlestoreproduct',{_id})
     dispatch({ type: SINGLE_PRODUCT_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: SINGLE_PRODUCT_FAIL, payload: error.response?.data.error });
@@ -44,7 +44,7 @@ const getProdct=(_id)=>async(dispatch)=>{
 const updateProductInfo=(productName,price,productStocks,description,storeName,_id,token,onClose,message)=>async(dispatch)=>{
     dispatch({ type: UPDATE_PRODUCT_REQUEST });
     try {
-        const {data}=await axios.post('/updateproduct',{
+        const {data}=await axios.post('https://mygarage23.herokuapp.com/updateproduct',{
             productName,price,productStocks,description,storeName,_id
         },{
             headers: {
@@ -61,7 +61,7 @@ const updateProductInfo=(productName,price,productStocks,description,storeName,_
 const makeProductImage=(_id,image,token,onClose)=>async(dispatch)=>{
     dispatch({ type: UPDATE_IMAGE_REQUEST });
     try {
-        const {data}=await axios.post('/productimage',{
+        const {data}=await axios.post('https://mygarage23.herokuapp.com/productimage',{
             _id,image
         },{
             headers: {

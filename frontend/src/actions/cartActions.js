@@ -4,7 +4,7 @@ import {ADD__TO__CART__REQUEST,ADD__TO__CART__SUCCESS,ADD__TO__CART__FAIL,VIEW__
 const addtocartact=(productId,token,message,name)=>async(dispatch)=>{
     dispatch({ type: ADD__TO__CART__REQUEST });
   try {
-    const {data}=await axios.post('/addtocart',{productId},{
+    const {data}=await axios.post('https://mygarage23.herokuapp.com/addtocart',{productId},{
         headers: {
             Authorization: `Bearer${token}`,
         },
@@ -20,7 +20,7 @@ const addtocartact=(productId,token,message,name)=>async(dispatch)=>{
 const viewCart=(token)=>async(dispatch)=>{
     dispatch({ type: VIEW__CART__REQUEST});
     try {
-        const {data}=await axios.get('/getCartInfo',{
+        const {data}=await axios.get('https://mygarage23.herokuapp.com/getCartInfo',{
             headers: {
                 Authorization: `Bearer${token}`,
             },
@@ -33,7 +33,7 @@ const viewCart=(token)=>async(dispatch)=>{
 const deleteItemFromCart=(productId,token,name,message)=>async(dispatch)=>{
   dispatch({ type: REMOVE__CART__REQUEST });
   try {
-    const {data}=await axios.post('/removeitem',{productId},{
+    const {data}=await axios.post('https://mygarage23.herokuapp.com/removeitem',{productId},{
       headers: {
           Authorization: `Bearer${token}`,
       },
@@ -50,7 +50,7 @@ const buyCart=(variables,token,message)=>async(dispatch)=>{
   dispatch({ type: BUY__CART__REQUEST });
   message.info('Processing Payment..')
   try {
-    const {data}=await  axios.post('/successBuy',variables,{headers: {
+    const {data}=await  axios.post('https://mygarage23.herokuapp.com/successBuy',variables,{headers: {
       Authorization: `Bearer${token}`,
   },})
   dispatch({ type: BUY__CART__SUCCESS, payload: data });
@@ -63,7 +63,7 @@ const buyCart=(variables,token,message)=>async(dispatch)=>{
 const cartHistory=(token)=>async(dispatch)=>{
   dispatch({ type: HISTORY__REQUEST });
   try {
-    const {data}=await axios.get('/PurchasedItems',{headers: {
+    const {data}=await axios.get('https://mygarage23.herokuapp.com/PurchasedItems',{headers: {
       Authorization: `Bearer${token}`,
   }})
     dispatch({ type: HISTORY__SUCCESS, payload: data });
