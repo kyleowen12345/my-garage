@@ -2,7 +2,6 @@ import React,{ useEffect,useState } from 'react'
 import { Link, } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { viewMyStore } from '../../actions/storeActions';
-import Cookie from "js-cookie";
 import {Card,Avatar,Drawer } from 'antd';
 import {PlusCircleOutlined } from '@ant-design/icons';
 import CreateStores from './CreateStores'
@@ -76,7 +75,7 @@ const Store = () => {
         </Drawer>
                {yourStore?.map(item=>{
                    return (
-                    <Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}} key={item._id}>
+                    <Link to={`/storeInfo/${item._id}/${item.storeName.replace(/\s/g,'_')}`}  key={item._id}>
                        <Card style={{ width: 300 ,border:'1px solid lightgray'}}   hoverable={true} bodyStyle={{display:'flex', flexDirection:'column',alignItems:'center'}}  cover={<img src={item.storeBackgroundImage} alt="my garage"/>}>
                           <Meta avatar={<Avatar src={item.sellerName.profilePic} alt='mygarage' />}
       title={item.storeName}

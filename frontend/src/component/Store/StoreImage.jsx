@@ -1,26 +1,26 @@
 import React, {useEffect,useState} from 'react'
 import Axios from "axios";
-import Cookie from "js-cookie";
 import { useSelector,useDispatch } from "react-redux";
 import { message} from 'antd';
 import { newStoreImage } from '../../actions/storeActions';
 import imageCompressor from 'browser-image-compression'
+import { useParams } from 'react-router-dom';
 
 const StoreImage = ({onClose}) => {
+	const {id}=useParams()
     const [image, setImage] = useState("");
 	const [filler, setFiller] = useState('');
     const [photoload,setPhotoLoad]=useState(false)
     const [url, setUrl] = useState("");
     const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
-	const storeNamefam=Cookie.getJSON('_stohremate')
 	const dispatch=useDispatch()
    const token=userInfo?.token
    useEffect(() => {
 	if(url){
-  dispatch(newStoreImage(url,storeNamefam,token,onClose,message))
+  dispatch(newStoreImage(url,id,token,onClose,message))
 	} 
-},[dispatch,storeNamefam,token,url,onClose]);
+},[dispatch,id,token,url,onClose]);
     const postPhoto = (e) => {
 		e.preventDefault();
 		if(!image){

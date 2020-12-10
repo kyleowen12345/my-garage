@@ -51,7 +51,7 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
         <Menu>
           <Menu.Item key={5}>
           <Popconfirm title="Sure to delete?" onConfirm={handleDelete}  >
-          <p ><DeleteOutlined />  Remove Store</p>
+          <p ><DeleteOutlined />  Remove Product</p>
             </Popconfirm>
           </Menu.Item> 
         </Menu>

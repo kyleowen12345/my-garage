@@ -1,9 +1,8 @@
 import React,{ useEffect,useState } from 'react'
 import { useSelector,useDispatch } from "react-redux";
 import { getSingleStore } from '../../actions/storeActions';
-import Cookie from "js-cookie";
 import Axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { getAllPInS } from '../../actions/productAction';
 import { addtocartact } from '../../actions/cartActions';
 import { message,Dropdown,Menu,Image,Drawer,Popconfirm } from 'antd';
@@ -19,6 +18,7 @@ import StoreInfoProducts from './StoreInfoProducts';
 
 const StoreInfo = () => {
     const history=useHistory()
+    const {id}=useParams()
     const [drawer,setDrawer]=useState(false)
     const [imageDrawer,setImageDrawer]=useState(false)
     const [productDrawer,setProductDrawer]=useState(false)
@@ -35,27 +35,24 @@ const StoreInfo = () => {
     const viewcahrt=useSelector((state) => state.viewcahrt);
     const {loader}=viewcahrt
     const dispatch = useDispatch();
-    const storeNameFam=Cookie.getJSON("_stohremate");
   const storeId=getStore?._id
-
-  useEffect(()=>{
-    dispatch(getAllPInS(storeId))
-  },[dispatch,storeId])
-
-
 
 // get store
     useEffect(()=>{
-        if(storeNameFam ){
-            dispatch(getSingleStore(storeNameFam))
+        if(id ){
+            dispatch(getSingleStore(id))
         }
         
-    },[dispatch,storeNameFam])
+    },[dispatch,id])
+// StoreProducts
+useEffect(()=>{
+  dispatch(getAllPInS(storeId))
+},[dispatch,storeId])
 // get updated store
 
-    const handleDelete=()=>{
-        Axios.post('https://mygarage23.herokuapp.com/removeStorefam',{
-            storeName:storeNameFam
+const handleDelete=()=>{
+    Axios.post('/removeStorefam',{
+            storeName:id
         },{
             headers: {
                 Authorization: `Bearer${userInfo?.token}`,
@@ -99,7 +96,7 @@ const onCloseProductImg =() => {
             setProductDrawer(false)
             setProductInfo(false)
             dispatch(getAllPInS(storeId))
-            dispatch(getSingleStore(storeNameFam))
+            dispatch(getSingleStore(id))
                   };   
                 //   Product Info
 const onCloseProducInfo=()=>{
@@ -119,8 +116,6 @@ const deleteClose=()=>{
       setProductInfo(false)
      dispatch(getAllPInS(storeId))
         }
-        
-
     // Dropdown
     const editmenu=(
         <Menu>
@@ -136,7 +131,7 @@ const deleteClose=()=>{
     const Statmenu = (
         <Menu>
           <Menu.Item key={2}>
-              <p onClick={()=>history.push('/storeStats')}>
+              <p onClick={()=>history.push(`/storeStats/${id}`)}>
              <BarChartOutlined  />  Store Stat-sheet
               </p>
           </Menu.Item>

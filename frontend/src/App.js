@@ -43,7 +43,7 @@ function App() {
 			<Navbar />
 				<StoreType/>
 				</Route>
-			<Route path="/storeInfo" >
+			<Route path="/storeInfo/:id" >
 			<Navbar />
 				<StoreInfo/>
 			</Route>
@@ -67,7 +67,7 @@ function App() {
 						 <Navbar />
 							 <Cart/>
 						 </Route>
-						 <Route path="/storeStats">
+						 <Route path="/storeStats/:id">
 						 <Navbar />
                              <StoreStat/>
 						 </Route>

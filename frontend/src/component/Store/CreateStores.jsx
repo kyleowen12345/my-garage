@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { makeStore } from '../../actions/storeActions';
 import Loader from "react-loader-spinner";
 import { Form, Input, Button,Select,message} from 'antd';
+import { useHistory } from 'react-router-dom';
 
 
 const CreateStores = ({onClose,openChildred}) => {
+  const history=useHistory()
     const [storeName, setStoreName] = useState("");
 	const [storeAddress, setStoreAddress] = useState("");
 	const [storeDescription, setStoreDescription] = useState("");
@@ -22,7 +24,7 @@ const CreateStores = ({onClose,openChildred}) => {
     const { Option } = Select;
 
     const handlePost=()=>{
-		dispatch(makeStore(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,message))
+		dispatch(makeStore(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,message,history))
     }
     const onChange=(value)=> {
       setStoreType(value)

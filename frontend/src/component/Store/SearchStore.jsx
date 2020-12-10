@@ -3,7 +3,6 @@ import { useSelector,useDispatch } from "react-redux";
 import {Card,Avatar,Pagination } from 'antd';
 import { Link,useHistory, useParams } from "react-router-dom";
 import { getSearchedStore } from '../../actions/storeActions';
-import Cookie from "js-cookie";
 import HomeLoading from '../Home/HomeLoading';
 
 const CartContent = () => {
@@ -36,7 +35,7 @@ const CartContent = () => {
 				<> 
                 {searchStore && searchStore.length >0 && searchStore.slice(minValue,maxValue)?.map(item=>{
                     return(
-                        <Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}} key={item._id}>
+                        <Link to={`/storeInfo/${item._id}/${item.storeName.replace(/\s/g,'_')}`}  key={item._id}>
 							<Card style={{ width: 300, marginTop: 16, borderRadius:10 ,border:'1px solid lightgray'}}   hoverable={true} bodyStyle={{display:'flex', flexDirection:'column',alignItems:'center'}} cover={<img src={item.storeBackgroundImage} alt="my-garage" />}>
 								<Meta
       avatar={<Avatar src={item.sellerName.profilePic} alt='mygarage' />}

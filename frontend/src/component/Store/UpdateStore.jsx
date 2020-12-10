@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
 import { updateStore } from '../../actions/storeActions';
 import { useSelector, useDispatch } from "react-redux";
-import Cookie from "js-cookie";
 import { Form, Input, Button,message,Select} from 'antd';
+import { useParams } from 'react-router-dom';
 
 
 const UpdateStore = ({onClose}) => {
+  const {id}=useParams()
     const [storeName, setStoreName] = useState("");
 	const [storeAddress, setStoreAddress] = useState("");
 	const [storeDescription, setStoreDescription] = useState("");
@@ -14,12 +15,11 @@ const UpdateStore = ({onClose}) => {
     const [contactNumber, setContactNumber] = useState('');
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
-    const dispatch = useDispatch();
-    const storeNameFam=Cookie.getJSON("_stohremate")
+    const dispatch = useDispatch()
     const userToken=userInfo?.token
     const { Option } = Select;
     const handlePost=()=>{
-		dispatch(updateStore(storeNameFam,storeName,storeAddress,storeDescription,storeType,contactNumber,socialMediaAcc,userToken,message,onClose))
+		dispatch(updateStore(id,storeName,storeAddress,storeDescription,storeType,contactNumber,socialMediaAcc,userToken,message,onClose))
     }
     const onChange=(value)=> {
       setStoreType(value)

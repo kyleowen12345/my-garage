@@ -4,9 +4,11 @@ import Loader from "react-loader-spinner";
 import Cookie from "js-cookie";
 import { updateProductInfo } from '../../actions/productAction';
 import { Form, Input, Button,message} from 'antd';
+import { useParams } from 'react-router-dom';
 
 
 const UpdateProduct = ({onClose}) => {
+  const {id}=useParams()
     const [productName, setProductName] = useState("");
 	const [price, setPrice] = useState("");
 	const [productStocks, setProductStocks] = useState("");
@@ -18,10 +20,9 @@ const UpdateProduct = ({onClose}) => {
     const dispatch = useDispatch();
     const userToken=userInfo?.token
     const productNameFam=Cookie.getJSON("_pductFam");
-    const storeNameFam=Cookie.getJSON("_stohremate")
     const handlePost=()=>{
         
-        dispatch(updateProductInfo(productName,price,productStocks,description,storeNameFam,productNameFam,userToken,onClose,message))
+        dispatch(updateProductInfo(productName,price,productStocks,description,id,productNameFam,userToken,onClose,message))
     }
     return (
         <Form

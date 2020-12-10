@@ -1,13 +1,12 @@
 import axios from "axios";
-import Cookie from "js-cookie";
 import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_REQUEST,VIEW_STORE_SUCCESS,VIEW_STORE_FAIL,VIEWALL_STORE_REQUEST,VIEWALL_STORE_SUCCESS,VIEWALL_STORE_FAIL,VIEWSINGLE_STORE_REQUEST,VIEWSINGLE_STORE_SUCCESS,VIEWSINGLE_STORE_FAIL,UPDATE_STORE_REQUEST,UPDATE_STORE_SUCCESS,UPDATE_STORE_FAIL,SEARCH_STORE_REQUEST,SEARCH_STORE_SUCCESS,SEARCH_STORE_FAIL,UPDATE_IMAGE_REQUEST,UPDATE_IMAGE_SUCCESS,UPDATE_IMAGE_FAIL,STORETYPE_REQUEST,STORETYPE_SUCCESS,STORETYPE_FAIL} from '../constants/storeContstants'
 
 
 
-const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,message)=>async(dispatch)=>{
+const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,message,history)=>async(dispatch)=>{
     dispatch({ type: CREATE_STORE_REQUEST});
     try {
-        const {data} = await axios.post('https://mygarage23.herokuapp.com/createStore',{
+        const {data} = await axios.post('/createStore',{
             storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,
             _id:userId
         },{
@@ -16,7 +15,7 @@ const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAc
             },
         })
         dispatch({ type: CREATE_STORE_SUCCESS, payload: data });
-        Cookie.set('_stohremate', data?.store._id)
+        history.push('/Store')
         message.success('Store Created')
         openChildred()
         

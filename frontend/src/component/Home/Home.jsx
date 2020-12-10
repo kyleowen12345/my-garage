@@ -2,7 +2,6 @@ import React, { useEffect,useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { allStoresViewer } from '../../actions/storeActions'
 import { Link, } from "react-router-dom";
-import Cookie from "js-cookie";
 import {Card,Pagination,Avatar } from 'antd';
 import HomeLoading from "./HomeLoading";
 import ImageCarousel from "./ImageCarousel";
@@ -38,7 +37,7 @@ const handleChange = (item) => {
 				<div className="home">
 					{allStores && allStores?.length >0 && allStores?.slice(minValue,maxValue).map(item=>{
 						return (
-							<Link to={`/storeInfo/${item.storeName.replace(/\s/g,'_')}`} onClick={()=>{Cookie.set('_stohremate',item._id)}} key={item._id}>
+							<Link to={`/storeInfo/${item._id}/${item.storeName.replace(/\s/g,'_')}`}  key={item._id}>
 							<Card style={{ width: 300 ,border:'1px solid lightgray'}}   hoverable={true} bodyStyle={{display:'flex', flexDirection:'column',alignItems:'center'}}  cover={<img src={item.storeBackgroundImage} alt="my garage"/>}>
 								<Meta
       avatar={<Avatar src={item.sellerName.profilePic} alt='mygarage' />}
