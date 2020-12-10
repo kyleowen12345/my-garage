@@ -26,6 +26,7 @@ import HomeLoading from './component/Home/HomeLoading'
 
 
 
+
 function App() {
 	return (
 		<Router>
@@ -59,7 +60,11 @@ function App() {
 						 <Navbar />
                                 <Seller/>
 						 </Route>
-						 <Route path="/Store">
+						 <Route path="/Store/:id">
+						 <Navbar />
+                                <Store/>
+						 </Route>
+						 <Route path="/Store/">
 						 <Navbar />
                                 <Store/>
 						 </Route>

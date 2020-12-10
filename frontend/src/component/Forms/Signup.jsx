@@ -22,7 +22,7 @@ const Signup = () => {
 
     setLoading(true);
 		axios
-			.post("/signup", {
+			.post(`${process.env.REACT_APP_API_KEY}/signup`, {
 				name,
 				password,
 				email,

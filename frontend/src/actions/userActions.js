@@ -22,7 +22,7 @@ import {
 const signin = (email, password, history,message) => async (dispatch) => {
 	dispatch({ type: USER_SIGN_REQUEST});
 	try {
-		const { data } = await axios.post("/signin", {
+		const { data } = await axios.post(`${process.env.REACT_APP_API_KEY}/signin`, {
 			password,
 			email,
 		});
@@ -39,7 +39,7 @@ const profile = (_id, token) =>async (dispatch) => {
   try {
 	  const {data}=await axios
 	  .post(
-		  "/profile",
+		  `${process.env.REACT_APP_API_KEY}/profile`,
 		  {
 			  _id,
 		  },
@@ -72,7 +72,7 @@ const updateProfile = (
 	message.info('updating profile')
 	try {
 		const { data } = await axios.post(
-			"https://mygarage23.herokuapp.com/updatebio",
+			`${process.env.REACT_APP_API_KEY}/updatebio`,
 			{
 				_id,
 				name,
@@ -102,9 +102,8 @@ const updateProfile = (
 };
 const updateSeller=(_id,token,message)=>async(dispatch)=>{
 	dispatch({ type: USER_SELLER_REQUEST })
-	message.info('updating Seller Info')
 	try {
-	const {data}=await axios.post("https://mygarage23.herokuapp.com/createSeller",{
+	const {data}=await axios.post(`${process.env.REACT_APP_API_KEY}/createSeller`,{
 			_id
 		},{
 			headers:{
@@ -127,7 +126,7 @@ const updateProfilePicAct=(url,token,onClose,message)=>async(dispatch)=>{
 	message.info('uploading picture')
 	try {
 	const {data}=await	axios.post(
-			"https://mygarage23.herokuapp.com/updatephoto",
+			`${process.env.REACT_APP_API_KEY}/updatephoto`,
 			{
 			
 				profilePic: url,

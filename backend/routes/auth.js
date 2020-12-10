@@ -144,7 +144,7 @@ router.post("/reset-password", (req, res) => {
 					subject: "Password reset",
 					html: `
 					<p>You requested for password reset</p>
-					<h2>Click in this <a href="https://mygarage23.herokuapp.com/reset-password/${token}"> link </a>to reset password</h2>
+					<h2>Click in this <a href="https://blackedmarket-aec61.web.app/reset-password/${token}"> link </a>to reset password</h2>
 					`,
 				});
 				res.json({ message: "check your email" });

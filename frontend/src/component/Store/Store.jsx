@@ -29,8 +29,7 @@ const Store = () => {
         return history.push('/')
        }
     },[dispatch, userId, userToken, userInfo,history])
-    // const userStoreName= yourStore.map(info=>{
-    //    return info.contactNumber})
+    
     const { Meta } = Card;
     const showDrawer = () => {
         setDrawer(true)

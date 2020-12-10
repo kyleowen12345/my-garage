@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_REQUEST,VIEW_STORE_SUCCESS,VIEW_STORE_FAIL,VIEWALL_STORE_REQUEST,VIEWALL_STORE_SUCCESS,VIEWALL_STORE_FAIL,VIEWSINGLE_STORE_REQUEST,VIEWSINGLE_STORE_SUCCESS,VIEWSINGLE_STORE_FAIL,UPDATE_STORE_REQUEST,UPDATE_STORE_SUCCESS,UPDATE_STORE_FAIL,SEARCH_STORE_REQUEST,SEARCH_STORE_SUCCESS,SEARCH_STORE_FAIL,UPDATE_IMAGE_REQUEST,UPDATE_IMAGE_SUCCESS,UPDATE_IMAGE_FAIL,STORETYPE_REQUEST,STORETYPE_SUCCESS,STORETYPE_FAIL} from '../constants/storeContstants'
 
 
@@ -6,7 +7,7 @@ import {CREATE_STORE_REQUEST,CREATE_STORE_SUCCESS,CREATE_STORE_FAIL,VIEW_STORE_R
 const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,userId,openChildred,userToken,message,history)=>async(dispatch)=>{
     dispatch({ type: CREATE_STORE_REQUEST});
     try {
-        const {data} = await axios.post('/createStore',{
+        const {data} = await axios.post(`${process.env.REACT_APP_API_KEY}/createStore`,{
             storeName,storeAddress,storeDescription,storeType,socialMediaAcc,contactNumber,
             _id:userId
         },{
@@ -15,7 +16,7 @@ const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAc
             },
         })
         dispatch({ type: CREATE_STORE_SUCCESS, payload: data });
-        history.push('/Store')
+        history.push(`/Store/${data.store._id}`)
         message.success('Store Created')
         openChildred()
         
@@ -26,7 +27,7 @@ const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAc
 const viewMyStore=(_id, token)=>async(dispatch)=>{
     dispatch({ type: VIEW_STORE_REQUEST});
     try {
-        const {data}=await axios.post('/mystores',{_id},{
+        const {data}=await axios.post(`${process.env.REACT_APP_API_KEY}/mystores`,{_id},{
             headers: {
                 Authorization: `Bearer${token}`,
             },
@@ -39,7 +40,7 @@ const viewMyStore=(_id, token)=>async(dispatch)=>{
 const allStoresViewer=()=>async(dispatch)=>{
     dispatch({ type: VIEWALL_STORE_REQUEST });
     try {
-        const {data}=await axios.get('/homies')
+        const {data}=await axios.get(`${process.env.REACT_APP_API_KEY}/homies`)
         dispatch({ type: VIEWALL_STORE_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: VIEWALL_STORE_FAIL, payload: error.response?.data.error });
@@ -49,7 +50,7 @@ const allStoresViewer=()=>async(dispatch)=>{
 const getSingleStore=(_id)=>async(dispatch)=>{
     dispatch({ type: VIEWSINGLE_STORE_REQUEST});
     try {
-        const {data}=await axios.post('/singlestore',{
+        const {data}=await axios.post(`${process.env.REACT_APP_API_KEY}/singlestore`,{
             _id
         })
         dispatch({ type: VIEWSINGLE_STORE_SUCCESS, payload: data });
@@ -61,7 +62,7 @@ const getSingleStore=(_id)=>async(dispatch)=>{
 const getSearchedStore=(storeName,history)=>async(dispatch)=>{
     dispatch({ type: SEARCH_STORE_REQUEST});
     try {
-        const {data}=await axios.post('/searchresult',{
+        const {data}=await axios.post(`${process.env.REACT_APP_API_KEY}/searchresult`,{
             storeName
         })
         dispatch({ type: SEARCH_STORE_SUCCESS, payload: data });
@@ -75,7 +76,7 @@ const updateStore=(_id,storeName,storeAddress,storeDescription,storeType,contact
     dispatch({ type: UPDATE_STORE_REQUEST});
     message.info('Updating Store',1)
     try {
-        const {data}=await axios.post('https://mygarage23.herokuapp.com/updatestoreinfo',{_id,storeName,storeAddress,storeDescription,storeType,contactNumber,socialMediaAcc},{
+        const {data}=await axios.post(`${process.env.REACT_APP_API_KEY}/updatestoreinfo`,{_id,storeName,storeAddress,storeDescription,storeType,contactNumber,socialMediaAcc},{
             headers: {
                 Authorization: `Bearer${token}`,
             },
@@ -90,9 +91,8 @@ const updateStore=(_id,storeName,storeAddress,storeDescription,storeType,contact
 }
 const newStoreImage=(storeBackgroundImage,_id,token,onClose,message)=>async(dispatch)=>{
     dispatch({ type: UPDATE_IMAGE_REQUEST});
-    message.info('uploading..',1)
     try {
-        const {data}=await axios.post('https://mygarage23.herokuapp.com/storebackgroundImage',{
+        const {data}=await axios.post(`${process.env.REACT_APP_API_KEY}/storebackgroundImage`,{
             storeBackgroundImage,_id
         },{
             headers: {
@@ -110,7 +110,7 @@ const newStoreImage=(storeBackgroundImage,_id,token,onClose,message)=>async(disp
 const getStoreType=(storeType,history)=>async(dispatch)=>{
     dispatch({ type: STORETYPE_REQUEST});
     try {
-        const {data}=await axios.post('/storeOption',{
+        const {data}=await axios.post(`${process.env.REACT_APP_API_KEY}/storeOption`,{
             storeType
         })
         dispatch({ type: STORETYPE_SUCCESS, payload: data });

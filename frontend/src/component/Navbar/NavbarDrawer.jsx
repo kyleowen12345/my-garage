@@ -42,7 +42,7 @@ const NavbarDrawer = ({onClose,drawer,userInfo,userProfileInfo,history}) => {
 				onClose()
 				Cookies.remove("_plip");
 				message.success('logged out successfully')
-			    history.push("/");
+			    history.push("/signin");
 				window.location.reload();			
 				}}
 				>

@@ -19,7 +19,7 @@ const ProductImage = ({onClose}) => {
 	const token=userInfo?.token
     useEffect(() => {
 		if (url) {
-			dispatch(makeProductImage(productNamefam,url,token,onClose))
+			dispatch(makeProductImage(productNamefam,url,token,onClose,message))
 		}
 	},[dispatch,productNamefam,url,token,onClose]);
 

@@ -23,7 +23,7 @@ const User = mongoose.model(
 			type: String,
 			default: "https://res.cloudinary.com/kaking/image/upload/v1604108250/xyjvdcouhpdgau0hcfgn.png",
 		},
-		contactNumber: { type: String },
+		contactNumber: { type: String,default: "no contactNumber", },
 		country: {
 			type: String,
 			default: "no country",
@@ -40,7 +40,7 @@ const User = mongoose.model(
 		},
 		zipcode: {
 			type: String,
-		
+			default: "no zipcode",
 		},
 		password: {
 			type: String,

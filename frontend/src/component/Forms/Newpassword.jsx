@@ -22,7 +22,7 @@ const Newpassword = () => {
 		}
 		setLoading(true);
 		axios
-			.post("https://mygarage23.herokuapp.com/new-password", {
+			.post(`${process.env.REACT_APP_API_KEY}/new-password`, {
 				password,
 				token,
 			})

@@ -99,7 +99,9 @@ const Cart = () => {
            ontracSuccess={transactionSuccess}
            ontracError={transactionError}
            ontracCancel={transactionCancel}
-           /></div>}
+           /> <p>Free acc: sb-lsca53536970@personal.example.com</p>
+              <p>Password:qwert12345</p>
+           </div>}
         </div>
     )
 }

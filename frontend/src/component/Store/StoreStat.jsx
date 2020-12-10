@@ -52,9 +52,10 @@ const StoreStat = () => {
       }
     return (
         <div className="stats">
-             <StoreStatChart PinSInfo={PinSInfo} state={state} productSales={productSales}/>
-             <h1>Items</h1>
+          <h1>Stats</h1>
+             <h1>Products</h1>
                     <StoreProductsStat PinSInfo={PinSInfo} loading={loading}/> 
+                    <StoreStatChart PinSInfo={PinSInfo} state={state} productSales={productSales}/>
                      <h1>Buyers</h1>
                      <StoreBuyers stats={stats} loading={loading}/>
         </div>
