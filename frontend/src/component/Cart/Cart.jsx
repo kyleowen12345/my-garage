@@ -6,8 +6,10 @@ import Paypal from '../Paypal';
 import {message,Table,Popconfirm} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import {v4 as uuid} from 'uuid'
+import { useHistory } from "react-router-dom";
 
 const Cart = () => {
+    const history=useHistory()
     const dispatch = useDispatch();
     const [Total,setTotal]=useState(0)
     const userSignin = useSelector((state) => state.userSignin);
@@ -20,7 +22,11 @@ const Cart = () => {
     useEffect(()=>{
         dispatch(viewCart(token))
     },[dispatch,token])
- 
+    useEffect(()=>{
+        if(!userInfo){
+            return history.push('/')
+        }
+     },[userInfo,history])
     const mycartdetail=cartInfo?.cartDetail
     const mycart=cartInfo?.cart
     const op=mycartdetail?.map((e,i)=>{
@@ -70,6 +76,7 @@ const Cart = () => {
        }
     return (
         <div className="cartTable" key={uuid()} >
+            <h2>Your Cart</h2>
             {error ? (
 				<div>{error}</div>
             ):(

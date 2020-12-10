@@ -19,6 +19,8 @@ const Seller = () => {
     useEffect(()=>{
       if(userProfileInfo?.Seller===true) {
       return  history.push('/Store')
+      }if(!userInfo){
+        return history.push('/')
       }
     })
    

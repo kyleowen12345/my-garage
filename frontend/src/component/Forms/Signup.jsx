@@ -7,7 +7,8 @@ import {HomeOutlined} from '@ant-design/icons';
 import QueueAnim from 'rc-queue-anim';
 
 const Signup = () => {
-	const history = useHistory();
+  const history = useHistory();
+  const [error,setError]=useState('')
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -20,23 +21,21 @@ const Signup = () => {
 		}
 
     setLoading(true);
-    message.info('creating account',2)
 		axios
-			.post("https://mygarage23.herokuapp.com/signup", {
+			.post("/signup", {
 				name,
 				password,
 				email,
 			})
 			.then((data) => {
         setLoading(false);
-        message.success('account created',2)
-        message.info('sign in with your new account',5)
+        message.info('sign in with your new account',3)
 				history.push("/signin");
 			})
 
 			.catch((err) => {
 				console.log(err.response.data);
-        message.error(err.response.data.error)
+        setError(err.response.data.error)
 				setLoading(false);
 			});
 	};
@@ -54,6 +53,7 @@ const Signup = () => {
        onFinish={handlePost}
       hideRequiredMark
       key="a"
+      
     >
    <HomeOutlined onClick={()=>history.push('/')}style={{fontSize:30}}/>
     <h2>Sign Up</h2>
@@ -112,6 +112,7 @@ const Signup = () => {
       >
         <Input.Password  type="password" onChange={(e) => setConfirmpass(e.target.value)} placeholder='Please enter confirm password' />
       </Form.Item>
+      {error && <p style={{color:'red'}}>{error}</p>}
 				{loading ? (
 				 <div className="sign__loader">
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />

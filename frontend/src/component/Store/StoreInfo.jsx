@@ -6,9 +6,8 @@ import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { getAllPInS } from '../../actions/productAction';
 import { addtocartact } from '../../actions/cartActions';
-import { useAlert } from 'react-alert'
-import { message,Dropdown,Menu,Card,Button,Image,Drawer,Empty,Popconfirm } from 'antd';
-import { BarChartOutlined,PictureOutlined,AuditOutlined,AppstoreAddOutlined,DeleteOutlined,ShoppingCartOutlined,EditOutlined } from '@ant-design/icons';
+import { message,Dropdown,Menu,Image,Drawer,Popconfirm } from 'antd';
+import { BarChartOutlined,PictureOutlined,AuditOutlined,AppstoreAddOutlined,DeleteOutlined,EditOutlined } from '@ant-design/icons';
 import UpdateStore from '../Store/UpdateStore';
 import StoreImage from '../Store/StoreImage';
 import CreateProduct from '../Product/CreateProduct';
@@ -16,10 +15,10 @@ import ProductImage from '../Product/ProductImage';
 import Product from '../Product/Product';
 import UpdateProduct from '../Product/UpdateProduct';
 import StoreInfoLoad from './StoreInfoLoad';
+import StoreInfoProducts from './StoreInfoProducts';
 
 const StoreInfo = () => {
     const history=useHistory()
-    const alert = useAlert()
     const [drawer,setDrawer]=useState(false)
     const [imageDrawer,setImageDrawer]=useState(false)
     const [productDrawer,setProductDrawer]=useState(false)
@@ -33,6 +32,8 @@ const StoreInfo = () => {
     const { userInfo } = userSignin;
     const getStoreProds = useSelector((state) => state.getStoreProds);
     const { PinSInfo } = getStoreProds;
+    const viewcahrt=useSelector((state) => state.viewcahrt);
+    const {loader}=viewcahrt
     const dispatch = useDispatch();
     const storeNameFam=Cookie.getJSON("_stohremate");
   const storeId=getStore?._id
@@ -60,7 +61,7 @@ const StoreInfo = () => {
                 Authorization: `Bearer${userInfo?.token}`,
             },
         }).then(result=>{
-            alert.success(result?.data.message)
+          message.success(result?.data.message)
             history.push('/Store')
         }).catch(error=>{
             console.log(error)
@@ -135,7 +136,7 @@ const deleteClose=()=>{
     const Statmenu = (
         <Menu>
           <Menu.Item key={2}>
-              <p onClick={()=>history.push('/StoreStats')}>
+              <p onClick={()=>history.push('/storeStats')}>
              <BarChartOutlined  />  Store Stat-sheet
               </p>
           </Menu.Item>
@@ -242,33 +243,7 @@ const deleteClose=()=>{
         >
 		<UpdateProduct onClose={closeUpdateProduct} openChildred={showDrawerProductImg}/>
         </Drawer>
-                <div className="ProductList">
-                    
-                {PinSInfo?.length < 1 ?<Empty description={'Products unavailable'} /> :PinSInfo?.map(item=>{
-                const handleAdd=()=>{
-                    const token=userInfo?.token
-                    const productId=item._id
-                    const name=item.productName
-                            dispatch(addtocartact(productId,token,message,name))   
-                }
-               return(
-                   <div className="Products" key={item._id} >
-                       <Card
-    hoverable
-     cover={<Image src={item.image} alt="my garage"  height={250} width={250} />}
-  >
-               <h2>{item.productName}</h2>
-               <p>${item.price}</p>
-              
-               {userInfo?._id !==getStore?.sellerName._id &&<Button onClick={handleAdd} ><ShoppingCartOutlined />Add to cart</Button>}
-               <h3 onClick={()=>{ Cookie.set('_pductFam',item._id)
-    setProductInfo(true)
-    setProductName(item.productName)}} className='product__clicked'>View More Info</h3>
-  </Card>
-                   </div>
-               )
-           })}
-                </div>
+                <StoreInfoProducts PinSInfo={PinSInfo} userInfo={userInfo } getStore={getStore} setProductInfo={setProductInfo} setProductName={setProductName} addtocartact={addtocartact} dispatch={dispatch} loader={loader}/>
                 </div>
                 </div>
             )}

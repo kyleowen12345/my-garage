@@ -11,7 +11,7 @@ const Signin = () => {
 	const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 	const userSignin = useSelector((state) => state.userSignin);
-	const { loading, userInfo } = userSignin;
+	const { loading, userInfo,error } = userSignin;
 	const dispatch = useDispatch();
 	useEffect(() => {
 		if (userInfo) {
@@ -68,7 +68,7 @@ const Signin = () => {
         <Input.Password type="password" onChange={(e) => setPassword(e.target.value)} placeholder='Please enter your password' allowClear={true} />
       </Form.Item>
       
-        
+      {error && <p style={{color:'red'}}>{error}</p>}
 				{loading ? (
 				 <div className="sign__loader">
          <Loader type="TailSpin" color="#13CC0E" height={50} width={50} />

@@ -1,6 +1,7 @@
 {
 	"name": "frontend",
 	"version": "0.1.0",
+	"proxy":"http://localhost:5000",
 	"private": true,
 	"dependencies": {
 		"@material-ui/core": "^4.11.0",
@@ -16,7 +17,7 @@
 		"cra-template": "1.0.3",
 		"js-cookie": "^2.2.1",
 		"rc-queue-anim": "^1.8.5",
-		"react": "^16.13.1",
+		"react": "^17.0.1",
 		"react-alert": "^7.0.2",
 		"react-alert-template-basic": "^1.0.0",
 		"react-chartjs-2": "^2.11.1",

@@ -21,9 +21,8 @@ import {
 
 const signin = (email, password, history,message) => async (dispatch) => {
 	dispatch({ type: USER_SIGN_REQUEST});
-	message.info('Processing Credentials')
 	try {
-		const { data } = await axios.post("https://mygarage23.herokuapp.com/signin", {
+		const { data } = await axios.post("/signin", {
 			password,
 			email,
 		});
@@ -33,7 +32,6 @@ const signin = (email, password, history,message) => async (dispatch) => {
 		history.push("/");
 	} catch (err) {
 		dispatch({ type: USER_SIGN_FAIL, payload: err.response?.data.error });
-		message.error(err.response?.data.error)
 	}
 };
 const profile = (_id, token) =>async (dispatch) => {
@@ -41,7 +39,7 @@ const profile = (_id, token) =>async (dispatch) => {
   try {
 	  const {data}=await axios
 	  .post(
-		  "https://mygarage23.herokuapp.com/profile",
+		  "/profile",
 		  {
 			  _id,
 		  },

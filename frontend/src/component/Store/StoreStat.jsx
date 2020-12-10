@@ -4,13 +4,16 @@ import { getAllPInS } from '../../actions/productAction';
 import Cookie from "js-cookie";
 import Axios from 'axios';
 import {Table} from 'antd';
+import {Line} from 'react-chartjs-2';
 import {v4 as uuid} from 'uuid'
 import Moment from 'react-moment';
+import { useHistory } from "react-router-dom";
 
 
 
 
 const StoreStat = () => {
+  const history=useHistory()
     const getStoreProds = useSelector((state) => state.getStoreProds);
     const { PinSInfo,loading } = getStoreProds;
     const [stats,setStats]=useState([])
@@ -20,7 +23,11 @@ const StoreStat = () => {
 	const { userInfo } = userSignin;
     const token = userInfo?.token;
     const { Column,ColumnGroup } = Table;
-    
+    useEffect(() => {
+      if (!userInfo) {
+        return history.push('/')
+      }
+    }, [history,userInfo]);
     useEffect(()=>{
         dispatch(getAllPInS(storeNameFam))
       },[dispatch,storeNameFam])
@@ -30,9 +37,73 @@ const StoreStat = () => {
       }}).then(data=>setStats(data.data)).catch(err=>console.log(err))
   },[token,storeNameFam])
     
+   
+     const productNames=PinSInfo?.map(item=>item.productName)
+     const productSales=PinSInfo?.map(item=>item.sold)
+     const state = {
+        labels: productNames,
+        datasets: [
+          {
+            label: 'Sales',
+            backgroundColor: 'rgba(255,99,132,0.2)',
+  borderColor: 'rgba(255,99,132,1)',
+  borderWidth: 1,
+  hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+  hoverBorderColor: 'rgba(255,99,132,1)',
+            data: productSales
+            
+          }
+        ],
+        
+      }
+
+   const chartLayouts=()=>{
+    if(PinSInfo?.length <=2){
+      return
+    }
+     else{
+       return (
+         <div>
+<Line
+        data={state}
+
+        maintainAspectRatio
+        options={{
+          title:{
+            display:true,
+            text:'Product Sales',
+            fontSize:20
+          },
+          legend:{
+            display:true,
+            position:'bottom'
+          },
+          scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true,
+                    min: 0,
+                   max:productSales?.sort((a,b)=>a-b)[productSales?.length - 1] + 2
+                }
+              }],
+              xAxes: [{
+                ticks: {
+                 fontSize: 12
+                }
+               }]
+           },
+           responsive: true,
+          maintainAspectRatio: true,
+        }}
+      />
+         </div>
+        
+       )
+     }
+   }
     return (
         <div className="stats">
-          <h1>Stats</h1>
+          {chartLayouts()}
              <h1>Items</h1>
                      <Table  size={'large'}  dataSource={PinSInfo} loading={loading}   rowKey={PinSInfo=>(PinSInfo._id ||uuid() )} bordered={true} scroll={{ x: true }} pagination={{ pageSize: 5 }}>
                      <Column title={<p className="Cart__title">Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} fixed={'left'}/>

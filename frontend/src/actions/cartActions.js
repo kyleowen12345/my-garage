@@ -4,7 +4,7 @@ import {ADD__TO__CART__REQUEST,ADD__TO__CART__SUCCESS,ADD__TO__CART__FAIL,VIEW__
 const addtocartact=(productId,token,message,name)=>async(dispatch)=>{
     dispatch({ type: ADD__TO__CART__REQUEST });
   try {
-    const {data}=await axios.post('https://mygarage23.herokuapp.com/addtocart',{productId},{
+    const {data}=await axios.post('/addtocart',{productId},{
         headers: {
             Authorization: `Bearer${token}`,
         },
@@ -20,7 +20,7 @@ const addtocartact=(productId,token,message,name)=>async(dispatch)=>{
 const viewCart=(token)=>async(dispatch)=>{
     dispatch({ type: VIEW__CART__REQUEST});
     try {
-        const {data}=await axios.get('https://mygarage23.herokuapp.com/getCartInfo',{
+        const {data}=await axios.get('/getCartInfo',{
             headers: {
                 Authorization: `Bearer${token}`,
             },

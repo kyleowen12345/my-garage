@@ -8,9 +8,11 @@ import {PlusCircleOutlined } from '@ant-design/icons';
 import CreateStores from './CreateStores'
 import StoreImage from './StoreImage'
 import HomeLoading from '../Home/HomeLoading';
+import { useHistory } from "react-router-dom";
 
 
 const Store = () => {
+  const history=useHistory()
     const [drawer,setDrawer]=useState(false)
     const [storechildren,setStoreChildren]=useState(false)
     const userSignin = useSelector((state) => state.userSignin);
@@ -24,8 +26,10 @@ const Store = () => {
     useEffect(()=>{
        if(userInfo){
             dispatch(viewMyStore(userId,userToken))
+       }else{
+        return history.push('/')
        }
-    },[dispatch, userId, userToken, userInfo])
+    },[dispatch, userId, userToken, userInfo,history])
     // const userStoreName= yourStore.map(info=>{
     //    return info.contactNumber})
     const { Meta } = Card;

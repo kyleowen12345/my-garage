@@ -13,6 +13,8 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
     const { productInfo, loading, error } = getProduct;
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
+    const viewcahrt=useSelector((state) => state.viewcahrt);
+    const {loader}=viewcahrt
     const dispatch = useDispatch();
     const productNameFam=Cookie.getJSON("_pductFam");
   
@@ -79,7 +81,7 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
     <p><span style={{fontWeight:'bold', fontSize:15}}>Description :</span> {productInfo?.description}</p>
     <p> <span style={{fontWeight:'bold', fontSize:15}}>Store Name :</span> {productInfo?.storeName.storeName}</p>
     <p><span style={{fontWeight:'bold', fontSize:15}}>Store Owner :</span> {productInfo?.storeOwner.name}</p>
-   {userInfo?._id !==productInfo?.storeOwner._id&&<button onClick={handleAdd}><ShoppingCartOutlined /> Add to cart</button>}
+            {userInfo?._id !==productInfo?.storeOwner._id&&<button onClick={handleAdd}><ShoppingCartOutlined /> {loader ? "Adding..":"Add to cart"}</button>}
                 </>
             )}
          

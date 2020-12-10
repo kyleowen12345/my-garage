@@ -6,7 +6,6 @@ import Home from "./component/Home/Home";
 import Navbar from "./component/Navbar/Navbar";
 import Signin from "./component/Forms/Signin";
 import Signup from "./component/Forms/Signup";
-import { useSelector } from "react-redux";
 import Reset from "./component/Forms/Reset";
 import Newpassword from "./component/Forms/Newpassword";
 import Profile from "./component/Profile/Profile";
@@ -18,6 +17,7 @@ import StoreStat from "./component/Store/StoreStat";
 import SearchStore from './component/Store/SearchStore'
 import StoreType from "./component/Store/StoreType";
 import Footer from "./component/Footer";
+import HomeLoading from './component/Home/HomeLoading'
 
 
 
@@ -27,35 +27,31 @@ import Footer from "./component/Footer";
 
 
 function App() {
-	const userSignin = useSelector((state) => state.userSignin);
-	const { userInfo } = userSignin;
 	return (
 		<Router>
-			
+			<Route path='/sa'>
+				<HomeLoading/>
+			</Route>
 			<Switch>
-				
 			<Route exact path="/" >
 			<Navbar />
 				<Home/>
 				<Footer/>
 			</Route>
 				
-			<Route path="/storetype/:name" component={StoreType}>
+			<Route path="/storetype/:name" >
 			<Navbar />
 				<StoreType/>
 				</Route>
-			<Route path="/storeInfo" component={StoreInfo}>
+			<Route path="/storeInfo" >
 			<Navbar />
 				<StoreInfo/>
 			</Route>
-			<Route path="/searchResult/:name" component={SearchStore}>
+			<Route path="/searchResult/:name" >
 			<Navbar />
 				<SearchStore/>
 			</Route>
-                                   	
-				{userInfo ? (
-					<>
-						<Route path="/profile">
+			<Route path="/profile">
 						<Navbar />
 							<Profile />
 						</Route>
@@ -71,13 +67,11 @@ function App() {
 						 <Navbar />
 							 <Cart/>
 						 </Route>
-						 <Route path="/StoreStats">
+						 <Route path="/storeStats">
 						 <Navbar />
                              <StoreStat/>
 						 </Route>
-					</>
-				) : (
-					<>
+					
 						<Route path="/signup">
 							<Signup />
 						</Route>
@@ -90,8 +84,6 @@ function App() {
 						<Route exact path="/reset-password/:token">
 							<Newpassword />
 						</Route>
-					</>
-				)}
 			</Switch>
 		</Router>
 	);

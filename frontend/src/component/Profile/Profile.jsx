@@ -7,8 +7,10 @@ import { Avatar,Card,Menu, Dropdown,Drawer } from 'antd';
 import { AntDesignOutlined,EditOutlined,PictureOutlined,AuditOutlined } from '@ant-design/icons';
 import History from './History'
 import ProfileLoad from "./ProfileLoad";
+import { useHistory } from "react-router-dom";
 
 const Profile = () => {
+	const history=useHistory()
 	const [drawer,setDrawer]=useState(false)
 	const [imageDrawer,setImageDrawer]=useState(false)
 	const userSignin = useSelector((state) => state.userSignin);
@@ -21,9 +23,11 @@ const Profile = () => {
 	useEffect(() => {
 		if (userInfo) {
 		 dispatch(profile(userId, userToken))
+		}else{
+			return history.push('/')
 		}
-	}, [dispatch, userId, userToken, userInfo]);
-
+	}, [dispatch, userId, userToken, userInfo,history]);
+ 
 const showDrawer = () => {
 	setDrawer(true)
 	  };

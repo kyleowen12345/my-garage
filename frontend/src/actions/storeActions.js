@@ -27,7 +27,7 @@ const makeStore=(storeName,storeAddress,storeDescription,storeType,socialMediaAc
 const viewMyStore=(_id, token)=>async(dispatch)=>{
     dispatch({ type: VIEW_STORE_REQUEST});
     try {
-        const {data}=await axios.post('https://mygarage23.herokuapp.com/mystores',{_id},{
+        const {data}=await axios.post('/mystores',{_id},{
             headers: {
                 Authorization: `Bearer${token}`,
             },
@@ -40,7 +40,7 @@ const viewMyStore=(_id, token)=>async(dispatch)=>{
 const allStoresViewer=()=>async(dispatch)=>{
     dispatch({ type: VIEWALL_STORE_REQUEST });
     try {
-        const {data}=await axios.get('https://mygarage23.herokuapp.com/homies')
+        const {data}=await axios.get('/homies')
         dispatch({ type: VIEWALL_STORE_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: VIEWALL_STORE_FAIL, payload: error.response?.data.error });
@@ -50,7 +50,7 @@ const allStoresViewer=()=>async(dispatch)=>{
 const getSingleStore=(_id)=>async(dispatch)=>{
     dispatch({ type: VIEWSINGLE_STORE_REQUEST});
     try {
-        const {data}=await axios.post('https://mygarage23.herokuapp.com/singlestore',{
+        const {data}=await axios.post('/singlestore',{
             _id
         })
         dispatch({ type: VIEWSINGLE_STORE_SUCCESS, payload: data });
@@ -62,7 +62,7 @@ const getSingleStore=(_id)=>async(dispatch)=>{
 const getSearchedStore=(storeName,history)=>async(dispatch)=>{
     dispatch({ type: SEARCH_STORE_REQUEST});
     try {
-        const {data}=await axios.post('https://mygarage23.herokuapp.com/searchresult',{
+        const {data}=await axios.post('/searchresult',{
             storeName
         })
         dispatch({ type: SEARCH_STORE_SUCCESS, payload: data });
@@ -111,7 +111,7 @@ const newStoreImage=(storeBackgroundImage,_id,token,onClose,message)=>async(disp
 const getStoreType=(storeType,history)=>async(dispatch)=>{
     dispatch({ type: STORETYPE_REQUEST});
     try {
-        const {data}=await axios.post('https://mygarage23.herokuapp.com/storeOption',{
+        const {data}=await axios.post('/storeOption',{
             storeType
         })
         dispatch({ type: STORETYPE_SUCCESS, payload: data });
