@@ -7,12 +7,14 @@ import HomeLoading from "./HomeLoading";
 import ImageCarousel from "./ImageCarousel";
 import OptionCarousel from "./OptionCarousel";
 
+
 const Home = () => {
 	const [minValue,setMinValue]=useState(0)
 	const [maxValue,setMaxValue]=useState(6)
 	const viewAllStore = useSelector((state) => state.viewAllStore);
 	const { allStores, loading, error } = viewAllStore;
 	const dispatch = useDispatch();
+	
 	useEffect(()=>{
 	  dispatch(allStoresViewer())
 	},[dispatch])
@@ -32,7 +34,7 @@ const handleChange = (item) => {
 			{loading ? (
 				<HomeLoading />
 			) :error ? (
-				<div>{error}</div>
+				<div>nag error</div>
 			) : (
 				<div className="home">
 					{allStores && allStores?.length >0 && allStores?.slice(minValue,maxValue).map(item=>{

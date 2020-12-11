@@ -17,7 +17,7 @@ import StoreStat from "./component/Store/StoreStat";
 import SearchStore from './component/Store/SearchStore'
 import StoreType from "./component/Store/StoreType";
 import Footer from "./component/Footer";
-import HomeLoading from './component/Home/HomeLoading'
+import NotFound from "./component/NotFound";
 
 
 
@@ -30,9 +30,9 @@ import HomeLoading from './component/Home/HomeLoading'
 function App() {
 	return (
 		<Router>
-			<Route path='/sa'>
+			{/* <Route path='/sa'>
 				<HomeLoading/>
-			</Route>
+			</Route> */}
 			<Switch>
 			<Route exact path="/" >
 			<Navbar />
@@ -89,6 +89,7 @@ function App() {
 						<Route exact path="/reset-password/:token">
 							<Newpassword />
 						</Route>
+						<Route component={NotFound}/>
 			</Switch>
 		</Router>
 	);
