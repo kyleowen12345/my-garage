@@ -52,6 +52,7 @@ const updateProductInfo=(productName,price,productStocks,description,storeName,_
             },
         })
         dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: data });
+
         message.success('Product Updated')
         onClose()
     } catch (error) {

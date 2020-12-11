@@ -51,7 +51,7 @@ const StoreStat = () => {
         
       }
     return (
-        <div className="stats">
+        <div style={{textAlign:'center'}} >
           <h1>Stats</h1>
              <h1>Products</h1>
                     <StoreProductsStat PinSInfo={PinSInfo} loading={loading}/> 

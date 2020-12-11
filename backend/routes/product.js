@@ -84,7 +84,7 @@ router.post('/updateproduct',requireLogin,async(req,res)=>{
 			return res.status(422).json({ error: "complete the fields" })
 		}
   try {
-    const updateProduct=await Product.findOne({_id:_id})
+    const updateProduct=await Product.findOne({_id:_id}).populate('storeOwner','name').populate('storeName','storeName _id socialMediaAcc')
     updateProduct.productName=productName
     updateProduct.price=price
     updateProduct.productStocks=productStocks

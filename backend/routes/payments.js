@@ -16,7 +16,6 @@ router.post('/payments',requireLogin,async(req,res)=>{
         })
     })
     const yourStats=statSheet?.filter(i=>i.storeName?.includes(storeNameFam))
-   console.log(work)
    res.status(200).json(yourStats)
     } catch (error) {
         res.status(422).send('something went wrong')

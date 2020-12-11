@@ -15,8 +15,8 @@ const UpdateProduct = ({onClose}) => {
     const [description, setDescription] = useState("");
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
-    const updateProduct = useSelector((state) => state.updateProduct);
-    const { loading ,error } = updateProduct;
+    const getStoreProds = useSelector((state) => state.getStoreProds);
+    const { loading,error } = getStoreProds;
     const dispatch = useDispatch();
     const userToken=userInfo?.token
     const productNameFam=Cookie.getJSON("_pductFam");

@@ -40,21 +40,16 @@ const getProductReducer=(state={},action)=>{
                 return {loading:false, productInfo:action.payload}
                 case SINGLE_PRODUCT_FAIL:
             return {loading:false, error:action.payload}
-        default:
-            return state
-    }
-}
-const updateProductReducer=(state={},action)=>{
-    switch (action.type) {
-        case UPDATE_PRODUCT_REQUEST:
-            return {loading:true}
-            case UPDATE_PRODUCT_SUCCESS:
-                return {loading:false, updateProd:action.payload}
-                case UPDATE_PRODUCT_FAIL:
-            return {loading:false, error:action.payload}
+            case UPDATE_PRODUCT_REQUEST:
+                return {loading:true}
+                case UPDATE_PRODUCT_SUCCESS:
+                    return {loading:false, productInfo:action.payload}
+                    case UPDATE_PRODUCT_FAIL:
+                return {loading:false, error:action.payload}
         default:
             return state
     }
 }
 
-export {createProductReducer,getStoreProductReducer,getProductReducer,updateProductReducer}
+
+export {createProductReducer,getStoreProductReducer,getProductReducer}

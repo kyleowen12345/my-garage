@@ -61,6 +61,7 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
         const productId=productNameFam
         dispatch(addtocartact(productId,token,message,productInfo?.productName))
     }
+  
     return(
 <div className="ProductInfo">
     {loading ?<ProductLoad/>
@@ -70,10 +71,9 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
                 <>
     <img src={productInfo?.image} alt="my-garage" style={{width:250,height:250}}/>
     <div className="ProductSettings">
-    {userInfo?._id ===productInfo?.storeOwner._id&& <Dropdown overlay={editmenu} placement="bottomCenter" arrow trigger={['click']} key={2}><EditOutlined style={{fontSize:25,margin:20}}/></Dropdown>}
-    {userInfo?._id ===productInfo?.storeOwner._id &&<Dropdown overlay={Deletemenu} placement="bottomCenter" arrow trigger={['click']} key={4}>
+    {userInfo?._id ===productInfo?.storeOwner._id  && <><Dropdown overlay={editmenu} placement="bottomCenter" arrow trigger={['click']} key={2}><EditOutlined style={{fontSize:25,margin:20}}/></Dropdown><Dropdown overlay={Deletemenu} placement="bottomCenter" arrow trigger={['click']} key={4}>
       <DeleteOutlined key="edit" style={{fontSize:25,margin:20}}/>
-				</Dropdown>} 
+				</Dropdown></>} 
     </div>
     <p> <span style={{fontWeight:'bold', fontSize:15}}>Product Name :</span> {productInfo?.productName}</p>
     <p><span style={{fontWeight:'bold', fontSize:15}}>Price :</span> ${productInfo?.price}</p>

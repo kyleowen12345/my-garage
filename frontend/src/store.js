@@ -6,7 +6,7 @@ import {
 	userSigninReducer,
 } from "./reducers/userReducer";
 import { createStoreReducer, viewMyStoreReducer,allStoreReducer, getSingleStoreReducer, searchStoreReducer, getStoretypeReducer } from "./reducers/storeReducer";
-import { createProductReducer, getProductReducer, getStoreProductReducer, updateProductReducer } from "./reducers/productReducer";
+import { createProductReducer, getProductReducer, getStoreProductReducer } from "./reducers/productReducer";
 import {  historyReducer, viewCartReducer } from "./reducers/cartReducer";
 
 
@@ -27,7 +27,6 @@ const reducer = combineReducers({
 	createProduct:createProductReducer,
 	getStoreProds:getStoreProductReducer,
 	getProduct:getProductReducer,
-	updateProduct:updateProductReducer,
 	// Cart
 	viewcahrt:viewCartReducer,
 	purchasedItems:historyReducer,
