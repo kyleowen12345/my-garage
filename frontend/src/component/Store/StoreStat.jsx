@@ -26,7 +26,7 @@ const StoreStat = () => {
         dispatch(getAllPInS(id))
       },[dispatch,id])
   useEffect(()=>{
-      Axios.post('/payments',{storeNameFam:id},{headers:{
+      Axios.post(`${process.env.REACT_APP_API_KEY}/payments`,{storeNameFam:id},{headers:{
         Authorization: `Bearer${token}`,
       }}).then(data=>setStats(data.data)).catch(err=>console.log(err))
   },[token,id])
