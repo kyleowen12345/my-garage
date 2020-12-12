@@ -18,7 +18,6 @@ router.post('/createproduct', requireLogin,async(req,res)=>{
         return res.status(422).json({ error: "complete the fields" })
       }
     try {
-     await Product.findOne({productName:productName})
      const newProduct=new Product({
       productName,price,productStocks,description,storeName,storeOwner
      })
@@ -84,6 +83,7 @@ router.post('/updateproduct',requireLogin,async(req,res)=>{
 			return res.status(422).json({ error: "complete the fields" })
 		}
   try {
+    
     const updateProduct=await Product.findOne({_id:_id}).populate('storeOwner','name').populate('storeName','storeName _id socialMediaAcc')
     updateProduct.productName=productName
     updateProduct.price=price
