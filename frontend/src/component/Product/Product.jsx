@@ -7,6 +7,7 @@ import { addtocartact } from '../../actions/cartActions';
 import { Popconfirm, message,Dropdown,Menu} from 'antd';
 import ProductLoad from './ProductLoad';
 import { PictureOutlined,AuditOutlined,DeleteOutlined,EditOutlined,ShoppingCartOutlined } from '@ant-design/icons';
+import ErrorPage from '../ErrorPage';
 
 const Product = ({openChildred,openUpdateprod,deleteClose}) => {
     const getProduct = useSelector((state) => state.getProduct);
@@ -66,7 +67,7 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
 <div className="ProductInfo">
     {loading ?<ProductLoad/>
 				: error ? (
-				<div>{error}</div>
+				<ErrorPage/>
 			):(
                 <>
     <img src={productInfo?.image} alt="my-garage" style={{width:250,height:250}}/>

@@ -8,6 +8,7 @@ import { AntDesignOutlined,EditOutlined,PictureOutlined,AuditOutlined } from '@a
 import History from './History'
 import ProfileLoad from "./ProfileLoad";
 import { useHistory } from "react-router-dom";
+import ErrorPage from "../ErrorPage";
 
 const Profile = () => {
 	const history=useHistory()
@@ -59,7 +60,7 @@ const onClose = () => {
 	return (
 		<div className="Profile">
 			{ error ? (
-				<div>{error}</div>
+				<ErrorPage/>
 			) : loading ?(
 				<ProfileLoad/>
 

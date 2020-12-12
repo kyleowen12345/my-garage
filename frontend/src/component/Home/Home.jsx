@@ -6,6 +6,7 @@ import {Card,Pagination,Avatar } from 'antd';
 import HomeLoading from "./HomeLoading";
 import ImageCarousel from "./ImageCarousel";
 import OptionCarousel from "./OptionCarousel";
+import ErrorPage from "../ErrorPage";
 
 
 const Home = () => {
@@ -34,7 +35,7 @@ const handleChange = (item) => {
 			{loading ? (
 				<HomeLoading />
 			) :error ? (
-				<div>nag error</div>
+			<ErrorPage/>
 			) : (
 				<div className="home">
 					{allStores && allStores?.length >0 && allStores?.slice(minValue,maxValue).map(item=>{

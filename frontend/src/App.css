@@ -439,6 +439,10 @@ header {
 	text-align: center;
 	justify-content: center;
 }
+/* Error page */
+.Error__page{
+	text-align: center;
+}
 @media only screen and (max-width: 1200px) {
 	.home {
 		display: grid;

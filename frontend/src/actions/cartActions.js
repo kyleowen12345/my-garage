@@ -27,7 +27,7 @@ const viewCart=(token)=>async(dispatch)=>{
           })
           dispatch({ type: VIEW__CART__SUCCESS, payload: data }); 
     } catch (error) {
-        dispatch({ type: VIEW__CART__FAIL, payload: error.response?.data.error })
+        dispatch({ type: VIEW__CART__FAIL, payload: error })
     }
 }
 const deleteItemFromCart=(productId,token,name,message)=>async(dispatch)=>{

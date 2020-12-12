@@ -34,7 +34,7 @@ const viewMyStore=(_id, token)=>async(dispatch)=>{
         })
         dispatch({ type: VIEW_STORE_SUCCESS, payload: data });
     } catch (error) {
-        dispatch({ type: VIEW_STORE_FAIL, payload: error.response?.data.error });
+        dispatch({ type: VIEW_STORE_FAIL, payload: error });
     }
 }
 const allStoresViewer=()=>async(dispatch)=>{
@@ -43,7 +43,8 @@ const allStoresViewer=()=>async(dispatch)=>{
         const {data}=await axios.get(`${process.env.REACT_APP_API_KEY}/homies`)
         dispatch({ type: VIEWALL_STORE_SUCCESS, payload: data });
     } catch (error) {
-        dispatch({ type: VIEWALL_STORE_FAIL, payload: error.response?.data.error });
+        console.log(error)
+        dispatch({ type: VIEWALL_STORE_FAIL, payload: error });
     }
     
 }
@@ -55,7 +56,7 @@ const getSingleStore=(_id)=>async(dispatch)=>{
         })
         dispatch({ type: VIEWSINGLE_STORE_SUCCESS, payload: data });
     } catch (error) {
-        dispatch({ type: VIEWSINGLE_STORE_FAIL, payload: error.response?.data.error });
+        dispatch({ type: VIEWSINGLE_STORE_FAIL, payload: error });
     }
 
 }
@@ -68,7 +69,7 @@ const getSearchedStore=(storeName,history)=>async(dispatch)=>{
         dispatch({ type: SEARCH_STORE_SUCCESS, payload: data });
         history.push(`/searchResult/${storeName}`)
     } catch (error) {
-        dispatch({ type: SEARCH_STORE_FAIL, payload: error.response?.data.error });
+        dispatch({ type: SEARCH_STORE_FAIL, payload: error });
     }
 
 }

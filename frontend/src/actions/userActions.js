@@ -51,7 +51,7 @@ const profile = (_id, token) =>async (dispatch) => {
 	  )
 	  dispatch({ type: USER_PROFILE_SUCCESS, payload: data });
   } catch (error) {
-	dispatch({ type: USER_PROFILE_FAIL, payload: error.response?.data.error });
+	dispatch({ type: USER_PROFILE_FAIL, payload: error });
   }
 };
 const updateProfile = (

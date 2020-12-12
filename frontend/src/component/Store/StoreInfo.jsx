@@ -15,6 +15,7 @@ import Product from '../Product/Product';
 import UpdateProduct from '../Product/UpdateProduct';
 import StoreInfoLoad from './StoreInfoLoad';
 import StoreInfoProducts from './StoreInfoProducts';
+import ErrorPage from '../ErrorPage';
 
 const StoreInfo = () => {
     const history=useHistory()
@@ -27,7 +28,7 @@ const StoreInfo = () => {
     const [updateProduct,setUpdateProduct]=useState(false)
     const [productName,setProductName]=useState('')
     const singleStore = useSelector((state) => state.singleStore);
-    const { getStore, loading } = singleStore;
+    const { getStore, loading,error } = singleStore;
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
     const getStoreProds = useSelector((state) => state.getStoreProds);
@@ -158,7 +159,7 @@ const deleteClose=()=>{
         <>
             {loading ? (
                 <StoreInfoLoad/>
-			):(
+			):error ? <ErrorPage/>:(
                 <div className="Store__info">
             <div className="Store__fulldetails">
                 <Image src={getStore?.storeBackgroundImage} alt="my-garage"  />

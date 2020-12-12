@@ -27,12 +27,10 @@ import NotFound from "./component/NotFound";
 
 
 
+
 function App() {
 	return (
 		<Router>
-			{/* <Route path='/sa'>
-				<HomeLoading/>
-			</Route> */}
 			<Switch>
 			<Route exact path="/" >
 			<Navbar />

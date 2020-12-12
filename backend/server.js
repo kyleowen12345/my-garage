@@ -9,6 +9,7 @@ import payments from './routes/payments.js'
 import cors from "cors";
 
 
+
 // config
 const app = express();
 dotenv.config();
@@ -42,7 +43,13 @@ mongoose.connect(
 	},()=>
 		console.log("connected to mongoDB")
 );
-
+mongoose.connection.on('error', function (err) {
+	console.log('Mongoose connection error: ' + err);
+  });
+  
+  mongoose.connection.on('disconnected', function () {
+	console.log('Mongoose disconnected');
+  });
 
 
 

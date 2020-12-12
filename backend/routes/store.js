@@ -12,7 +12,8 @@ try {
  res.json(stores)
 
 } catch (error) {
-	res.json(error)
+	console.log('something went wrong store')
+return	res.json(error)
 }
 })
 router.post('/singlestore',async(req,res)=>{

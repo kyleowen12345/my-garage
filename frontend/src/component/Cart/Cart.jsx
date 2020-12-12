@@ -7,6 +7,7 @@ import {message,Table,Popconfirm} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import {v4 as uuid} from 'uuid'
 import { useHistory } from "react-router-dom";
+import ErrorPage from '../ErrorPage';
 
 const Cart = () => {
     const history=useHistory()
@@ -78,7 +79,7 @@ const Cart = () => {
         <div className="cartTable" key={uuid()} >
             <h2>Your Cart</h2>
             {error ? (
-				<div>{error}</div>
+			   <ErrorPage/>
             ):(
                 <Table size={'large'}  dataSource={op} loading={loading}   pagination={{ pageSize: 5 }}  rowKey={op=>(op._id ||uuid() )} bordered={true} scroll={{ x: true }}>
                     <Column title={<p className="Cart__title">Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:window.innerWidth < 600 ? 30:100, height:window.innerWidth < 800 ? 40:100, objectFit:'contain'}}/>}  key={uuid()} />

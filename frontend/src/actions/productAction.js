@@ -38,7 +38,7 @@ const getProdct=(_id)=>async(dispatch)=>{
       const {data}=await axios.post(`${process.env.REACT_APP_API_KEY}/singlestoreproduct`,{_id})
     dispatch({ type: SINGLE_PRODUCT_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: SINGLE_PRODUCT_FAIL, payload: error.response?.data.error });
+    dispatch({ type: SINGLE_PRODUCT_FAIL, payload: error });
   }
 }
 const updateProductInfo=(productName,price,productStocks,description,storeName,_id,token,onClose,message)=>async(dispatch)=>{

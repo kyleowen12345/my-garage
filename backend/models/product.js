@@ -17,7 +17,6 @@ const Product = mongoose.model(
 			type: String,
 			min: 5,
 			maxlength: 100,
-			validate: /^[a-zA-Z0-9,. ]*$/,
 			required: true,
 		},
 		Rating: {

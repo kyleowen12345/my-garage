@@ -8,6 +8,7 @@ import CreateStores from './CreateStores'
 import StoreImage from './StoreImage'
 import HomeLoading from '../Home/HomeLoading';
 import { useHistory } from "react-router-dom";
+import ErrorPage from '../ErrorPage';
 
 
 const Store = () => {
@@ -53,7 +54,7 @@ const Store = () => {
          <p onClick={showDrawer} style={{cursor:'pointer'}}><PlusCircleOutlined style={{fontSize:20,margin:10}} />Create Store</p>
         
         <div className="home">
-             {loading ?  <HomeLoading/>: error ? <p>{error}</p>:<>
+             {loading ?  <HomeLoading/>: error ? <p><ErrorPage/></p>:<>
              <Drawer
           title="Create Store"
           width={window.innerWidth < 1000 ? 300:600}
