@@ -39,11 +39,11 @@ const StoreStat = () => {
         datasets: [
           {
             label: 'Sales',
-            backgroundColor: 'rgba(255,99,132,0.2)',
-  borderColor: 'rgba(255,99,132,1)',
+            backgroundColor: 'rgb(0,156,222)',
+  borderColor: 'black',
   borderWidth: 1,
-  hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-  hoverBorderColor: 'rgba(255,99,132,1)',
+  hoverBackgroundColor: 'rgb(0,156,222)',
+  hoverBorderColor: 'rgb(0,156,222)',
             data: productSales
             
           }
