@@ -519,7 +519,7 @@ header {
 		font-size: 12px;
 	}
 	.react-multi-carousel-list {
-		margin: 5px 0px !important;
+		margin: 0px 0px !important;
 	}
 	.options > img {
 		width: 200px;
@@ -619,8 +619,5 @@ header {
 
 	.carousel_image {
 		height: 200px;
-	}
-	.home{
-	row-gap: 0px;
 	}
 }
