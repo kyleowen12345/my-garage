@@ -20,14 +20,6 @@ import Footer from "./component/Footer";
 import NotFound from "./component/NotFound";
 
 
-
-
-
-
-
-
-
-
 function App() {
 	return (
 		<Router>
@@ -74,7 +66,6 @@ function App() {
 						 <Navbar />
                              <StoreStat/>
 						 </Route>
-					
 						<Route path="/signup">
 							<Signup />
 						</Route>

@@ -5,8 +5,8 @@ body {
 	font-family: "Quicksand", sans-serif !important;
 	background-color: rgb(248, 248, 248) !important;
 	overflow-x: hidden;
+	height: 100vh;
 }
-
 /*Forms */
 /*Forms */
 /*Forms */
@@ -519,7 +519,7 @@ header {
 		font-size: 12px;
 	}
 	.react-multi-carousel-list {
-		margin: 30px 0px !important;
+		margin: 5px 0px !important;
 	}
 	.options > img {
 		width: 200px;
@@ -619,5 +619,8 @@ header {
 
 	.carousel_image {
 		height: 200px;
+	}
+	.home{
+	row-gap: 0px;
 	}
 }

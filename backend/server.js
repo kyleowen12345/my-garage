@@ -15,7 +15,7 @@ const app = express();
 dotenv.config();
 export const secret = process.env.JWT_SECRET;
 const corsOptions = {
-	origin: "https://blackedmarket-aec61.web.app" ,
+	origin: "https://blackedmarket-aec61.web.app",
 	optionsSuccessStatus: 200, // For legacy browser support
 	// method: "GET, POST, DELETE,",
 };

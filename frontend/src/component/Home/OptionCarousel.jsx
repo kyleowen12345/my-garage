@@ -59,7 +59,7 @@ const OptionCarousel = () => {
   
     return (
       <>
-      <h1 style={{textAlign:'center'}}>Categories</h1>
+  
         <Carousel responsive={responsive} centerMode={true} infinite={true} >
   { Options.map(item=>{
     const handleSelect=()=>{

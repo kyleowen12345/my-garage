@@ -110,6 +110,7 @@ const showUpdateProduct=()=>{
 const closeUpdateProduct=()=>{
     setUpdateProduct(false)
     setProductInfo(false)
+    window.location.reload()
     dispatch(getAllPInS(storeId))
         }
         // Delete Product
@@ -154,7 +155,7 @@ const deleteClose=()=>{
           </Menu.Item> 
         </Menu>
       )
- 
+
     return (
         <>
             {loading ? (
@@ -239,7 +240,7 @@ const deleteClose=()=>{
         >
 		<UpdateProduct onClose={closeUpdateProduct} openChildred={showDrawerProductImg}/>
         </Drawer>
-                <StoreInfoProducts PinSInfo={PinSInfo} userInfo={userInfo } getStore={getStore} setProductInfo={setProductInfo} setProductName={setProductName} addtocartact={addtocartact} dispatch={dispatch} loader={loader}/>
+                <StoreInfoProducts  PinSInfo={PinSInfo} userInfo={userInfo } getStore={getStore} setProductInfo={setProductInfo} setProductName={setProductName} addtocartact={addtocartact} dispatch={dispatch} loader={loader}/>
                 </div>
                 </div>
             )}

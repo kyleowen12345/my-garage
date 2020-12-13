@@ -2,7 +2,7 @@ import React,{ useEffect,useState } from 'react'
 import { Link, } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { viewMyStore } from '../../actions/storeActions';
-import {Card,Avatar,Drawer } from 'antd';
+import {Card,Avatar,Drawer,Empty } from 'antd';
 import {PlusCircleOutlined } from '@ant-design/icons';
 import CreateStores from './CreateStores'
 import StoreImage from './StoreImage'
@@ -73,6 +73,7 @@ const Store = () => {
         >
 			<StoreImage  onClose={onCloseImg}/>
         </Drawer>
+        {yourStore?.length===0 &&<Empty description={'You have no Stores'}/>}
                {yourStore?.map(item=>{
                    return (
                     <Link to={`/storeInfo/${item._id}/${item.storeName.replace(/\s/g,'_')}`}  key={item._id}>

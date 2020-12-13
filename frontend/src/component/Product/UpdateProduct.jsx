@@ -33,6 +33,7 @@ const UpdateProduct = ({onClose}) => {
      layout={'vertical'}
      onFinish={handlePost}
      hideRequiredMark
+  
     >
    
     <h2>Update Product</h2>

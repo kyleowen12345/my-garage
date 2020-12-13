@@ -31,7 +31,6 @@ const handleChange = (item) => {
 		<>
 		<ImageCarousel/>
 		<OptionCarousel/>
-		<h1 style={{textAlign:'center'}}>Stores</h1>
 			{loading ? (
 				<HomeLoading />
 			) :error ? (
