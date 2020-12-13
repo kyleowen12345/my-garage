@@ -191,6 +191,18 @@ header {
 	padding: 0 !important;
 	margin-top: 0 !important;
 }
+.centered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	font-weight: bold;
+	background-color: black;
+	font-size: 25px;
+	padding: 10px;
+	border-radius: 10px;
+  }
 /* home carousel */
 .carousel_image {
 	width: 100vw !important;
@@ -619,5 +631,8 @@ header {
 
 	.carousel_image {
 		height: 200px;
+	}
+	.centered{
+		font-size: 12px;
 	}
 }
