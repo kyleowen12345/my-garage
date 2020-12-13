@@ -108,7 +108,6 @@ const showUpdateProduct=()=>{
   setUpdateProduct(true)
         }
 const closeUpdateProduct=()=>{
-  message.info('Please wait')
     setUpdateProduct(false)
     setProductInfo(false)
     window.location.reload()
