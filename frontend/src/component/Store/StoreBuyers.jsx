@@ -5,8 +5,13 @@ import Moment from 'react-moment';
 
 const StoreBuyers = ({stats,loading}) => {
     const { Column,ColumnGroup } = Table;
+   const sorted=stats?.sort((a,b)=>{
+    if(a.dateOfPurchase>b.dateOfPurchase) return -1
+    if(a.dateOfPurchase<b.dateOfPurchase) return 1
+    return 0
+})
     return (
-        <Table  size={'large'}  dataSource={stats} loading={loading}   scroll={{ x: true }} rowKey={yourStats=>(yourStats._id ||uuid() )} bordered={true} pagination={{ pageSize: 5 }}>
+        <Table  size={'large'}  dataSource={sorted} loading={loading}   scroll={{ x: true }} rowKey={yourStats=>(yourStats._id ||uuid() )} bordered={true} pagination={{ pageSize: 5 }}>
                      <ColumnGroup title={<p >Buyer</p>} >
                      <Column title={<p className="Cart__title">Image</p>}    render={(dataIndex) =>  <img src={dataIndex.buyer.profile} alt={'my-garage'}  style={{width:100, height:100, objectFit:'contain'}}/>}  key={uuid()} width={50} />
                      <Column title={<p className="Cart__title">Name</p>} render={ (record) => record.buyer.name} key={uuid()}   />

@@ -17,13 +17,17 @@ const History = () => {
     useEffect(()=>{
         dispatch(cartHistory(token))
     },[dispatch,token])
-
+   const sorted=historyInfo?.sort((a,b)=>{
+       if(a.dateOfPurchase>b.dateOfPurchase) return -1
+       if(a.dateOfPurchase<b.dateOfPurchase) return 1
+       return 0
+   })
     return (
         <div className="history">
         { error ? (
 				<div>{error}</div>
 			):(
-                <Table size={'large'}  dataSource={historyInfo} loading={loading}   pagination={{ pageSize: 5 }}  rowKey={op=>(op._id ||uuid() )} bordered={true} scroll={{ x: true }}>
+                <Table size={'large'}  dataSource={sorted} loading={loading}   pagination={{ pageSize: 5 }}  rowKey={op=>(op._id ||uuid() )} bordered={true} scroll={{ x: true }}>
                    <ColumnGroup title='Purchase History'>
                    <Column title={<p className="Cart__title">Image</p>} dataIndex='image'  render={(dataIndex) => <img src={dataIndex} alt={'my-garage'}  style={{width:window.innerWidth < 600 ? 30:100, height:window.innerWidth < 800 ? 40:100, objectFit:'contain'}}/>}  key={uuid()} />
                         <Column title={<p className="Cart__title"> Name</p>} render={(record)=><p className="Cart__productName">{record.name}</p>} key={uuid()}  />
