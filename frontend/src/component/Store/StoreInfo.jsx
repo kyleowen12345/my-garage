@@ -52,6 +52,7 @@ useEffect(()=>{
 // get updated store
 
 const handleDelete=()=>{
+  message.info("deleting..")
     Axios.post(`${process.env.REACT_APP_API_KEY}/removeStorefam`,{
             storeName:id
         },{

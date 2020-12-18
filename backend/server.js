@@ -7,6 +7,7 @@ import store from "./routes/store.js";
 import product from './routes/product.js'
 import payments from './routes/payments.js'
 import cors from "cors";
+import helmet from 'helmet'
 
 
 
@@ -15,12 +16,13 @@ const app = express();
 dotenv.config();
 export const secret = process.env.JWT_SECRET;
 const corsOptions = {
-	origin: "https://blackedmarket-aec61.web.app" && "http://localhost:3000",
+	origin: "https://blackedmarket-aec61.web.app",
 	optionsSuccessStatus: 200, // For legacy browser support
 	// method: "GET, POST, DELETE,",
 };
 // middleware
 app.use(express.json());
+app.use(helmet())
 app.use(cors(corsOptions));
 app.use(auth);
 app.use(userInfo);

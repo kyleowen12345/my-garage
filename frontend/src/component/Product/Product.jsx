@@ -24,6 +24,7 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
     },[productNameFam,dispatch])
     
     const handleDelete=()=>{
+        message.info('deleting..')
         Axios.post(`${process.env.REACT_APP_API_KEY}/removeProduct`,{
             productNameFam:productNameFam
         },{
