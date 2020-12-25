@@ -30,7 +30,7 @@ const ProductImage = ({onClose}) => {
 		}
 		setPhotoLoad(true)
 		const options = {
-			maxSizeMB: 0.5,
+			maxSizeMB: 0.1,
 			maxWidthOrHeight: 1920,
 			useWebWorker: true
 		  }
