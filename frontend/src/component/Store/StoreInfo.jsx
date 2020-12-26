@@ -37,7 +37,6 @@ const StoreInfo = () => {
     const {loader}=viewcahrt
     const dispatch = useDispatch();
   const storeId=getStore?._id
-
 // get store
     useEffect(()=>{
         if(id ){

@@ -104,6 +104,17 @@ router.post('/removeProduct',requireLogin,async(req,res)=>{
     console.log(error)
   }
 })
+router.post('/products',async(req,res)=>{
+   try {
+   const products= await Product.find({})
+   const images=products.map(i=>i.image)
+   const length=images[1].length
+    res.json(images)
+
+   } catch (error) {
+     console.log(error)
+   }
+})
 
 
 export default router

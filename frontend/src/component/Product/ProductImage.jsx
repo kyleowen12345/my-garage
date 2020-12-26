@@ -19,6 +19,7 @@ const ProductImage = ({onClose}) => {
 	const token=userInfo?.token
     useEffect(() => {
 		if (url) {
+			console.log(url)
 			dispatch(makeProductImage(productNamefam,url,token,onClose,message))
 		}
 	},[dispatch,productNamefam,url,token,onClose]);
@@ -29,6 +30,8 @@ const ProductImage = ({onClose}) => {
 			return setFiller('Choose image first')
 		}
 		setPhotoLoad(true)
+		const url="https://api.cloudinary.com/v1_1/kaking/image/upload"
+		console.log(url)
 		const options = {
 			maxSizeMB: 0.1,
 			maxWidthOrHeight: 1920,
@@ -44,7 +47,7 @@ const ProductImage = ({onClose}) => {
 				headers: { "content-type": "multipart/form-data" },
 			};
 			Axios.post(
-				"https://api.cloudinary.com/v1_1/kaking/image/upload",
+				url,
 				data,
 				config
 			)
