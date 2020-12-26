@@ -18,7 +18,16 @@ const StoreImage = ({onClose}) => {
    const token=userInfo?.token
    useEffect(() => {
 	if(url){
-  dispatch(newStoreImage(url,id,token,onClose,message))
+		// eslint-disable-next-line
+		String.prototype.insert = function(index, string) { 
+			if (index > 0) {
+			  return this.substring(0, index) + string + this.substr(index);
+			}
+		  
+			return string + this;
+		  };
+		const fetched=url.insert(47,'f_auto/')
+  dispatch(newStoreImage(fetched,id,token,onClose,message))
 	} 
 },[dispatch,id,token,url,onClose]);
     const postPhoto = (e) => {

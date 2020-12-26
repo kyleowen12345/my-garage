@@ -16,7 +16,16 @@ const UpdateProfilePic = ({onClose}) => {
     
     useEffect(() => {
 		if (url) {
-			dispatch(updateProfilePicAct(url,token,onClose,message) )
+			// eslint-disable-next-line
+		String.prototype.insert = function(index, string) { 
+			if (index > 0) {
+			  return this.substring(0, index) + string + this.substr(index);
+			}
+		  
+			return string + this;
+		  };
+		const fetched=url.insert(47,'f_auto/')
+			dispatch(updateProfilePicAct(fetched,token,onClose,message) )
 			
 		}
 	},[ url, dispatch, token, onClose]);

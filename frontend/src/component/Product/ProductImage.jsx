@@ -7,6 +7,7 @@ import imageCompressor from 'browser-image-compression'
 import { message} from 'antd';
 
 
+
 const ProductImage = ({onClose}) => {
     const [image, setImage] = useState("");
     const [filler, setFiller] = useState('');
@@ -19,8 +20,16 @@ const ProductImage = ({onClose}) => {
 	const token=userInfo?.token
     useEffect(() => {
 		if (url) {
-			console.log(url)
-			dispatch(makeProductImage(productNamefam,url,token,onClose,message))
+			// eslint-disable-next-line
+			String.prototype.insert = function(index, string) { 
+				if (index > 0) {
+				  return this.substring(0, index) + string + this.substr(index);
+				}
+			  
+				return string + this;
+			  };
+			const fetched=url.insert(47,'f_auto/')
+			dispatch(makeProductImage(productNamefam,fetched,token,onClose,message))
 		}
 	},[dispatch,productNamefam,url,token,onClose]);
 
@@ -31,7 +40,6 @@ const ProductImage = ({onClose}) => {
 		}
 		setPhotoLoad(true)
 		const url="https://api.cloudinary.com/v1_1/kaking/image/upload"
-		console.log(url)
 		const options = {
 			maxSizeMB: 0.1,
 			maxWidthOrHeight: 1920,
