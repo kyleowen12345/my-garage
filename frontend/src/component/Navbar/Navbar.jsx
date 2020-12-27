@@ -86,7 +86,7 @@ useEffect(() => {
 			{/* Drawer */}
 			<NavbarDrawer onClose={onClose} drawer={drawer} userInfo={userInfo} userProfileInfo={userProfileInfo} history={history}/>
 			</div>
-			<h2 style={{color:'white'}}>Logo</h2>
+			<h2 style={{color:'white'}}>Blacked</h2>
 			<div className="header__left">
 				{userInfo ? <div className="cart__info">
 				<Badge style={{marginTop:10, backgroundColor:'green'}}  count={cartInfo?.cartDetail?.length === undefined ? cartInfo?.length:cartInfo?.cartDetail?.length} >

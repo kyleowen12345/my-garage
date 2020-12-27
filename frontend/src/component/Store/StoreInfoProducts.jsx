@@ -1,14 +1,22 @@
-import React from 'react'
-import { message,Card,Button,Image,Empty } from 'antd';
+import React,{useState} from 'react'
+import { message,Card,Button,Image,Empty,Pagination } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import Cookie from "js-cookie";
 
 
 const StoreInfoProducts = ({PinSInfo,userInfo,getStore,setProductInfo,setProductName,addtocartact,dispatch,loader}) => {
-
+    const [minValue,setMinValue]=useState(0)
+    const [maxValue,setMaxValue]=useState(3)
+    // Card
+const numEachPage=3
+const handleChange = (item) => {
+	setMinValue((item-1)*numEachPage)
+	setMaxValue(item * numEachPage)
+  };
     return (
+        <>
         <div className="ProductList">
- {PinSInfo?.length < 1 ?<Empty description={'Products unavailable'} /> :PinSInfo?.map(item=>{
+ {PinSInfo?.length < 1 ?<Empty description={'Products unavailable'} /> :PinSInfo && PinSInfo?.length >0 && PinSInfo?.slice(minValue,maxValue).map(item=>{
                 const handleAdd=()=>{
                     const token=userInfo?.token
                     const productId=item._id
@@ -33,6 +41,18 @@ const StoreInfoProducts = ({PinSInfo,userInfo,getStore,setProductInfo,setProduct
                )
            })}
         </div>
+        {PinSInfo && <Pagination
+		total={PinSInfo?.length}
+		showTotal={total => `Total ${total} Products`}
+				  defaultCurrent={1}
+				  size="small"
+				  defaultPageSize={numEachPage} //default size of page
+				  onChange={handleChange}
+				  responsive={true}
+      showQuickJumper
+				  style={{display:'flex',justifyContent:'center', margin:30}}
+				/>}
+        </>
     )
 }
 

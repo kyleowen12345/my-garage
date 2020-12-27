@@ -18,25 +18,31 @@ import SearchStore from './component/Store/SearchStore'
 import StoreType from "./component/Store/StoreType";
 import Footer from "./component/Footer";
 import NotFound from "./component/NotFound";
+import ScrolltoTop from "./component/ScrolltoTop";
+import ScrollTop from "./component/ScrollTop";
 
 
 function App() {
 	return (
 		<Router>
+			<ScrolltoTop/>
 			<Switch>
 			<Route exact path="/" >
 			<Navbar />
 				<Home/>
+				<ScrollTop/>
 				<Footer/>
 			</Route>
 				
 			<Route path="/storetype/:name" >
 			<Navbar />
 				<StoreType/>
+				<ScrollTop/>
 				</Route>
 			<Route path="/storeInfo/:id" >
 			<Navbar />
 				<StoreInfo/>
+				<ScrollTop/>
 			</Route>
 			<Route path="/searchResult/:name" >
 			<Navbar />
@@ -57,6 +63,7 @@ function App() {
 						 <Route path="/Store/">
 						 <Navbar />
                                 <Store/>
+								<ScrollTop/>
 						 </Route>
 						 <Route path="/cart">
 						 <Navbar />

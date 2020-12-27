@@ -72,7 +72,7 @@ label {
 /* Navbar */
 /* Navbar */
 header {
-	height: 110px;
+	height: 95px;
 	background-color: black;
 	position: sticky;
 	width: 100vw;
@@ -83,7 +83,7 @@ header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 10px 40px;
+	padding: 10px 40px 0px 40px;
 }
 .nav__link {
 	display: flex;
@@ -545,7 +545,8 @@ header {
 		max-width: 100px;
 	}
 	header {
-		height: 120px;
+		height: 90px;
+		
 	}
 	.home {
 		display: grid;
@@ -634,5 +635,41 @@ header {
 	}
 	.centered{
 		font-size: 12px;
+	}
+}
+/* scroll */
+.scroll__toTop {
+	position: fixed;
+	bottom: 20px;
+	left: 48%;
+	width: 50px;
+	height: 50px;
+	z-index: 1;
+}
+.scroll__toTop > .anticon  {
+	margin-top: 10px;
+	font-size: 60px;
+	animation: scrollTop 0.5s alternate ease infinite;
+	cursor: pointer;
+	color: black;
+	border-radius: 100%;
+}
+
+@keyframes scrollTop {
+	from {
+		transform: translateY(-2px);
+	}
+	to {
+		transform: translateY(2px);
+	}
+}
+@media only screen and (max-width: 700px) {
+	.scroll__toTop > .anticon  {
+		color: black;
+		font-size: 35px;
+	}
+	.scroll__toTop {
+		bottom: 10px;
+		left: 45%;
 	}
 }
