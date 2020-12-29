@@ -354,6 +354,9 @@ header {
 	flex-direction: column;
 	align-items: center;
 }
+.product__clicked{
+	color:#0066CC;
+}
 /* Profile */
 /* Profile */
 /* Profile */

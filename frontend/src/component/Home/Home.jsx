@@ -25,6 +25,7 @@ const numEachPage=6
 const handleChange = (item) => {
 	setMinValue((item-1)*numEachPage)
 	setMaxValue(item * numEachPage)
+	window.scrollTo(0, 300);
   };
 
 	return (

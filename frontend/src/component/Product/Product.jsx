@@ -83,7 +83,7 @@ const Product = ({openChildred,openUpdateprod,deleteClose}) => {
     <p><span style={{fontWeight:'bold', fontSize:15}}>Description :</span> {productInfo?.description}</p>
     <p> <span style={{fontWeight:'bold', fontSize:15}}>Store Name :</span> {productInfo?.storeName.storeName}</p>
     <p><span style={{fontWeight:'bold', fontSize:15}}>Store Owner :</span> {productInfo?.storeOwner.name}</p>
-            {userInfo?._id !==productInfo?.storeOwner._id&&<button onClick={handleAdd}><ShoppingCartOutlined /> {loader ? "Adding..":"Add to cart"}</button>}
+            {userInfo?._id !==productInfo?.storeOwner._id&&<button disabled={loader} onClick={handleAdd}><ShoppingCartOutlined /> {loader ? "Adding..":"Add to cart"}</button>}
                 </>
             )}
          

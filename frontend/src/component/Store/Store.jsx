@@ -28,6 +28,7 @@ const Store = () => {
     const handleChange = (item) => {
       setMinValue((item-1)*numEachPage)
       setMaxValue(item * numEachPage)
+      window.scrollTo(0, 0);
       };
     useEffect(()=>{
        if(userInfo){
@@ -57,7 +58,7 @@ const Store = () => {
         <>
         <div style={{display:'flex',flexDirection:'column',alignItems:'center', padding:30}}>
         <h1>My Stores</h1>
-         <p onClick={showDrawer} style={{cursor:'pointer'}}><PlusCircleOutlined style={{fontSize:20,margin:10}} />Create Store</p>
+         <p onClick={showDrawer} style={{cursor:'pointer' , color:'#0066CC'}}><PlusCircleOutlined style={{fontSize:20,margin:10}} />Create Store</p>
         
         <div className="home">
              {loading ?  <HomeLoading/>: error ? <p><ErrorPage/></p>:<>

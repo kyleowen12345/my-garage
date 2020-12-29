@@ -11,7 +11,8 @@ const StoreInfoProducts = ({PinSInfo,userInfo,getStore,setProductInfo,setProduct
 const numEachPage=3
 const handleChange = (item) => {
 	setMinValue((item-1)*numEachPage)
-	setMaxValue(item * numEachPage)
+    setMaxValue(item * numEachPage)
+    window.scrollTo(0, 500);
   };
     return (
         <>
@@ -32,10 +33,10 @@ const handleChange = (item) => {
                <h2>{item.productName}</h2>
                <p>${item.price}</p>
               
-               {userInfo?._id !==getStore?.sellerName._id &&<Button onClick={handleAdd} ><ShoppingCartOutlined />{loader ? "Adding..":"Add to cart"}</Button>}
-               <h3 onClick={()=>{ Cookie.set('_pductFam',item._id)
+               {userInfo?._id !==getStore?.sellerName._id &&<Button onClick={handleAdd} disabled={loader} ><ShoppingCartOutlined />{loader ? "Adding..":"Add to cart"}</Button>}
+               <h4 onClick={()=>{ Cookie.set('_pductFam',item._id)
     setProductInfo(true)
-    setProductName(item.productName)}} className='product__clicked'>View More Info</h3>
+    setProductName(item.productName)}} className='product__clicked'>View More Info</h4>
   </Card>
                    </div>
                )
