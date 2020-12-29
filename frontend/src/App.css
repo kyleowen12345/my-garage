@@ -210,13 +210,12 @@ header {
 	box-shadow: 0 4px 6px rgba(32, 33, 36, 0.28);
 }
 
-/* options shop */
-.react-multi-carousel-list {
-	height: 250px !important ;
-}
-
-.react-multiple-carousel__arrow {
-	z-index: 40 !important;
+.sorter{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 20px;
+	
 }
 /* options */
 .options {

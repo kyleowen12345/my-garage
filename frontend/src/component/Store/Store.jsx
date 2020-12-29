@@ -104,7 +104,7 @@ const Store = () => {
 				  onChange={handleChange}
 				  responsive={true}
       showQuickJumper
-				  style={{display:'flex',justifyContent:'center', margin:30}}
+				  style={{display:'flex',justifyContent:'center', margin:30, padding:30}}
 				/>}
         </>
     )

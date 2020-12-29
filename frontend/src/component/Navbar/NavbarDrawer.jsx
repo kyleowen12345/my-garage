@@ -7,7 +7,7 @@ const NavbarDrawer = ({onClose,drawer,userInfo,userProfileInfo,history}) => {
    
     return (
         <Drawer
-          title='Logo'
+          title='Blacked'
 		  width={300}
           onClose={onClose}
 		  visible={drawer}
@@ -15,15 +15,15 @@ const NavbarDrawer = ({onClose,drawer,userInfo,userProfileInfo,history}) => {
         >
 			{!userInfo ? (
 					<div className='nav__link'>
+						<Link className="header__link2" to="/" onClick={onClose}>
+							<HomeOutlined />	Home 
+							</Link>
 							<Link className="header__link2" to="/signin" onClick={onClose}>
 							<LoginOutlined />	Signin
 							</Link>
 							<Link className="header__link2" to="/signup" onClick={onClose}>
 							<UserAddOutlined />	Signup
-							</Link>
-							<Link className="header__link2" to="/" onClick={onClose}>
-							<HomeOutlined />	Home 
-							</Link>
+							</Link>	
 					</div>
 				) : (
 						<div className='nav__link'> 

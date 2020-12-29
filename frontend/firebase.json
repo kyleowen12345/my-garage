@@ -5,8 +5,20 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ], "headers" : [ { "source": "**", "headers" : [ { "key" : "Access-Control-Allow-Origin", "value" : "*" }, { "key" : "X-Frame-Options", "value" : "deny" }, { "key" : "X-Content-Type-Options", "value" : "nosniff" }, { "key" : "X-XSS-Protection", "value" : "1; mode=block" }, { "key": "Cache-Control", "value": "public, max-age=31536000" } ] }
-     ],
+    ],"headers" : [ { "source": "**", "headers" : [ { "key" : "Access-Control-Allow-Origin", "value" : "*" }, { "key" : "X-Frame-Options", "value" : "deny" }, { "key" : "X-Content-Type-Options", "value" : "nosniff" }, { "key" : "X-XSS-Protection", "value" : "1; mode=block" }, { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=600" } ] }, {
+      "source" : "**/*.@(jpg|jpeg|gif|png)",
+      "headers" : [ {
+        "key" : "Cache-Control",
+        "value" : "max-age=7200"
+      } ]
+    }, {
+      "source" : "404.html",
+      "headers" : [ {
+        "key" : "Cache-Control",
+        "value" : "max-age=300"
+      } ]
+    }
+  ],
     "rewrites": [
       {
         "source": "**",

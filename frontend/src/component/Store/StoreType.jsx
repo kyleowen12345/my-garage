@@ -2,9 +2,9 @@ import React,{useEffect,useState} from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { getStoreType } from '../../actions/storeActions';
 import {useHistory,useParams,Link} from 'react-router-dom'
-import OptionCarousel from "../Home/OptionCarousel";
 import HomeLoading from '../Home/HomeLoading';
 import {Card,Pagination,Avatar,Empty } from 'antd';
+import StoreTypeSort from '../Home/StoreTypeSort';
 
 
 const StoreType = () => {
@@ -27,8 +27,7 @@ const handleChange = (item) => {
   };
     return (
         <div>
-            {/* <ImageCarousel/> */}
-		<OptionCarousel/>
+            <StoreTypeSort/>
   <h1 className="result">Results for {name}</h1>
   {storeTypeOps?.length < 1 && <Empty description={'Store Type unavailable'} />}
         {loader ? <HomeLoading/>:<div className="home">
@@ -58,7 +57,7 @@ const handleChange = (item) => {
                   responsive={true}
                   size="small"
       showQuickJumper={storeTypeOps?.length > 6 ? true: false}
-				  style={{display:'flex',justifyContent:'center', margin:30}}
+				  style={{display:'flex',justifyContent:'center', margin:30, padding:30}}
 				/>}
         </div>
     )

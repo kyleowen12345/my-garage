@@ -5,8 +5,8 @@ import { Link, } from "react-router-dom";
 import {Card,Pagination,Avatar } from 'antd';
 import HomeLoading from "./HomeLoading";
 import ImageCarousel from "./ImageCarousel";
-import OptionCarousel from "./OptionCarousel";
 import ErrorPage from "../ErrorPage";
+import StoreTypeSort from "./StoreTypeSort";
 
 
 const Home = () => {
@@ -30,7 +30,9 @@ const handleChange = (item) => {
 	return (
 		<>
 		<ImageCarousel/>
-		<OptionCarousel/>
+		
+		<StoreTypeSort/>
+		{/* <OptionCarousel/> */}
 			{loading ? (
 				<HomeLoading />
 			) :error ? (
