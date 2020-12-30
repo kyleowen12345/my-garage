@@ -3,6 +3,7 @@ import { Select } from 'antd';
 import {  useDispatch,useSelector } from "react-redux";
 import { getStoreType } from '../../actions/storeActions';
 import {useHistory} from 'react-router-dom'
+import { SortDescendingOutlined } from '@ant-design/icons';
 
 const StoreTypeSort = () => {
     const { Option } = Select;
@@ -17,7 +18,8 @@ const StoreTypeSort = () => {
        }
     return (
         <div className="sorter">
-            <h2>Select Store-type</h2>
+            <h2>Select Store-type <SortDescendingOutlined /></h2>
+            
           <Select defaultValue="Click here to select" style={{ width:"50vw", minWidth:300}} showSearch onChange={handleSelect} loading={loader} placeholder="Select a Store Type">
       <Option value="Automotive">Automotive</Option>
       <Option value="Baby & Toddler">Baby & Toddler</Option>
